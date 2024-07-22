@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  //variables:
+  --dark:rgb(43, 43, 43);
+
+}
+
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.error {
+  color: red;
+}
+
+.loadingContainer {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 20px;
+  h1 {
+    font-size: 1.2rem;
+    margin-left: 15px;
+    font-weight: bold;
+  }
+  img {
+    width: 100px;
+  }
+}
