@@ -1,8 +1,22 @@
 <ng-container *ngIf="user">
-  <div [routerLink]="['/user-page/1']">
-    <img src="https://github.com/MarioVillar25.png" alt="" />
-    <h2>{{ user.name }}</h2>
-    <span>{{ user.username }}</span>
-    <button>See more</button>
+  <div class="card" [routerLink]="['/user-page', user.id]">
+    <div>
+      <img src="https://github.com/MarioVillar25.png" alt="" />
+      <div>
+        <h2>{{ user.name | titlecase }}</h2>
+        <span>{{ user.username }}</span>
+
+      </div>
+    </div>
+    <h5>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
+      nulla.
+    </h5>
+    <p>
+      <span class="bold">23</span> posts • <span class="bold">34</span> comments
+      • Since {{user.dateCreation | date}}
+    </p>
+    <span>{{ user.id }}</span>
+
   </div>
 </ng-container>

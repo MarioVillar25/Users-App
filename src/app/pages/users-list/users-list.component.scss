@@ -17,5 +17,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
+    >div{
+      width: 32%;
+    }
   }
 }

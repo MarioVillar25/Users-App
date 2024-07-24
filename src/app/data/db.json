@@ -1,79 +1,55 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "a title",
-      "views": 100
-    },
-    {
       "id": "2",
       "title": "another title",
       "views": 200
-    },
-    {
-      "id": "3b18"
     }
   ],
   "comments": [
     {
       "id": "1",
       "text": "a comment about post 1",
-      "postId": "1"
+      "postId": null
     },
     {
       "id": "2",
       "text": "another comment about post 1",
-      "postId": "1"
+      "postId": null
     }
   ],
   "users": [
     {
-      "name": "typicode",
-      "email": "typicode@gmail.com",
+      "id": "",
+      "name": "user1",
+      "username": "@user1",
+      "email": "user1@gmail.com",
       "password": "1234",
-      "id": "dd1f"
+      "dateCreation": "2024-07-24T09:53:20.800Z"
     },
     {
-      "id": "960f"
+      "id": "",
+      "name": "user2",
+      "username": "@user2",
+      "email": "user2@gmail.com",
+      "password": "1234",
+      "dateCreation": "2024-07-24T09:53:34.427Z"
     },
     {
-      "id": "eadc",
-      "name": "name1",
-      "email": "name1@gmail.com",
-      "password": "1234554"
+      "id": "",
+      "name": "user3",
+      "username": "@user3",
+      "email": "user3@gmail.com",
+      "password": "1234",
+      "dateCreation": "2024-07-24T09:53:40.372Z"
     },
     {
-      "id": "1049",
-      "name": "name1",
-      "email": "name1@gmail.com",
-      "password": "ewqrwer"
-    },
-    {
-      "id": "8ff0",
-      "name": "qwerqwr",
-      "email": "eee@dddd.com",
-      "password": "ewrqwrwqe"
-    },
-    {
-      "id": "44bd",
-      "name": "dddddddddd",
-      "email": "fffff@ffdf.es",
-      "password": "341242142143"
-    },
-    {
-      "id": "587e",
-      "name": "josumi",
-      "username": "@josmimot34",
-      "email": "josumi@josuma.com",
-      "password": "1234"
-    },
-    {
-      "id": "c254",
-      "name": "mondy",
-      "username": "@mondy",
-      "email": "mondy@mondy.com",
-      "password": "12344",
-      "dateCreation": "2024-07-23T14:55:18.683Z"
+      "id": "",
+      "name": "user4",
+      "username": "@user4",
+      "email": "user4@gmail.com",
+      "password": "1234",
+      "dateCreation": "2024-07-24T09:53:46.572Z"
     }
   ]
 }
