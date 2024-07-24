@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Post } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'app-post-card',
@@ -9,5 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './post-card.component.scss'
 })
 export class PostCardComponent {
+
+  @Input() public post!: Post;
 
 }

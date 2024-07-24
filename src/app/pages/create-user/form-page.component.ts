@@ -27,7 +27,8 @@ export class FormPageComponent {
     username: '',
     email: '',
     password: '',
-    dateCreation: new Date()
+    dateCreation: new Date(),
+    id: '',
   };
 
   //* FORM:
@@ -77,7 +78,8 @@ export class FormPageComponent {
         username:'@' + this.myForm.controls['username'].value,
         email: this.myForm.controls['email'].value,
         password: this.myForm.controls['password'].value,
-        dateCreation: new Date()
+        dateCreation: new Date(),
+        id: ''
       };
 
       this.createUser(this.user);

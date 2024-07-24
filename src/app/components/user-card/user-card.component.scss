@@ -1,46 +1,62 @@
-
-
-
-div{
-  width: 16rem;
+.card {
+  background-color: rgb(252, 252, 252);
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  gap: 1.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  border: 2px solid transparent;
 
-
-  img{
-    width: 5rem;
-    border-radius: 50%;
-    margin-bottom: 0.5rem;
+  .bold {
+    font-weight: 600;
   }
 
-  h2{
-    font-size: 1rem ;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  img {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+  }
+
+  h2 {
+    font-size: 1rem;
     font-weight: 600;
     margin: 0;
   }
 
-  span{
-    color: rgb(105, 105, 105);
+  h5 {
     margin: 0;
-    margin-bottom: 1rem;
-  }
-  button{
-    border: 1px solid #84848460;
-    background-color: white;
-    padding: 0.5rem 1.2rem;
-    border-radius: 4rem;
-    cursor: pointer;
   }
 
-  button:hover{
-    background-color: var(--dark);
-    color: white;
-    padding: 0.5rem 1.2rem;
+  span {
+    color: rgb(105, 105, 105);
+    margin: 0;
+    font-size: 0.9rem;
   }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: rgb(105, 105, 105);
+  }
+  button {
+    border: 1px solid #84848460;
+    background-color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+}
+
+.card:hover {
+  border: 2px solid #8e989e60;
+  transform: scale(1.03);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

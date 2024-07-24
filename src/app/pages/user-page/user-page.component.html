@@ -2,30 +2,38 @@
   <h1>User Info</h1>
   <hr />
 
-  <section>
-    <div class="userContainer_userInfo">
-      <div class="userContainer_userInfo--card">
-        <img src="https://github.com/MarioVillar25.png" alt="" />
-        <h2>name: sdfsfsdfsdf</h2>
-        <span>username:dsfdsfsf</span>
-        <span>email:dsfdsfsf</span>
-        <span>location:dsfdsfsf</span>
-        <span>description:dsfdsfsf</span>
-        <span>Date creation:dsfdsfsf</span>
+  <ng-container *ngIf="user">
+    <section>
+      <div class="userContainer_userInfo">
+        <div class="userContainer_userInfo--card">
+          <img src="https://github.com/MarioVillar25.png" alt="" />
+          <h2>name: {{ user.name }}</h2>
+          <span>username:{{ user.username }}</span>
+          <span>email:{{ user.email }}</span>
+          <span>location:{{ user.name }}</span>
+          <span>description:{{ user.name }}</span>
+          <span>Date creation:{{ user.dateCreation | date }}</span>
+        </div>
       </div>
-    </div>
-    <h2>Posts:</h2>
+      <button (click)="deleteUserById()">DELETE USER</button>
+    </section>
+  </ng-container>
 
-    <div class="userContainer_postsInfo">
-<div>
-<app-post-card></app-post-card>
-</div>
-<div>
-  <app-post-card></app-post-card>
-  </div>
-  <div>
-    <app-post-card></app-post-card>
-    </div>
-    </div>
-  </section>
+    <section>
+      <h2>Posts:</h2>
+
+      <div class="userContainer_postsInfo">
+        <div>
+          <app-post-card></app-post-card>
+        </div>
+        <div>
+          <app-post-card></app-post-card>
+        </div>
+        <div>
+          <app-post-card></app-post-card>
+        </div>
+      </div>
+    </section>
+
+
 </div>
