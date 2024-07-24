@@ -1,0 +1,48 @@
+.postContainer {
+  h1 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  hr {
+    margin: 0;
+    width: 100%;
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+  }
+
+  section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .postContainer__card {
+      width: 32%;
+    }
+
+    .postContainer__commentsContainer {
+      width: 65%;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      border-radius: 0.8rem;
+      padding: 1rem;
+    }
+
+
+    .postContainer__buttonsContainer{
+      button{
+        font-size: 1rem;
+        padding: 3px 6px;
+      }
+
+      .postContainer__buttonsContainer--deleteButton{
+        margin-left: 1rem;
+      }
+    }
+
+
+
+
+  }
+}

@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, viewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, RouterLink],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })

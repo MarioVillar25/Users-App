@@ -1,0 +1,75 @@
+.postCard {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-radius: 0.8rem;
+  cursor: pointer;
+
+  h2{
+
+    margin: 0;
+  }
+
+  p{
+    margin: 0;
+    color: rgba(108, 108, 108, 0.785);
+
+  }
+
+  .postCard__imgContainer {
+    img {
+      border-radius: 0.8rem;
+      width: 100%;
+      max-width: 500px;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .postCard__tagsContainer {
+
+    margin: 10px 0px;
+    display: flex;
+    gap: 0.5rem;
+    span {
+      font-size: 0.8rem;
+      padding: 0.2rem;
+      background-color: rgb(211, 211, 211);
+      color: rgb(67, 67, 67);
+      border-radius: 10px;
+    }
+  }
+
+  .postCard_userInfo {
+    display: flex;
+    margin-top: 1rem;
+
+
+    img {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1rem;
+
+      h4 {
+        margin: 0;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 0;
+        color: rgba(108, 108, 108, 0.785);
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

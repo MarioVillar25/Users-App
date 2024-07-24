@@ -4,47 +4,42 @@
     <i class="bx bx-menu" id="btn" #btn></i>
   </div>
   <div class="user">
-    <img class="user-img" src="../../../assets/images/logo_admin.png" alt="" />
+    <img class="user-img" src="https://github.com/MarioVillar25.png" alt="" />
     <div>
-      <p class="bold">Clint B.</p>
+      <p class="bold">Mario Villar</p>
       <p>Admin</p>
     </div>
   </div>
   <ul>
     <li>
-      <a href="">
-        <i class="bx bxs-universal-access"></i>
+      <a [routerLink]="['']">
+        <i class="bx bxs-dashboard"></i>
         <span class="nav-item">dashboard</span>
       </a>
-      <span class="tooltip">dashboard</span>
     </li>
     <li>
-      <a href="">
-        <i class="bx bxs-universal-access"></i>
-        <span class="nav-item">dashboard</span>
+      <a [routerLink]="['create-user']">
+        <i class='bx bx-edit'></i>
+        <span class="nav-item">creation</span>
       </a>
-      <span class="tooltip">dashboard</span>
     </li>
     <li>
-      <a href="">
-        <i class="bx bxs-universal-access"></i>
-        <span class="nav-item">dashboard</span>
+      <a [routerLink]="['users-list']">
+        <i class="bx bx-user"></i>
+        <span class="nav-item">Users</span>
       </a>
-      <span class="tooltip">dashboard</span>
     </li>
     <li>
-      <a href="">
-        <i class="bx bxs-universal-access"></i>
-        <span class="nav-item">dashboard</span>
+      <a [routerLink]="['posts-list']">
+        <i class="bx bx-comment-dots"></i>
+        <span class="nav-item">Posts</span>
       </a>
-      <span class="tooltip">dashboard</span>
     </li>
     <li>
-      <a href="">
-        <i class="bx bxs-universal-access"></i>
-        <span class="nav-item">dashboard</span>
+      <a [routerLink]="['']">
+        <i class="bx bx-log-out-circle"></i>
+        <span class="nav-item">LogOut</span>
       </a>
-      <span class="tooltip">dashboard</span>
     </li>
   </ul>
 </div>

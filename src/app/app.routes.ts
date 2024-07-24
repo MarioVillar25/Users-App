@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout/layout.component';
+import { PostPageComponent } from './pages/post-page/post-page.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,27 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'posts-list',
+        loadComponent: () =>
+          import('./pages/posts-list/posts-page.component').then(
+            (c) => c.PostsPageComponent
+          ),
+      },
+      {
+        path: 'post-page/:id',
+        loadComponent: () =>
+          import('./pages/post-page/post-page.component').then(
+            (c) => c.PostPageComponent
+          ),
+      },
+      {
+        path: 'users-list',
+        loadComponent: () =>
+          import('./pages/users-list/users-list.component').then(
+            (c) => c.UsersListComponent
+          ),
+      },
+      {
         path: 'user-page/:id',
         loadComponent: () =>
           import('./pages/user-page/user-page.component').then(
@@ -21,9 +43,9 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'form-page',
+        path: 'create-user',
         loadComponent: () =>
-          import('./pages/form-page/form-page.component').then(
+          import('./pages/create-user/form-page.component').then(
             (c) => c.FormPageComponent
           ),
       },
