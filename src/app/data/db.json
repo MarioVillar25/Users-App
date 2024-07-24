@@ -50,6 +50,24 @@
       "email": "user4@gmail.com",
       "password": "1234",
       "dateCreation": "2024-07-24T09:53:46.572Z"
+    },
+    {
+      "id": "",
+      "name": "josuami",
+      "username": "@josuami",
+      "email": "jasami@gmail.com",
+      "password": "123354",
+      "dateCreation": "2024-07-24T11:44:51.158Z",
+      "description": "esto me gusta siiiii ay siiii"
+    },
+    {
+      "id": "",
+      "name": "Samanta LaRRusso",
+      "username": "@larussorrr",
+      "email": "ewrwerw@gmail.com",
+      "password": "2345",
+      "dateCreation": "2024-07-24T14:33:39.824Z",
+      "description": "eeeeeeeeeeeeewrwrwerrrrrrrrwerwerwerwerwerwe\nrwerwrewer"
     }
   ]
 }

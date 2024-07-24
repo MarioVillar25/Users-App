@@ -5,8 +5,6 @@
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <!-- Name -->
 
-
-
       <div>
         <label>Name</label>
         <input
@@ -14,8 +12,10 @@
           formControlName="name"
           placeholder="Introduce a name"
         />
-        <span *ngIf="isValidField('name')" class="error">Introduce a name</span>
       </div>
+
+      <span *ngIf="isValidField('name', 'required')" class="error"
+      >This entry must be filled</span>
 
       <!-- username -->
 
@@ -26,10 +26,28 @@
           formControlName="username"
           placeholder="Introduce a username"
         />
-        <span *ngIf="isValidField('username')" class="error"
-          >Introduce a name</span
-        >
       </div>
+
+
+      <span *ngIf="isValidField('username', 'required')" class="error"
+      >This entry must be filled</span>
+
+
+
+      <!-- Description -->
+
+      <div>
+        <label>Description</label>
+        <textarea
+          formControlName="description"
+          placeholder="Introduce a Description"
+        >
+        </textarea>
+      </div>
+
+      <span *ngIf="isValidField('description', 'required')" class="error"
+      >This entry must be filled</span
+    >
 
       <!-- Email -->
 
@@ -40,8 +58,11 @@
           formControlName="email"
           placeholder="Introduce an email"
         />
-        <span *ngIf="isValidField('email')" class="error"
-          >this must be an email</span
+        <span *ngIf="isValidField('email', 'pattern')" class="error"
+          >You must enter an Email</span
+        >
+        <span *ngIf="isValidField('email', 'required')" class="error"
+          >This entry must be filled</span
         >
       </div>
 
@@ -54,8 +75,15 @@
           formControlName="password"
           placeholder="Introduce a password"
         />
-        <span *ngIf="isValidField('password')" class="error">min 6 length</span>
+
+        <span *ngIf="isValidField('password', 'required')" class="error"
+        >This entry must be filled</span>
+
+        <span *ngIf="isValidField('password', 'minlength')" class="error"
+        >Password must contain at least 6 characters</span>
       </div>
+
+
 
       <div class="formContainer__buttonContainer">
         <button type="submit">Submit</button>
