@@ -1,3 +1,31 @@
-<p>landing-page works!</p>
 
-<button (click)="readAllComments()">call comments</button>
+<div class="landingContainer">
+  <h1>Dashboard</h1>
+  <hr>
+  <section class="countersSection">
+    <div>
+      <h2>Users:</h2>
+      <span>{{users.length}}</span>
+    </div>
+    <div>
+      <h2>Posts:</h2>
+      <span>{{posts.length}}</span>
+    </div>
+    <div>
+      <h2>Comments:</h2>
+      <span>{{comments.length}}</span>
+    </div>
+  </section>
+
+  <section class="cardsSection">
+    <div>
+      <h2>Know our Top 3 trending users!</h2>
+    </div>
+    <div>
+      <h2>Most commented posts</h2>
+    </div>
+    <div>
+      <h2>User who made most comments</h2>
+    </div>
+  </section>
+</div>

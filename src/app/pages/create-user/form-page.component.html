@@ -1,0 +1,65 @@
+<div class="formContainer">
+  <h1>Create User</h1>
+  <hr />
+  <div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <!-- Name -->
+
+
+
+      <div>
+        <label>Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Introduce a name"
+        />
+        <span *ngIf="isValidField('name')" class="error">Introduce a name</span>
+      </div>
+
+      <!-- username -->
+
+      <div>
+        <label>Username</label>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Introduce a username"
+        />
+        <span *ngIf="isValidField('username')" class="error"
+          >Introduce a name</span
+        >
+      </div>
+
+      <!-- Email -->
+
+      <div>
+        <label>Email</label>
+        <input
+          type="text"
+          formControlName="email"
+          placeholder="Introduce an email"
+        />
+        <span *ngIf="isValidField('email')" class="error"
+          >this must be an email</span
+        >
+      </div>
+
+      <!-- Password -->
+
+      <div>
+        <label>Password</label>
+        <input
+          type="text"
+          formControlName="password"
+          placeholder="Introduce a password"
+        />
+        <span *ngIf="isValidField('password')" class="error">min 6 length</span>
+      </div>
+
+      <div class="formContainer__buttonContainer">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

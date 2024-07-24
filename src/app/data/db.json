@@ -1,17 +1,79 @@
 {
   "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    },
+    {
+      "id": "3b18"
+    }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
   ],
   "users": [
     {
       "name": "typicode",
       "email": "typicode@gmail.com",
+      "password": "1234",
+      "id": "dd1f"
+    },
+    {
+      "id": "960f"
+    },
+    {
+      "id": "eadc",
+      "name": "name1",
+      "email": "name1@gmail.com",
+      "password": "1234554"
+    },
+    {
+      "id": "1049",
+      "name": "name1",
+      "email": "name1@gmail.com",
+      "password": "ewqrwer"
+    },
+    {
+      "id": "8ff0",
+      "name": "qwerqwr",
+      "email": "eee@dddd.com",
+      "password": "ewrqwrwqe"
+    },
+    {
+      "id": "44bd",
+      "name": "dddddddddd",
+      "email": "fffff@ffdf.es",
+      "password": "341242142143"
+    },
+    {
+      "id": "587e",
+      "name": "josumi",
+      "username": "@josmimot34",
+      "email": "josumi@josuma.com",
       "password": "1234"
+    },
+    {
+      "id": "c254",
+      "name": "mondy",
+      "username": "@mondy",
+      "email": "mondy@mondy.com",
+      "password": "12344",
+      "dateCreation": "2024-07-23T14:55:18.683Z"
     }
   ]
 }

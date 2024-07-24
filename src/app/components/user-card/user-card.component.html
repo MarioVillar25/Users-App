@@ -1,0 +1,8 @@
+<ng-container *ngIf="user">
+  <div [routerLink]="['/user-page/1']">
+    <img src="https://github.com/MarioVillar25.png" alt="" />
+    <h2>{{ user.name }}</h2>
+    <span>{{ user.username }}</span>
+    <button>See more</button>
+  </div>
+</ng-container>

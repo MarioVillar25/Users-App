@@ -1,0 +1,47 @@
+.userContainer {
+  h1 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  hr {
+    margin: 0;
+    width: 100%;
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .userContainer_userInfo {
+      display: flex;
+      justify-content: center;
+
+      .userContainer_userInfo--card {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 0.5rem;
+
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        img {
+          width: 100px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .userContainer_postsInfo {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      > div {
+        width: 32%;
+      }
+    }
+  }
+}
