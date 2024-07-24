@@ -5,18 +5,15 @@
       <div>
         <h2>{{ user.name | titlecase }}</h2>
         <span>{{ user.username }}</span>
-
       </div>
     </div>
     <h5>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
-      nulla.
+      {{ user.description }}
     </h5>
     <p>
       <span class="bold">23</span> posts • <span class="bold">34</span> comments
-      • Since {{user.dateCreation | date}}
+      • Since {{ user.dateCreation | date }}
     </p>
     <span>{{ user.id }}</span>
-
   </div>
 </ng-container>

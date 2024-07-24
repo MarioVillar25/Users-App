@@ -25,10 +25,6 @@ export class UserService {
 
   //* FUNCIONES:
 
-  public isValidField(form: FormGroup, field: string) {
-    return form.controls[field].errors && form.controls[field].touched;
-  }
-
   //-----READ FUNCTIONS-----
 
   public readAllUsers(): Observable<User[]> {
