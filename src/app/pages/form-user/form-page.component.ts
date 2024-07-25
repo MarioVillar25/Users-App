@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -38,7 +42,11 @@ export class FormPageComponent {
     name: ['', [Validators.required]],
     username: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+    email: [
+      '',
+      [Validators.required, Validators.pattern(this.emailPattern)],
+      this.validateEmail(),
+    ],
     password: ['', [Validators.required, Validators.minLength(4)]],
   });
 
@@ -66,13 +74,14 @@ export class FormPageComponent {
 
   public onSubmit() {
     if (this.myForm.invalid) {
+      console.log(this.myForm.controls['email'].errors);
+
       this.myForm.markAllAsTouched();
-
-
-
-
-
     } else {
+      //validar correo:
+
+      //validar usuario:
+
       this.user = {
         name: this.myForm.controls['name'].value,
         username: '@' + this.myForm.controls['username'].value,
@@ -88,11 +97,34 @@ export class FormPageComponent {
   }
 
   //Check errors in field
+  //? CREAR SERVICIO SOLO PARA VALIDACIONES DE FORMULARIOS?
 
   public isValidField(field: string, error: string) {
     return (
       this.myForm.controls[field].errors?.[error] &&
       this.myForm.controls[field].touched
     );
+  }
+
+  public validateEmail(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+
+      if (!value) {
+        return of(null);
+      }
+
+      let datos: User[] = this.usersService.users.filter(
+        (elem) => value === elem.email
+      );
+
+      let state: boolean = false;
+
+      if (datos.length === 1) {
+        state = true;
+      }
+
+      return of(state ? { emailTaken: true } : null);
+    };
   }
 }
