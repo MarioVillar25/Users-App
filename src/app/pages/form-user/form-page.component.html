@@ -15,7 +15,8 @@
       </div>
 
       <span *ngIf="isValidField('name', 'required')" class="error"
-      >This entry must be filled</span>
+        >This entry must be filled</span
+      >
 
       <!-- username -->
 
@@ -24,15 +25,13 @@
         <input
           type="text"
           formControlName="username"
-          placeholder="Introduce a username"
+          placeholder="Introduce an username"
         />
       </div>
 
-
       <span *ngIf="isValidField('username', 'required')" class="error"
-      >This entry must be filled</span>
-
-
+        >This entry must be filled</span
+      >
 
       <!-- Description -->
 
@@ -40,14 +39,14 @@
         <label>Description</label>
         <textarea
           formControlName="description"
-          placeholder="Introduce a Description"
+          placeholder="Introduce a description..."
         >
         </textarea>
       </div>
 
       <span *ngIf="isValidField('description', 'required')" class="error"
-      >This entry must be filled</span
-    >
+        >This entry must be filled</span
+      >
 
       <!-- Email -->
 
@@ -64,6 +63,9 @@
         <span *ngIf="isValidField('email', 'required')" class="error"
           >This entry must be filled</span
         >
+        <span *ngIf="isValidField('email', 'emailTaken')" class="error"
+        >This email already exist</span
+      >
       </div>
 
       <!-- Password -->
@@ -77,13 +79,13 @@
         />
 
         <span *ngIf="isValidField('password', 'required')" class="error"
-        >This entry must be filled</span>
+          >This entry must be filled</span
+        >
 
         <span *ngIf="isValidField('password', 'minlength')" class="error"
-        >Password must contain at least 6 characters</span>
+          >Password must contain at least 6 characters</span
+        >
       </div>
-
-
 
       <div class="formContainer__buttonContainer">
         <button type="submit">Submit</button>
