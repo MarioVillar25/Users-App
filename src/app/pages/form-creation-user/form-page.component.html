@@ -1,0 +1,103 @@
+  <div class="formContainer">
+    <h1>Create User</h1>
+    <hr />
+
+    <div>
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <!-- Name -->
+
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Introduce a name"
+          />
+        </div>
+
+        <span *ngIf="isValidField('name', 'required')" class="error"
+          >This entry must be filled</span
+        >
+
+        <!-- username -->
+
+        <div>
+          <label>Username</label>
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Introduce an username"
+          />
+        </div>
+
+        <span *ngIf="isValidField('username', 'required')" class="error"
+          >This entry must be filled</span
+        >
+
+        <span *ngIf="isValidField('username', 'usernameTaken')" class="error"
+          >This username already exist</span
+        >
+
+        <!-- Description -->
+
+        <div>
+          <label>Description</label>
+          <textarea
+            formControlName="description"
+            placeholder="Introduce a description..."
+          >
+          </textarea>
+        </div>
+
+        <span *ngIf="isValidField('description', 'required')" class="error"
+          >This entry must be filled</span
+        >
+
+        <!-- Email -->
+
+        <div>
+          <label>Email</label>
+          <input
+            type="text"
+            formControlName="email"
+            placeholder="Introduce an email"
+          />
+          <span *ngIf="isValidField('email', 'pattern')" class="error"
+            >You must enter an Email</span
+          >
+          <span *ngIf="isValidField('email', 'required')" class="error"
+            >This entry must be filled</span
+          >
+          <span *ngIf="isValidField('email', 'emailTaken')" class="error"
+            >This email already exist</span
+          >
+        </div>
+
+        <!-- Password -->
+
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            autocomplete="on"
+            name="password"
+            formControlName="password"
+            placeholder="Introduce a password"
+          />
+
+          <span *ngIf="isValidField('password', 'required')" class="error"
+            >This entry must be filled</span
+          >
+
+          <span *ngIf="isValidField('password', 'minlength')" class="error"
+            >Password must contain at least 6 characters</span
+          >
+        </div>
+
+        <div class="formContainer__buttonContainer">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+

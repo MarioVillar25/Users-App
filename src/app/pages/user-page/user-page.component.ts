@@ -5,12 +5,12 @@ import { unsubscribePetition } from '../../utils/utils';
 import { Subscription, switchMap } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [PostCardComponent, CommonModule],
+  imports: [PostCardComponent, CommonModule, RouterLink],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss',
 })

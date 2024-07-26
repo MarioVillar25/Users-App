@@ -20,54 +20,13 @@
   ],
   "users": [
     {
-      "id": "",
-      "name": "user1",
-      "username": "@user1",
-      "email": "user1@gmail.com",
-      "password": "1234",
-      "dateCreation": "2024-07-24T09:53:20.800Z"
-    },
-    {
-      "id": "",
-      "name": "user2",
-      "username": "@user2",
-      "email": "user2@gmail.com",
-      "password": "1234",
-      "dateCreation": "2024-07-24T09:53:34.427Z"
-    },
-    {
-      "id": "",
-      "name": "user3",
-      "username": "@user3",
-      "email": "user3@gmail.com",
-      "password": "1234",
-      "dateCreation": "2024-07-24T09:53:40.372Z"
-    },
-    {
-      "id": "",
-      "name": "user4",
-      "username": "@user4",
-      "email": "user4@gmail.com",
-      "password": "1234",
-      "dateCreation": "2024-07-24T09:53:46.572Z"
-    },
-    {
-      "id": "",
-      "name": "josuami",
-      "username": "@josuami",
-      "email": "jasami@gmail.com",
-      "password": "123354",
-      "dateCreation": "2024-07-24T11:44:51.158Z",
-      "description": "esto me gusta siiiii ay siiii"
-    },
-    {
-      "id": "",
-      "name": "Samanta LaRRusso",
-      "username": "@larussorrr",
-      "email": "ewrwerw@gmail.com",
-      "password": "2345",
-      "dateCreation": "2024-07-24T14:33:39.824Z",
-      "description": "eeeeeeeeeeeeewrwrwerrrrrrrrwerwerwerwerwerwe\nrwerwrewer"
+      "id": "1721896699725",
+      "name": "rafa",
+      "username": "rafa",
+      "email": "rafa@gmail.com",
+      "password": "12344124",
+      "dateCreation": "2024-07-25T08:38:19.725Z",
+      "description": "rafachan jajajjajajajjaa"
     }
   ]
 }

@@ -1,0 +1,65 @@
+<div class="formContainer">
+  <h1>Edit User</h1>
+  <hr />
+
+  <ng-container *ngIf="user">
+    <div>
+      <form [formGroup]="editForm" (ngSubmit)="onEdit()" autocomplete="off">
+        <!-- Name -->
+
+        <div>
+          <label>Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Introduce a new name"
+          />
+        </div>
+
+        <span *ngIf="isValidField('name', 'required')" class="error"
+          >This entry must be filled</span
+        >
+
+        <!-- Description -->
+
+        <div>
+          <label>Description</label>
+          <textarea
+            formControlName="description"
+            placeholder="Introduce a new description..."
+          >
+          </textarea>
+        </div>
+
+        <span *ngIf="isValidField('description', 'required')" class="error"
+          >This entry must be filled</span
+        >
+
+        <!-- Password -->
+
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            formControlName="password"
+            autocomplete="on"
+            placeholder="Introduce a new password"
+          />
+
+          <span *ngIf="isValidField('password', 'required')" class="error"
+            >This entry must be filled</span
+          >
+
+          <span *ngIf="isValidField('password', 'minlength')" class="error"
+            >Password must contain at least 6 characters</span
+          >
+        </div>
+
+        <div class="formContainer__buttonContainer">
+          <button type="submit">Edit</button>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+</div>

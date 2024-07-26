@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Post } from '../interfaces/post.interface';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +16,6 @@ export class UserService {
   public posts: Post[] = [];
   public comments: Comment[] = [];
 
-  //TODO encapsular rutas en tres variables
-
   //* CONSTRUCTOR:
 
   constructor(private http: HttpClient) {}
@@ -31,10 +28,9 @@ export class UserService {
     return this.http.get<User[]>(this.usersURL);
   }
 
-  public readUserById(id: string): Observable<User | undefined> {
+  public readUserById(id: string): Observable<User> {
     return this.http
       .get<User>(`${this.usersURL}/${id}`)
-      .pipe(catchError((error) => of(undefined)));
   }
 
   public readAllPosts(): Observable<Post[]> {
@@ -57,17 +53,29 @@ export class UserService {
     return this.http.post<User>(this.usersURL, user);
   }
 
+    //-----PUT FUNCTIONS-----
+
+    public editUser(user: User, id: string): Observable<User> {
+      return this.http.put<User>(`${this.usersURL}/${id}`, user);
+    }
+
+
   //-----DELETE FUNCTIONS-----
 
-  public deleteUser(id: string): Observable<User | undefined> {
+  public deleteUser(id: number): Observable<User | undefined> {
     return this.http
       .delete<User>(`${this.usersURL}/${id}`)
       .pipe(catchError((error) => of(undefined)));
   }
 
-  public deletePost(id: string): Observable<User | undefined> {
+  public deletePost(id: number): Observable<User | undefined> {
     return this.http
       .delete<User>(`${this.postsURL}/${id}`)
       .pipe(catchError((error) => of(undefined)));
   }
+
+
+
+
+
 }
