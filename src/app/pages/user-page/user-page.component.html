@@ -15,7 +15,11 @@
           <span>Date creation:{{ user.dateCreation | date }}</span>
         </div>
       </div>
-      <button (click)="deleteUserById()">DELETE USER</button>
+      <div>
+        <button (click)="deleteUserById()">Delete User</button>
+        <button [routerLink]="['/edit-user', user.id]">Edit User</button>
+      </div>
+
     </section>
   </ng-container>
 
@@ -23,15 +27,13 @@
       <h2>Posts:</h2>
 
       <div class="userContainer_postsInfo">
+
+<!--
         <div>
           <app-post-card></app-post-card>
         </div>
-        <div>
-          <app-post-card></app-post-card>
-        </div>
-        <div>
-          <app-post-card></app-post-card>
-        </div>
+ -->
+
       </div>
     </section>
 

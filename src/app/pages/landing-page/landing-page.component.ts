@@ -41,6 +41,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.readAllComments();
     this.readAllPosts();
     this.readAllUsers();
+
   }
 
   public ngOnDestroy(): void {

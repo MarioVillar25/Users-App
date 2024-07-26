@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Observable, of, Subscription } from 'rxjs';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -8,11 +8,12 @@ import {
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ValidationsService } from '../../services/validations.service';
 
 @Component({
   selector: 'app-form-page',
@@ -24,23 +25,24 @@ import { User } from '../../interfaces/user.interface';
 export class FormPageComponent {
   //* VARIABLES:
 
+  public newId: number = Date.now();
   public suscriptions: Subscription[] = [];
   public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  public user: User = {
+  public user: User | undefined = {
     name: '',
     username: '',
     email: '',
     description: '',
     password: '',
     dateCreation: new Date(),
-    id: '',
+    id: this.newId.toString(),
   };
 
   //* FORM:
 
   public myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
-    username: ['', [Validators.required]],
+    username: ['', [Validators.required], this.validateUsername()],
     description: ['', [Validators.required]],
     email: [
       '',
@@ -54,8 +56,15 @@ export class FormPageComponent {
 
   //* CONSTRUCTOR:
 
-  constructor(private usersService: UserService, private fb: FormBuilder) {}
+  constructor(
+    private usersService: UserService,
+    private validationsService: ValidationsService,
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
   //* LIFECYCLE HOOKS
+
 
   //* FUNCTIONS:
 
@@ -72,38 +81,39 @@ export class FormPageComponent {
     });
   }
 
+
+
   public onSubmit() {
     if (this.myForm.invalid) {
-      console.log(this.myForm.controls['email'].errors);
+      console.log(this.myForm.controls['username'].errors);
 
       this.myForm.markAllAsTouched();
     } else {
-      //validar correo:
-
-      //validar usuario:
-
       this.user = {
         name: this.myForm.controls['name'].value,
-        username: '@' + this.myForm.controls['username'].value,
+        username: this.myForm.controls['username'].value,
         email: this.myForm.controls['email'].value,
         password: this.myForm.controls['password'].value,
         dateCreation: new Date(),
         description: this.myForm.controls['description'].value,
-        id: '',
+        id: this.newId.toString(),
       };
 
       this.createUser(this.user);
+
+      this.router.navigate(['users-list']);
     }
   }
 
+
+
+
   //Check errors in field
-  //? CREAR SERVICIO SOLO PARA VALIDACIONES DE FORMULARIOS?
 
   public isValidField(field: string, error: string) {
-    return (
-      this.myForm.controls[field].errors?.[error] &&
-      this.myForm.controls[field].touched
-    );
+
+    return this.validationsService.isValidField(this.myForm, field, error)
+
   }
 
   public validateEmail(): AsyncValidatorFn {
@@ -125,6 +135,28 @@ export class FormPageComponent {
       }
 
       return of(state ? { emailTaken: true } : null);
+    };
+  }
+
+  public validateUsername(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const value = control.value;
+
+      if (!value) {
+        return of(null);
+      }
+
+      let datos: User[] = this.usersService.users.filter(
+        (elem) => value === elem.username
+      );
+
+      let state: boolean = false;
+
+      if (datos.length === 1) {
+        state = true;
+      }
+
+      return of(state ? { usernameTaken: true } : null);
     };
   }
 }
