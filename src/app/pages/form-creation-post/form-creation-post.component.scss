@@ -1,0 +1,71 @@
+/* Tag Styles */
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
+  > div {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    input {
+      padding: 0.3rem;
+    }
+  }
+}
+
+/* Classes Styles */
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+
+  hr{
+    margin: 0;
+    width: 100%;
+    margin-top: 0.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+  }
+
+  h1 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  > div {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .formContainer__buttonContainer {
+    button {
+      width: 25%;
+    }
+  }
+
+
+  .formContainer_tagsContainer{
+    display: flex;
+    flex-direction: row;
+
+
+    .formContainer_tagsContainer--tagsList{
+      ul{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      i{
+        cursor: pointer;
+      }
+    }
+  }
+
+
+
+}

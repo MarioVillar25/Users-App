@@ -1,0 +1,72 @@
+<div class="formContainer">
+  <h1>Create Post</h1>
+  <hr />
+
+  <div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+      <!-- title -->
+
+      <div>
+        <label>title</label>
+        <input
+          type="text"
+          formControlName="title"
+          placeholder="Introduce a title"
+        />
+      </div>
+
+      <span *ngIf="isValidField('title', 'required')" class="error"
+        >This entry must be filled</span
+      >
+
+      <!-- Description -->
+
+      <div>
+        <label>Description</label>
+        <textarea
+          formControlName="description"
+          placeholder="Introduce a description..."
+        >
+        </textarea>
+      </div>
+
+      <span *ngIf="isValidField('description', 'required')" class="error"
+        >This entry must be filled</span
+      >
+
+      <!-- tags -->
+
+      <div class="formContainer_tagsContainer">
+        <div class="formContainer_tagsContainer--form">
+          <label>tags</label>
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="newTag"
+              [ngModelOptions]="{ standalone: true }"
+              placeholder="Introduce a tag"
+            />
+            <button type="button" (click)="addTag()">Add tag</button>
+          </div>
+          <span *ngIf="tags.length === 5" class="error"
+            >You cannot create more than 5 tags</span
+          >
+          <span *ngIf="error" class="error"
+          >This tag already exist</span
+        >
+        </div>
+        <div class="formContainer_tagsContainer--tagsList">
+          <ul>
+            <li *ngFor="let tag of tags">
+              {{ tag }} <i (click)="deleteTag(tag)" class="bx bx-x"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="formContainer__buttonContainer">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

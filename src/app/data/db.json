@@ -1,9 +1,43 @@
 {
   "posts": [
     {
-      "id": "2",
-      "title": "another title",
-      "views": 200
+      "id": "1721982373295",
+      "userId": "1721896699725",
+      "title": "dsaf",
+      "description": "sdaf",
+      "tags": [
+        "eqwr",
+        "wqre",
+        "qwer"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-26T08:26:41.608Z"
+    },
+    {
+      "id": "1721982414476",
+      "userId": "1721896699725",
+      "title": "asdasd",
+      "description": "adsdad",
+      "tags": [
+        "dsaf",
+        "asfd",
+        "asdf"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-26T08:27:00.395Z"
+    },
+    {
+      "id": "1721982490802",
+      "userId": "1721896699725",
+      "title": "prueba titulo",
+      "description": "lorem10sssssssssssssssss",
+      "tags": [
+        "miles",
+        "morleaes",
+        "jaja"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-26T08:28:32.633Z"
     }
   ],
   "comments": [

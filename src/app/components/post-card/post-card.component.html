@@ -6,20 +6,20 @@
     />
   </div>
   <div class="postCard__tagsContainer">
-      <span>Sony</span>
-      <span>Miles Morales</span>
+    <ng-container *ngFor="let tag of post.tags">
+      <span>{{tag}}</span>
+
+    </ng-container>
   </div>
   <h2>{{post.title}}</h2>
   <p>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim eum nisi odio
-    cupiditate ullam explicabo ut doloribus quam, asperiores facere, officiis
-    labore fuga natus. Minus labore numquam sint corrupti voluptas.
+    {{post.description}}
   </p>
   <div class="postCard_userInfo">
       <img src="https://github.com/MarioVillar25.png" alt="" />
       <div>
-        <h4>Mario Villar</h4>
-        <p>July 6 2023</p>
+        <h4>{{user?.name}}</h4>
+        <p>{{post.dateCreation | date}}</p>
     </div>
   </div>
 </div>

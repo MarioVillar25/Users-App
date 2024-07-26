@@ -1,8 +1,10 @@
 export interface Post {
-  id:    string;
+  id: string;
+  userId: string;
   title: string;
   description: string;
-  tags: string[]
+  tags: string[];
   views: number;
   dateCreation: Date;
 }
+
