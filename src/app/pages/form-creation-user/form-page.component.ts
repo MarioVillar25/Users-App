@@ -85,7 +85,6 @@ export class FormPageComponent {
 
   public onSubmit() {
     if (this.myForm.invalid) {
-      console.log(this.myForm.controls['username'].errors);
 
       this.myForm.markAllAsTouched();
     } else {

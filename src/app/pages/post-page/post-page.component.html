@@ -20,7 +20,8 @@
       </div>
 
       <div class="postContainer__buttonsContainer">
-        <button class="postContainer__buttonsContainer--editButton">
+
+        <button  [routerLink]="['edit-post']" class="postContainer__buttonsContainer--editButton">
           Edit Post
         </button>
         <button (click)="deletePostById()" class="postContainer__buttonsContainer--deleteButton">

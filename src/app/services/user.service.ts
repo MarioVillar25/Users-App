@@ -53,10 +53,18 @@ export class UserService {
     return this.http.post<User>(this.usersURL, user);
   }
 
+  public createPost(post: Post): Observable<Post> {
+    return this.http.post<Post>(this.postsURL, post)
+  }
+
     //-----PUT FUNCTIONS-----
 
     public editUser(user: User, id: string): Observable<User> {
       return this.http.put<User>(`${this.usersURL}/${id}`, user);
+    }
+
+    public editPost(post: Post, id: string): Observable<Post> {
+      return this.http.put<Post>(`${this.postsURL}/${id}`, post);
     }
 
 

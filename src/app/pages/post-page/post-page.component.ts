@@ -3,14 +3,14 @@ import { PostCardComponent } from '../../components/post-card/post-card.componen
 import { Subscription, switchMap } from 'rxjs';
 import { Post } from '../../interfaces/post.interface';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { unsubscribePetition } from '../../utils/utils';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-page',
   standalone: true,
-  imports: [PostCardComponent, CommonModule],
+  imports: [PostCardComponent, CommonModule, RouterLink],
   templateUrl: './post-page.component.html',
   styleUrl: './post-page.component.scss',
 })
