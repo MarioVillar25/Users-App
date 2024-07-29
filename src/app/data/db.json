@@ -175,6 +175,87 @@
       "password": "12344124",
       "dateCreation": "2024-07-25T08:38:19.725Z",
       "description": "rafachan jajajjajajajjaa"
+    },
+    {
+      "id": "1722251657939",
+      "name": "mondy",
+      "username": "mondyloron",
+      "email": "mondy@gmail.com",
+      "password": "1233444",
+      "dateCreation": "2024-07-29T11:14:38.472Z",
+      "description": "el mondyyyy"
+    },
+    {
+      "id": "1722256474581",
+      "name": "ewrqwer",
+      "username": "qwerqwer",
+      "email": "ewqr@fwqreqr.com",
+      "password": "weqrqwer",
+      "dateCreation": "2024-07-29T12:34:42.687Z",
+      "description": "qwewqerwqer"
+    },
+    {
+      "id": "1722256570477",
+      "name": "user2",
+      "username": "user2",
+      "email": "user2@gmail.com",
+      "password": "dfsfsdfsdfsdf",
+      "dateCreation": "2024-07-29T12:36:24.576Z",
+      "description": "user2user2user2user2user2"
+    },
+    {
+      "id": "1722256834209",
+      "name": "AAAA",
+      "username": "AAAA",
+      "email": "ddd@gmail.com",
+      "password": "werqwer",
+      "dateCreation": "2024-07-29T12:40:45.790Z",
+      "description": "AAAA"
+    },
+    {
+      "id": "1722256858483",
+      "name": "rrrrrr",
+      "username": "rrrrrr",
+      "email": "rrrrrr@gmail.com",
+      "password": "rrrrrr",
+      "dateCreation": "2024-07-29T12:41:07.082Z",
+      "description": "rrrrrr"
+    },
+    {
+      "id": "1722256908603",
+      "name": "user1",
+      "username": "user1",
+      "email": "user1@gmail.com",
+      "password": "user1",
+      "dateCreation": "2024-07-29T12:42:03.667Z",
+      "description": "user1"
+    },
+    {
+      "id": "1722257098946",
+      "name": "pruebaultimaaaaa",
+      "username": "pruebaultimaaaaa",
+      "email": "pruebaultimaaaaa@gmail.com",
+      "password": "pruebaultimaaaaa",
+      "dateCreation": "2024-07-29T12:45:18.804Z",
+      "description": "pruebaultimaaaaa"
+    },
+    {
+      "id": "1722257157284",
+      "name": "orochumaru",
+      "username": "orochumaru",
+      "email": "orochumaru@gmail.com",
+      "password": "orochumaru",
+      "dateCreation": "2024-07-29T12:46:17.881Z",
+      "description": "orochumaru"
+    },
+    {
+      "id": "1722257190670",
+      "name": "naruto",
+      "username": "naruto",
+      "email": "naruto@gmail.com",
+      "password": "defewetr",
+      "dateCreation": "2024-07-29T12:46:40.550Z",
+      "description": "naruto"
     }
   ]
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Post } from '../interfaces/post.interface';
 import { Comment } from '../interfaces/comment.interface';
@@ -16,12 +16,20 @@ export class UserService {
   public users: User[] = [];
   public posts: Post[] = [];
   public comments: Comment[] = [];
+  public searchInputValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public searchProtected = this.searchInputValue.asObservable();
+
 
   //* CONSTRUCTOR:
 
   constructor(private http: HttpClient) {}
 
   //* FUNCIONES:
+
+
+  public changeInputValue(value: string){
+    this.searchInputValue.next(value)
+  }
 
   //-----READ FUNCTIONS-----
 
@@ -95,10 +103,4 @@ export class UserService {
     return this.http
       .delete<Comment>(`${this.commentsURL}/${id}`)
   }
-
-
-
-
-
-
 }
