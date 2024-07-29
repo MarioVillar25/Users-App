@@ -1,1 +1,54 @@
-<p>comment-card works!</p>
+<ng-container *ngIf="comment">
+  <div class="cardContainer">
+    <div class="cardContainer__card--header">
+      <div>
+        <img src="https://github.com/MarioVillar25.png" alt="" />
+        <h1>{{ user?.name }}</h1>
+      </div>
+      <p>{{ comment.dateCreation | date }}</p>
+    </div>
+    <div class="cardContainer__card--comment">
+      <ng-container *ngIf="!commentState">
+        <p>
+          {{ comment.text }}
+        </p>
+
+        <span
+          *ngIf="commentModified"
+          class="cardContainer__card--comment--modified"
+        >
+          Comment modified by {{ user?.name }}
+        </span>
+      </ng-container>
+
+      <ng-container *ngIf="commentState">
+        <form [formGroup]="editForm" (ngSubmit)="onEdit()" autocomplete="off">
+          <textarea placeholder="edit Comment" formControlName="comment">
+          </textarea>
+
+          <span *ngIf="isValidField('comment', 'required')"
+            >You must write something to edit a comment</span
+          >
+
+          <div><button type="submit">Edit Comment</button></div>
+        </form>
+      </ng-container>
+    </div>
+    <div class="cardContainer__card--options">
+      <div class="cardContainer__card--options--spans">
+        <span
+          class="cardContainer__card--options--spans--button"
+          (click)="editCommentById()"
+          >Edit</span
+        >
+        <span>•</span>
+        <span
+          class="cardContainer__card--options--spans--button"
+          (click)="deleteCommentById()"
+          >Remove</span
+        >
+      </div>
+      <i class="bx bx-check-circle"></i>
+    </div>
+  </div>
+</ng-container>

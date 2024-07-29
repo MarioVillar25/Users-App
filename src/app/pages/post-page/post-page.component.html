@@ -2,31 +2,52 @@
   <h1>Post Info</h1>
   <hr />
   <ng-container *ngIf="post">
+    <div class="postContainer__buttonsContainer">
+      <button
+        [routerLink]="['edit-post']"
+        class="postContainer__buttonsContainer--editButton"
+      >
+        Edit Post
+      </button>
+      <button
+        (click)="deletePostById()"
+        class="postContainer__buttonsContainer--deleteButton"
+      >
+        Delete Post
+      </button>
+    </div>
     <section>
       <div class="postContainer__card">
         <app-post-card [post]="post"></app-post-card>
       </div>
 
       <div class="postContainer__commentsContainer">
-        <div>
+        <div class="postContainer__commentsContainer--commentsList">
           <h2>Comments</h2>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim eum
-            nisi odio cupiditate ullam explicabo ut doloribus quam, asperiores
-            facere, officiis labore fuga natus. Minus labore numquam sint
-            corrupti voluptas.
-          </p>
+          <hr>
+
+          <div class="postContainer__commentsContainer--commentsList--input">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+              <h3>Create a new comment</h3>
+              <textarea
+              formControlName="comment"
+              placeholder="Write about something!"
+              >
+              </textarea>
+              <span *ngIf="isValidField('comment', 'required')" class="error"
+              >You must write something to post a comment</span
+            >
+
+              <div><button>Add Comment</button></div>
+            </form>
+          </div>
+          <ng-container *ngFor="let comment of commentsByPost">
+            <div>
+              <app-comment-card [comment]="comment" [comments]="commentsByPost" (emisionComments)="getCommentsArray($event)"></app-comment-card>
+            </div>
+          </ng-container>
+
         </div>
-      </div>
-
-      <div class="postContainer__buttonsContainer">
-
-        <button  [routerLink]="['edit-post']" class="postContainer__buttonsContainer--editButton">
-          Edit Post
-        </button>
-        <button (click)="deletePostById()" class="postContainer__buttonsContainer--deleteButton">
-          Delete Post
-        </button>
       </div>
     </section>
   </ng-container>

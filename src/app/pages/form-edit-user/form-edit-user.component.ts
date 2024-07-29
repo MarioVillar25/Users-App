@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import {
   FormBuilder,
@@ -11,6 +11,7 @@ import { User } from '../../interfaces/user.interface';
 import { Subscription, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ValidationsService } from '../../services/validations.service';
+import { unsubscribePetition } from '../../utils/utils';
 
 @Component({
   selector: 'app-form-edit-user',
@@ -19,7 +20,7 @@ import { ValidationsService } from '../../services/validations.service';
   templateUrl: './form-edit-user.component.html',
   styleUrl: './form-edit-user.component.scss',
 })
-export class FormEditUserComponent {
+export class FormEditUserComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
   public newId: number = Date.now();
@@ -34,7 +35,6 @@ export class FormEditUserComponent {
     password: ['', [Validators.required, Validators.minLength(4)]],
   });
 
-  //* GETTERS:
 
   //* CONSTRUCTOR:
 
@@ -45,24 +45,32 @@ export class FormEditUserComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
+
   //* LIFECYCLE HOOKS
 
   ngOnInit(): void {
     this.rechargeInputs();
   }
 
+  ngOnDestroy(): void {
+    unsubscribePetition(this.suscriptions);
+  }
+
   //* FUNCTIONS:
 
   public editUser() {
-    this.usersService.editUser(this.user, this.user.id).subscribe({
-      next: (res) => {
-        console.log('res EditUser', res);
-        this.router.navigate(['users-list']);
-      },
-      error: (err) => {
-        alert('there was an error at editUser');
-      },
-    });
+    let editPetition = this.usersService
+      .editUser(this.user, this.user.id)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['users-list']);
+        },
+        error: () => {
+          alert('there was an error at editUser');
+        },
+      });
+
+    this.suscriptions.push(editPetition);
   }
 
   public onEdit() {
@@ -72,8 +80,6 @@ export class FormEditUserComponent {
       this.user.name = this.editForm.controls['name'].value;
       this.user.description = this.editForm.controls['description'].value;
       this.user.password = this.editForm.controls['password'].value;
-
-      console.log('USER MODIFICADO', this.user);
 
       this.editUser();
     }
@@ -101,14 +107,8 @@ export class FormEditUserComponent {
   }
 
   //Check errors in field
-  //? CREAR SERVICIO SOLO PARA VALIDACIONES DE FORMULARIOS?
 
   public isValidField(field: string, error: string) {
-
-    return this.validationsService.isValidField(this.editForm, field, error)
-
+    return this.validationsService.isValidField(this.editForm, field, error);
   }
-
-
-
 }

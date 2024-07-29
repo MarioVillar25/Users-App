@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { Post } from '../interfaces/post.interface';
+import { Comment } from '../interfaces/comment.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -37,15 +38,15 @@ export class UserService {
     return this.http.get<Post[]>(this.postsURL);
   }
 
-  public readPostById(id: string): Observable<Post | undefined> {
+  public readPostById(id: string): Observable<Post> {
     return this.http
       .get<Post>(`${this.postsURL}/${id}`)
-      .pipe(catchError((err) => of(undefined)));
   }
 
   public readAllComments(): Observable<Comment[]> {
     return this.http.get<Comment[]>(this.commentsURL);
   }
+
 
   //-----POST FUNCTIONS-----
 
@@ -55,6 +56,10 @@ export class UserService {
 
   public createPost(post: Post): Observable<Post> {
     return this.http.post<Post>(this.postsURL, post)
+  }
+
+  public createComment(comment: Comment): Observable<Comment> {
+    return this.http.post<Comment>(this.commentsURL, comment)
   }
 
     //-----PUT FUNCTIONS-----
@@ -67,20 +72,30 @@ export class UserService {
       return this.http.put<Post>(`${this.postsURL}/${id}`, post);
     }
 
+    public editComment(comment: Comment, id: string): Observable<Comment> {
+      return this.http.put<Comment>(`${this.commentsURL}/${id}`, comment);
+    }
+
 
   //-----DELETE FUNCTIONS-----
 
-  public deleteUser(id: number): Observable<User | undefined> {
+  public deleteUser(id: string): Observable<User | undefined> {
     return this.http
       .delete<User>(`${this.usersURL}/${id}`)
       .pipe(catchError((error) => of(undefined)));
   }
 
-  public deletePost(id: number): Observable<User | undefined> {
+  public deletePost(id: string): Observable<User | undefined> {
     return this.http
       .delete<User>(`${this.postsURL}/${id}`)
       .pipe(catchError((error) => of(undefined)));
   }
+
+  public deleteComment(id: string): Observable<Comment> {
+    return this.http
+      .delete<Comment>(`${this.commentsURL}/${id}`)
+  }
+
 
 
 
