@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
-
 
 @Component({
   selector: 'app-landing-page',
@@ -16,21 +15,19 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   public suscriptions: Subscription[] = [];
 
-
   //* GETTERS:
 
-  public get comments(){
+  public get comments() {
     return this.usersService.comments;
   }
 
-  public get posts(){
+  public get posts() {
     return this.usersService.posts;
   }
 
-  public get users(){
+  public get users() {
     return this.usersService.users;
   }
-
 
   //* CONSTRUCTOR:
 
@@ -41,12 +38,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.readAllComments();
     this.readAllPosts();
     this.readAllUsers();
-
   }
 
   public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions);
-
   }
 
   //* FUNCIONES:
@@ -56,7 +51,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public readAllUsers() {
     let allUsersPetition = this.usersService.readAllUsers().subscribe({
       next: (res) => {
-        console.log(res);
         this.usersService.users = res;
       },
       error: (err) => {
@@ -72,7 +66,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public readAllPosts() {
     let allPostsPetition = this.usersService.readAllPosts().subscribe({
       next: (res) => {
-        console.log(res);
         this.usersService.posts = res;
       },
       error: (err) => {
@@ -88,7 +81,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public readAllComments() {
     let allCommentsPetition = this.usersService.readAllComments().subscribe({
       next: (res) => {
-        console.log(res);
         this.usersService.comments = res;
       },
       error: (err) => {
@@ -98,4 +90,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
+
+
+
+
+
 }

@@ -71,9 +71,7 @@ export class FormPageComponent {
   public createUser(user: User) {
     this.usersService.createUser(user).subscribe({
       next: (res) => {
-        console.log('res', res);
-        this.usersService.users.push(user);
-        console.log('users:', this.usersService.users);
+        //this.usersService.users.push(user);
       },
       error: (err) => {
         alert('there was an error at createUser');

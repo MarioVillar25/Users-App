@@ -1,6 +1,37 @@
 <nav>
-  <h3>Logo</h3>
-  <input
-  placeholder="Search for users..."
-  type="text" />
+  <div>
+    <h3>Logo</h3>
+
+    <input
+      placeholder="Search for users..."
+      [(ngModel)]="searchInputText"
+      type="text"
+      (keyup)="onKeyPress()"
+    />
+    <i
+      [ngClass]="(this.route !== '/users-list' && this.searchInputText.length > 0) ||
+      (this.route !== '/users-list' && showSearchArray) ? 'activeIcon' : ''"
+      (click)="setSearch()"
+      class="bx bx-search"
+    ></i>
+  </div>
 </nav>
+
+<ng-container
+  *ngIf="
+    (this.route !== '/users-list' && this.searchInputText.length > 0) ||
+    (this.route !== '/users-list' && showSearchArray)
+  "
+>
+  <section>
+    <h3>looking for someone?</h3>
+    <hr>
+     <p>There are {{users.length}} results with the search: '{{searchInputText}}'</p>
+
+    <div>
+      <div class="usersContainer" *ngFor="let user of users">
+        <app-user-card [user]="user"></app-user-card>
+      </div>
+    </div>
+  </section>
+</ng-container>
