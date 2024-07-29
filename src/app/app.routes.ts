@@ -23,7 +23,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'post-page/:id',
+        path: 'user-page/:userId/post-page/:postId',
         loadComponent: () =>
           import('./pages/post-page/post-page.component').then(
             (c) => c.PostPageComponent

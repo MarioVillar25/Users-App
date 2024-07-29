@@ -17,27 +17,17 @@ export class PostCardComponent implements OnInit {
 
   public user?: User;
 
-  constructor(private userService: UserService){}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-
-
-    this.bringUser()
-
-
-
+    this.bringUser();
   }
 
-
-  bringUser():void{
-    let datos = this.userService.users.filter((elem) => elem.id === this.post.userId)
-
+  bringUser(): void {
+    let datos = this.userService.users.filter(
+      (elem) => elem.id === this.post.userId
+    );
 
     this.user = datos[0];
-
-
-
-
-
   }
 }

@@ -11,6 +11,7 @@ import { UserService } from '../../services/user.service';
 import { ValidationsService } from '../../services/validations.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../interfaces/post.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-form-creation-post',
@@ -27,6 +28,7 @@ export class FormCreationPostComponent {
   public newTag: string = '';
   public error: boolean = false;
   public post?: Post;
+  public suscriptions: Subscription[] = [];
 
   //* FORM:
 
@@ -53,12 +55,23 @@ export class FormCreationPostComponent {
     } else {
       let userIdParams = '';
 
-      this.activatedRoute.params.subscribe((params) => {
+      let paramsPetition = this.activatedRoute.params.subscribe((params) => {
         userIdParams = params['id'];
         console.log('ID', userIdParams);
       });
 
-      this.post = {
+      this.suscriptions.push(paramsPetition);
+
+     this.post = {
+        id: this.newId.toString(),
+        userId: userIdParams,
+        title: this.myForm.controls['title'].value,
+        description: this.myForm.controls['description'].value,
+        tags: this.tags,
+        views: 0,
+        dateCreation: new Date(),
+      };
+   this.post = {
         id: this.newId.toString(),
         userId: userIdParams,
         title: this.myForm.controls['title'].value,
@@ -75,15 +88,14 @@ export class FormCreationPostComponent {
   }
 
   public createPost(post: Post) {
-    this.usersService.createPost(post).subscribe({
-      next: (res) => {
-        console.log('createPost Res', res);
-        //this.usersService.posts.push(post)
-      },
+    let createPetition = this.usersService.createPost(post).subscribe({
+      next: () => {},
       error: () => {
         alert('There was a problem at createPost');
       },
     });
+
+    this.suscriptions.push(createPetition);
   }
 
   public addTag(): void {
