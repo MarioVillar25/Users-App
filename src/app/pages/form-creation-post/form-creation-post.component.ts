@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../interfaces/post.interface';
 import { Subscription } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
-import { unsubscribePetition } from '../../utils/utils';
+import { getUniqueId, unsubscribePetition } from '../../utils/utils';
 
 @Component({
   selector: 'app-form-creation-post',
@@ -25,10 +25,12 @@ import { unsubscribePetition } from '../../utils/utils';
 export class FormCreationPostComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
-  public newId: number = Date.now();
   public tags: string[] = [];
   public newTag: string = '';
+  public repeatedTag: string = '';
   public error: boolean = false;
+  public errorEmpty: boolean = false;
+  public errorLength: boolean = false;
   public post?: Post;
   public suscriptions: Subscription[] = [];
   public user!: User;
@@ -80,7 +82,7 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
       this.suscriptions.push(paramsPetition);
 
       this.post = {
-        id: this.newId.toString(),
+        id: getUniqueId(3),
         userId: userIdParams,
         title: this.myForm.controls['title'].value,
         description: this.myForm.controls['description'].value,
@@ -88,7 +90,7 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
         views: 0,
         dateCreation: new Date(),
         image: this.myForm.controls['image'].value,
-        totalComments: 0
+        totalComments: 0,
       };
 
       this.createPost(this.post);
@@ -114,19 +116,30 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
   }
 
   public addTag(): void {
-    let datos = this.tags.filter((elem) => elem === this.newTag);
+    if (this.tags.length <= 5) {
+      this.errorLength = false;
+    }
 
-    if (datos.length === 1) {
-      this.error = true;
-
-      this.newTag = '';
+    if (this.newTag === '' && this.tags.length !== 5) {
+      this.errorEmpty = true;
     } else {
-      this.error = false;
+      this.errorEmpty = false;
 
-      if (this.tags.length < 5) {
-        this.tags.push(this.newTag);
+      let datos = this.tags.filter((elem) => elem === this.newTag);
 
+      if (datos.length === 1) {
+        this.error = true;
+        this.repeatedTag = this.newTag;
         this.newTag = '';
+      } else {
+        this.error = false;
+
+        if (this.tags.length < 5) {
+          this.tags.push(this.newTag);
+          this.newTag = '';
+        } else {
+          this.errorLength = true;
+        }
       }
     }
   }

@@ -147,13 +147,50 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.suscriptions.push(readByIdPetition);
   }
 
+  public deletePostsByUserId(): Post[] {
+    let data = this.userService.posts.filter((elem) => {
+      if (elem.userId === this.user.id) {
+        let deletePetition = this.userService.deletePost(elem.id).subscribe({
+          next: (res) => {},
+          error: () => {
+            alert('There was an error at deleteCommentById');
+          },
+        });
+
+        this.suscriptions.push(deletePetition);
+      }
+    });
+
+    return data;
+  }
+
+  public deleteCommentsByUserId(): Comment[] {
+    let data = this.userService.comments.filter((elem) => {
+      if (elem.userId === this.user.id) {
+        let deletePetition = this.userService.deleteComment(elem.id).subscribe({
+          next: (res) => {},
+          error: () => {
+            alert('There was an error at deleteCommentById');
+          },
+        });
+
+        this.suscriptions.push(deletePetition);
+      }
+    });
+
+    return data;
+  }
+
   public deleteUserById() {
     let deletePetition = this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.userService.deleteUser(id)))
       .subscribe({
         next: (res) => {
-          console.log('delete', res);
-          this.router.navigate(['/users-list']);
+          this.deleteCommentsByUserId();
+          this.deletePostsByUserId();
+          setTimeout(() => {
+            this.router.navigate(['/users-list']);
+          }, 500);
         },
         error: () => {
           alert('There was an error at deleteUserById');

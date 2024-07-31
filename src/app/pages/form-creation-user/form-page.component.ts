@@ -15,7 +15,7 @@ import { User } from '../../interfaces/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValidationsService } from '../../services/validations.service';
 import { HttpClient } from '@angular/common/http';
-import { unsubscribePetition } from '../../utils/utils';
+import { getUniqueId, unsubscribePetition } from '../../utils/utils';
 
 @Component({
   selector: 'app-form-page',
@@ -27,21 +27,9 @@ import { unsubscribePetition } from '../../utils/utils';
 export class FormPageComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
-  public newId: number = Date.now();
   public suscriptions: Subscription[] = [];
   public emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  public user: User | undefined = {
-    name: '',
-    username: '',
-    email: '',
-    description: '',
-    password: '',
-    dateCreation: new Date(),
-    id: this.newId.toString(),
-    image: '',
-    totalPosts: 0,
-    totalComments: 0,
-  };
+  public user!: User
 
   //* FORM:
 
@@ -66,7 +54,6 @@ export class FormPageComponent implements OnInit, OnDestroy {
     private usersService: UserService,
     private validationsService: ValidationsService,
     private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
   //* LIFECYCLE HOOKS
@@ -103,7 +90,7 @@ export class FormPageComponent implements OnInit, OnDestroy {
         password: this.myForm.controls['password'].value,
         dateCreation: new Date(),
         description: this.myForm.controls['description'].value,
-        id: this.newId.toString(),
+        id: getUniqueId(3),
         image: this.myForm.controls['image'].value,
         totalPosts: 0,
         totalComments: 0,
