@@ -6,6 +6,9 @@ export interface User {
   id:            string;
   username:     string;
   dateCreation: Date;
+  image: string;
+  totalPosts: number;
+  totalComments: number;
 }
 
 

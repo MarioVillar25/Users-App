@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { ValidationsService } from '../../services/validations.service';
 import { Comment } from '../../interfaces/comment.interface';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-post-page',
@@ -33,9 +34,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
   public suscriptions: Subscription[] = [];
-  public post?: Post;
-  public comment?: Comment;
+  public post!: Post;
+  public comment!: Comment;
   public commentsByPost: Comment[] = [];
+  public user!: User;
 
   //* FORM:
 
@@ -55,16 +57,71 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   //* LIFECYCLE HOOKS
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
     this.readPostById();
     this.readCommentsByPostId();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions);
   }
 
   //* FUNCTIONS:
+
+  //FUNCIONES PARA SUMAR EL TOTAL POST
+
+  public getTotalComments(): void {
+    this.user.totalComments = this.commentsByPost.length;
+    this.post.totalComments = this.commentsByPost.length;
+
+    this.editPost();
+    this.editUser();
+  }
+
+  public editPost(): void {
+    let editPetition = this.userService
+      .editPost(this.post, this.post.id)
+      .subscribe({
+        next: () => {},
+        error: () => {
+          alert('there was an error at editUser');
+        },
+      });
+
+    this.suscriptions.push(editPetition);
+  }
+
+  public editUser(): void {
+    let editPetition = this.userService
+      .editUser(this.user, this.user.id)
+      .subscribe({
+        next: () => {},
+        error: () => {
+          alert('there was an error at editUser');
+        },
+      });
+
+    this.suscriptions.push(editPetition);
+  }
+
+  public readUserById(): void {
+    let userIdParams = '';
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['userId'];
+    });
+
+    this.suscriptions.push(bringUserPetition);
+
+    let data = this.userService.users.filter(
+      (elem) => elem.id === userIdParams
+    );
+
+    this.user = data[0];
+  }
 
   public readCommentsByPostId() {
     let postIdParams = '';
@@ -106,8 +163,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
       .pipe(switchMap(({ postId }) => this.userService.deletePost(postId)))
       .subscribe({
         next: (res) => {
-          console.log('delete', res);
-          this.router.navigate(['/posts-list']);
+          this.deleteCommentsByPostId()
+          setTimeout(() => {
+            this.router.navigate(['/user-page', this.user.id]);
+          }, 500);
         },
         error: () => {
           alert('There was an error at deletePostById');
@@ -115,6 +174,23 @@ export class PostPageComponent implements OnInit, OnDestroy {
       });
 
     this.suscriptions.push(deletePetition);
+  }
+
+  public deleteCommentsByPostId(): Comment[] {
+    let data = this.userService.comments.filter((elem) => {
+      if (elem.postId === this.post.id) {
+        let deletePetition = this.userService.deleteComment(elem.id).subscribe({
+          next: (res) => {},
+          error: () => {
+            alert('There was an error at deleteCommentById');
+          },
+        });
+
+        this.suscriptions.push(deletePetition);
+      }
+    });
+
+    return data;
   }
 
   public createComment(comment: Comment) {
@@ -126,6 +202,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
         alert('There was a problem at createComment');
       },
     });
+
+    setTimeout(() => {
+      this.getTotalComments();
+    }, 1000);
 
     this.suscriptions.push(createPetition);
   }
@@ -173,7 +253,57 @@ export class PostPageComponent implements OnInit, OnDestroy {
     return this.validationsService.isValidField(this.myForm, field, error);
   }
 
-  public getCommentsArray(comments: Comment[]) {
-    return (this.commentsByPost = comments);
+  public getCommentsArray(comments: Comment[]): void {
+    this.commentsByPost = comments;
+    this.getTotalComments();
+  }
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.userService.readAllUsers().subscribe({
+      next: (res) => {
+        this.userService.users = res;
+        this.readUserById();
+        console.log('USERS', this.userService.users);
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.userService.readAllPosts().subscribe({
+      next: (res) => {
+        this.userService.posts = res;
+        console.log('POSTS', this.userService.posts);
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.userService.readAllComments().subscribe({
+      next: (res) => {
+        this.userService.comments = res;
+        console.log('COMENTARIOS', this.userService.comments);
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
   }
 }

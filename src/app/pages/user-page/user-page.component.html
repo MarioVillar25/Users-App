@@ -1,43 +1,60 @@
 <div class="userContainer">
   <h1>User Info</h1>
   <hr />
-
   <ng-container *ngIf="user">
+
+  <div>
+    <button (click)="deleteUserById()">Delete User</button>
+    <button [routerLink]="['/edit-user', user.id]">Edit User</button>
+  </div>
+
     <section>
-      <div class="userContainer_userInfo">
-        <div class="userContainer_userInfo--card">
-          <img src="https://github.com/MarioVillar25.png" alt="" />
-          <h2>name: {{ user.name }}</h2>
-          <span>username:{{ user.username }}</span>
-          <span>email:{{ user.email }}</span>
-          <span>location:{{ user.name }}</span>
-          <span>description:{{ user.name }}</span>
-          <span>Date creation:{{ user.dateCreation | date }}</span>
+      <div class="userContainer__userCommentsBox">
+        <div class="userContainer_userInfo">
+          <div class="userContainer_userInfo--card">
+            <img
+              [src]="
+                user.image
+                  ? user.image
+                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
+              "
+              alt="img"
+            />
+            <h2>name: {{ user.name }}</h2>
+            <span>username:{{ user.username }}</span>
+            <span>email:{{ user.email }}</span>
+            <span>location:{{ user.name }}</span>
+            <span>description:{{ user.name }}</span>
+            <span>Date creation:{{ user.dateCreation | date }}</span>
+          </div>
+        </div>
+        <div class="userContainer__commentsContainer">
+          <h2>Comments</h2>
+          <hr />
+          <div class="userContainer__commentsContainer--commentsList">
+            <ng-container *ngFor="let comment of userComments">
+              <div>
+                <app-comment-card
+                  [comment]="comment"
+                  [comments]="userComments"
+                  (emisionComments)="getCommentsArray($event)"
+                ></app-comment-card>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </div>
-      <div>
-        <button (click)="deleteUserById()">Delete User</button>
-        <button [routerLink]="['/edit-user', user.id]">Edit User</button>
-      </div>
-
     </section>
-  </ng-container>
 
     <section>
       <h2>Posts:</h2>
       <div><button [routerLink]="['create-post']">Create Post</button></div>
 
-
       <div class="userContainer_postsInfo">
-
-<!--
-        <div>
-          <app-post-card></app-post-card>
+        <div *ngFor="let post of userPosts">
+          <app-post-card [post]="post"></app-post-card>
         </div>
- -->
-
       </div>
     </section>
-
-
+  </ng-container>
 </div>

@@ -1,9 +1,13 @@
 <div class="postCard" [routerLink]="['/user-page', user?.id, 'post-page', post.id]">
   <div class="postCard__imgContainer">
     <img
-      src="https://ftw.usatoday.com/wp-content/uploads/sites/90/2022/12/XXX_IMG_SPIDER_VERSE_EXCLUSI_1_1_2GV77D3N-e1680612532374.jpeg?w=1000&h=600&crop=1"
-      alt=""
-    />
+        [src]="
+          post.image
+            ? post.image
+            : 'https://wallpapercave.com/wp/wp4344773.jpg'
+        "
+        alt="img"
+      />
   </div>
   <div class="postCard__tagsContainer">
     <ng-container *ngFor="let tag of post.tags">
@@ -16,7 +20,14 @@
     {{post.description}}
   </p>
   <div class="postCard_userInfo">
-      <img src="https://github.com/MarioVillar25.png" alt="" />
+    <img
+    [src]="
+      user?.image
+        ? user?.image
+        : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
+    "
+    alt="img"
+  />
       <div>
         <h4>{{user?.name}}</h4>
         <p>{{post.dateCreation | date}}</p>

@@ -17,20 +17,46 @@
     flex-direction: column;
     gap: 2rem;
 
-    .userContainer_userInfo {
+
+
+    .userContainer__userCommentsBox {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      height: 25rem;
 
-      .userContainer_userInfo--card {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        border-radius: 0.5rem;
-
-        padding: 2rem;
+      .userContainer_userInfo {
         display: flex;
-        flex-direction: column;
-        img {
-          width: 100px;
-          border-radius: 50%;
+        justify-content: center;
+        width: 20%;
+
+        .userContainer_userInfo--card {
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          border-radius: 0.5rem;
+
+          padding: 2rem;
+          display: flex;
+          flex-direction: column;
+          img {
+            object-fit: cover;
+            object-position: center;
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+          }
+        }
+      }
+      .userContainer__commentsContainer {
+        width: 75%;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        border-radius: 0.8rem;
+        padding: 1rem;
+        overflow-y: scroll;
+
+
+        .userContainer__commentsContainer--commentsList{
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
       }
     }

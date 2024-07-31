@@ -31,12 +31,14 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //* CONSTRUCTOR:
 
-  constructor(private userService: UserService) {}
+  constructor(private usersService: UserService) {}
 
   //* LIFECYCLE HOOKS
 
   ngOnInit(): void {
-   // this.readAllUsers();
+
+
+
   }
 
   ngAfterViewInit(): void {
@@ -50,6 +52,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   //* FUNCTIONS:
+
 
 
 }

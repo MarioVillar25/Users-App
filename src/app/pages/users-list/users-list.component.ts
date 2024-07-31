@@ -30,6 +30,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
   //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
+    this.readAllPosts();
+    this.readAllComments();
     this.readAllUsers();
   }
 
@@ -51,4 +53,41 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allUsersPetition);
   }
+
+
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.userService.readAllPosts().subscribe({
+      next: (res) => {
+        this.userService.posts = res;
+        console.log("POSTS",this.userService.posts);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.userService.readAllComments().subscribe({
+      next: (res) => {
+        this.userService.comments = res;
+        console.log("COMENTARIOS",this.userService.comments);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
+  }
+
 }

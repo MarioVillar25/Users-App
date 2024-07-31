@@ -38,7 +38,12 @@
               >You must write something to post a comment</span
             >
 
-              <div><button>Add Comment</button></div>
+              <div>
+                <button>Add Comment</button>
+
+                <button (click)="deleteCommentsByPostId()">test</button>
+
+              </div>
             </form>
           </div>
           <ng-container *ngFor="let comment of commentsByPost">

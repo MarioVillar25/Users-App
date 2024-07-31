@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { PostCardComponent } from '../../components/post-card/post-card.component';
 import { CommonModule } from '@angular/common';
 import { unsubscribePetition } from '../../utils/utils';
@@ -6,18 +12,23 @@ import { Subscription, switchMap } from 'rxjs';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Post } from '../../interfaces/post.interface';
+import { Comment } from '../../interfaces/comment.interface';
+import { CommentCardComponent } from '../../components/comment-card/comment-card.component';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [PostCardComponent, CommonModule, RouterLink],
+  imports: [PostCardComponent, CommonModule, RouterLink, CommentCardComponent],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss',
 })
 export class UserPageComponent implements OnInit, OnDestroy {
   //* VARIABLES:
   public suscriptions: Subscription[] = [];
-  public user?: User;
+  public user!: User;
+  public userPosts: Post[] = [];
+  public userComments: Comment[] = [];
 
   //* CONSTRUCTOR:
 
@@ -29,7 +40,13 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   //* LIFECYCLE HOOKS
   public ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
     this.readUserById();
+    setTimeout(() => {
+      this.getTotalPosts();
+    }, 1000);
   }
 
   public ngOnDestroy(): void {
@@ -37,20 +54,97 @@ export class UserPageComponent implements OnInit, OnDestroy {
   }
 
   //* FUNCTIONS:
+
+  //FUNCIONES PARA SUMAR EL TOTAL POST
+
+  public getTotalPosts(): void {
+    //First: Read User By Id
+    let userIdParams = '';
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['id'];
+    });
+
+    this.suscriptions.push(bringUserPetition);
+
+    let dataUser = this.userService.users.filter(
+      (elem) => elem.id === userIdParams
+    );
+
+    this.user = dataUser[0];
+
+    //Second: Bring all posts from that User ID
+
+    let dataPosts = this.userService.posts.filter(
+      (elem) => elem.userId === userIdParams
+    );
+
+    //Third: Asign value to totalPost
+
+    this.user.totalPosts = dataPosts.length;
+
+    //Last: PUT
+    this.editUser();
+  }
+
+  public editUser(): void {
+    let editPetition = this.userService
+      .editUser(this.user, this.user.id)
+      .subscribe({
+        next: () => {},
+        error: () => {
+          alert('there was an error at editUser');
+        },
+      });
+
+    this.suscriptions.push(editPetition);
+  }
+
+  //-----------------
+
+  public readCommentsByUserId() {
+    let userIdParams = '';
+
+    let paramsUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['id'];
+    });
+
+    let readPetition = this.userService.readAllComments().subscribe({
+      next: (res) => {
+        let data = res.filter((elem) => elem.userId === userIdParams);
+        this.userComments = data;
+      },
+      error: (err) => {
+        alert('There was a problem at readCommentsByUserId');
+      },
+    });
+
+    this.suscriptions.push(paramsUserPetition, readPetition);
+  }
+
+  public readUserPosts(): void {
+    let data = this.userService.posts.filter(
+      (elem) => elem.userId === this.user.id
+    );
+
+    this.userPosts = data;
+  }
+
   public readUserById() {
     let readByIdPetition = this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.userService.readUserById(id)))
       .subscribe({
         next: (res) => {
           this.user = res;
-          console.log('user', this.user);
+          this.readUserPosts();
+          this.readCommentsByUserId();
         },
         error: (err) => {
           alert('There was a problem at readUserById');
         },
       });
 
-      this.suscriptions.push(readByIdPetition);
+    this.suscriptions.push(readByIdPetition);
   }
 
   public deleteUserById() {
@@ -67,5 +161,57 @@ export class UserPageComponent implements OnInit, OnDestroy {
       });
 
     this.suscriptions.push(deletePetition);
+  }
+
+  public getCommentsArray(comments: Comment[]) {
+    return (this.userComments = comments);
+  }
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.userService.readAllUsers().subscribe({
+      next: (res) => {
+        this.userService.users = res;
+        console.log('USERS', this.userService.users);
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.userService.readAllPosts().subscribe({
+      next: (res) => {
+        this.userService.posts = res;
+        console.log('POSTS', this.userService.posts);
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.userService.readAllComments().subscribe({
+      next: (res) => {
+        this.userService.comments = res;
+        console.log('COMENTARIOS', this.userService.comments);
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
   }
 }

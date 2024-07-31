@@ -30,7 +30,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'post-page/:id/edit-post',
+        path: 'user-page/:userId/post-page/:postId/edit-post',
         loadComponent: () =>
           import('./pages/form-edit-post/form-edit-post.component').then(
             (c) => c.FormEditPostComponent

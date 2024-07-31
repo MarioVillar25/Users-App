@@ -31,6 +31,7 @@ export class UserService {
     this.searchInputValue.next(value)
   }
 
+
   //-----READ FUNCTIONS-----
 
   public readAllUsers(): Observable<User[]> {

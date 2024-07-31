@@ -2,6 +2,7 @@
   <h1>Create Post</h1>
   <hr />
 
+
   <div>
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <!-- title -->
@@ -33,6 +34,17 @@
       <span *ngIf="isValidField('description', 'required')" class="error"
         >This entry must be filled</span
       >
+
+         <!-- Images -->
+
+         <div>
+          <label>Images</label>
+          <input
+          type="text"
+          formControlName="image"
+          placeholder="Introduce an image link"
+        />
+        </div>
 
       <!-- tags -->
 
@@ -68,5 +80,7 @@
         <button type="submit">Submit</button>
       </div>
     </form>
+
+
   </div>
 </div>
