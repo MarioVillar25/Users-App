@@ -35,6 +35,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   public myForm: FormGroup = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
+    image: ['']
   });
 
   //* CONSTRUCTOR:
@@ -50,6 +51,9 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   //* LIFE CYCLEHOOKS
 
   ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
     this.rechargeInputs();
   }
 
@@ -63,7 +67,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
   public rechargeInputs() {
     let readByIdPetition = this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.usersService.readPostById(id)))
+      .pipe(switchMap(({ postId }) => this.usersService.readPostById(postId)))
       .subscribe({
         next: (res) => {
           this.post = res;
@@ -71,6 +75,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
           this.myForm.patchValue({
             title: this.post.title,
             description: this.post.description,
+            image: this.post.image
           });
         },
         error: (err) => {
@@ -90,6 +95,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
       this.post.title = this.myForm.controls['title'].value;
       this.post.description = this.myForm.controls['description'].value;
       this.post.tags = this.tags;
+      this.post.image = this.myForm.controls['image'].value;
 
       this.editPost();
     }
@@ -102,7 +108,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
       .editPost(this.post, this.post.id)
       .subscribe({
         next: () => {
-          this.router.navigate(['post-page', this.post.id]);
+          this.router.navigate(['posts-list']);
         },
         error: (err) => {
           alert('there was an error at editPost');
@@ -144,4 +150,58 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.myForm, field, error);
   }
+
+
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.usersService.readAllUsers().subscribe({
+      next: (res) => {
+        this.usersService.users = res;
+        console.log("USERS",this.usersService.users);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.usersService.readAllPosts().subscribe({
+      next: (res) => {
+        this.usersService.posts = res;
+        console.log("POSTS",this.usersService.posts);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.usersService.readAllComments().subscribe({
+      next: (res) => {
+        this.usersService.comments = res;
+        console.log("COMENTARIOS",this.usersService.comments);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
+  }
+
 }

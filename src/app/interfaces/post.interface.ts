@@ -6,5 +6,7 @@ export interface Post {
   tags: string[];
   views: number;
   dateCreation: Date;
+  image: string;
+  totalComments: number;
 }
 

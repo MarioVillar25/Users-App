@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Observable, of, Subscription, switchMap } from 'rxjs';
 import {
@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ValidationsService } from '../../services/validations.service';
+import { HttpClient } from '@angular/common/http';
+import { unsubscribePetition } from '../../utils/utils';
 
 @Component({
   selector: 'app-form-page',
@@ -22,7 +24,7 @@ import { ValidationsService } from '../../services/validations.service';
   templateUrl: './form-page.component.html',
   styleUrl: './form-page.component.scss',
 })
-export class FormPageComponent {
+export class FormPageComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
   public newId: number = Date.now();
@@ -36,6 +38,9 @@ export class FormPageComponent {
     password: '',
     dateCreation: new Date(),
     id: this.newId.toString(),
+    image: '',
+    totalPosts: 0,
+    totalComments: 0,
   };
 
   //* FORM:
@@ -50,6 +55,7 @@ export class FormPageComponent {
       this.validateEmail(),
     ],
     password: ['', [Validators.required, Validators.minLength(4)]],
+    image: [''],
   });
 
   //* GETTERS:
@@ -65,25 +71,29 @@ export class FormPageComponent {
   ) {}
   //* LIFECYCLE HOOKS
 
+  ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
+  }
+
+  ngOnDestroy(): void {
+    unsubscribePetition(this.suscriptions)
+  }
 
   //* FUNCTIONS:
 
   public createUser(user: User) {
     this.usersService.createUser(user).subscribe({
-      next: (res) => {
-        //this.usersService.users.push(user);
-      },
-      error: (err) => {
+      next: () => {},
+      error: () => {
         alert('there was an error at createUser');
       },
     });
   }
 
-
-
   public onSubmit() {
     if (this.myForm.invalid) {
-
       this.myForm.markAllAsTouched();
     } else {
       this.user = {
@@ -94,6 +104,9 @@ export class FormPageComponent {
         dateCreation: new Date(),
         description: this.myForm.controls['description'].value,
         id: this.newId.toString(),
+        image: this.myForm.controls['image'].value,
+        totalPosts: 0,
+        totalComments: 0,
       };
 
       this.createUser(this.user);
@@ -102,15 +115,10 @@ export class FormPageComponent {
     }
   }
 
-
-
-
   //Check errors in field
 
   public isValidField(field: string, error: string) {
-
-    return this.validationsService.isValidField(this.myForm, field, error)
-
+    return this.validationsService.isValidField(this.myForm, field, error);
   }
 
   public validateEmail(): AsyncValidatorFn {
@@ -155,5 +163,53 @@ export class FormPageComponent {
 
       return of(state ? { usernameTaken: true } : null);
     };
+  }
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.usersService.readAllUsers().subscribe({
+      next: (res) => {
+        this.usersService.users = res;
+        console.log('USERS', this.usersService.users);
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.usersService.readAllPosts().subscribe({
+      next: (res) => {
+        this.usersService.posts = res;
+        console.log('POSTS', this.usersService.posts);
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.usersService.readAllComments().subscribe({
+      next: (res) => {
+        this.usersService.comments = res;
+        console.log('COMENTARIOS', this.usersService.comments);
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
   }
 }

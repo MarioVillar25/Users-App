@@ -35,9 +35,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
-    this.readAllComments();
-    this.readAllPosts();
     this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
   }
 
   public ngOnDestroy(): void {
@@ -46,12 +46,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   //* FUNCIONES:
 
+
   //Read all users
 
   public readAllUsers() {
     let allUsersPetition = this.usersService.readAllUsers().subscribe({
       next: (res) => {
         this.usersService.users = res;
+        console.log("USERS",this.usersService.users);
+
       },
       error: (err) => {
         alert('There was an error un readAllUsers');
@@ -67,6 +70,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     let allPostsPetition = this.usersService.readAllPosts().subscribe({
       next: (res) => {
         this.usersService.posts = res;
+        console.log("POSTS",this.usersService.posts);
+
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
@@ -82,6 +87,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     let allCommentsPetition = this.usersService.readAllComments().subscribe({
       next: (res) => {
         this.usersService.comments = res;
+        console.log("COMENTARIOS",this.usersService.comments);
+
       },
       error: (err) => {
         alert('There was an error un readAllComments');
@@ -90,6 +97,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
+
 
 
 

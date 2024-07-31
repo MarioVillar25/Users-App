@@ -30,6 +30,8 @@ export class PostsPageComponent {
   //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllComments();
     this.readAllPosts();
   }
 
@@ -51,5 +53,46 @@ export class PostsPageComponent {
 
     this.suscriptions.push(allPostsPetition);
   }
+
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.userService.readAllUsers().subscribe({
+      next: (res) => {
+        this.userService.users = res;
+        console.log("USERS",this.userService.users);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.userService.readAllComments().subscribe({
+      next: (res) => {
+        this.userService.comments = res;
+        console.log("COMENTARIOS",this.userService.comments);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
+  }
+
+
+
+
 
 }

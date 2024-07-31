@@ -33,6 +33,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     name: ['', [Validators.required]],
     description: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(4)]],
+    image: ['']
   });
 
 
@@ -49,6 +50,9 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
   //* LIFECYCLE HOOKS
 
   ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
     this.rechargeInputs();
   }
 
@@ -80,6 +84,8 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
       this.user.name = this.editForm.controls['name'].value;
       this.user.description = this.editForm.controls['description'].value;
       this.user.password = this.editForm.controls['password'].value;
+      this.user.image = this.editForm.controls['image'].value;
+
 
       this.editUser();
     }
@@ -96,6 +102,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
             name: this.user.name,
             description: this.user.description,
             password: this.user.password,
+            image: this.user.image
           });
         },
         error: (err) => {
@@ -111,4 +118,58 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.editForm, field, error);
   }
+
+
+
+  //Read all users
+
+  public readAllUsers() {
+    let allUsersPetition = this.usersService.readAllUsers().subscribe({
+      next: (res) => {
+        this.usersService.users = res;
+        console.log("USERS",this.usersService.users);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllUsers');
+      },
+    });
+
+    this.suscriptions.push(allUsersPetition);
+  }
+
+  //Read all posts
+
+  public readAllPosts() {
+    let allPostsPetition = this.usersService.readAllPosts().subscribe({
+      next: (res) => {
+        this.usersService.posts = res;
+        console.log("POSTS",this.usersService.posts);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllPosts');
+      },
+    });
+
+    this.suscriptions.push(allPostsPetition);
+  }
+
+  //Read all comments
+
+  public readAllComments() {
+    let allCommentsPetition = this.usersService.readAllComments().subscribe({
+      next: (res) => {
+        this.usersService.comments = res;
+        console.log("COMENTARIOS",this.usersService.comments);
+
+      },
+      error: (err) => {
+        alert('There was an error un readAllComments');
+      },
+    });
+
+    this.suscriptions.push(allCommentsPetition);
+  }
+
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 import { Subscription, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { unsubscribePetition } from '../../utils/utils';
 import {
   FormBuilder,
@@ -29,9 +29,10 @@ export class CommentCardComponent implements OnInit {
   @Output() emisionComments = new EventEmitter<Comment[]>();
 
   public suscriptions: Subscription[] = [];
-  public user?: User;
+  public user!: User;
   public commentState: boolean = false;
   public commentModified: boolean = false;
+  public route = this.router.url
 
   //* FORM:
 
@@ -44,7 +45,8 @@ export class CommentCardComponent implements OnInit {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private validationService: ValidationsService
+    private validationService: ValidationsService,
+    private router: Router
   ) {}
 
   //* LIFECYCLE HOOKS
@@ -73,7 +75,6 @@ export class CommentCardComponent implements OnInit {
       .deleteComment(this.comment.id)
       .subscribe({
         next: (res) => {
-          console.log('delete Comment by Post Id', res);
 
           let datos = this.comments.filter((elem) => elem.id !== res.id);
           this.comments = datos;
@@ -106,7 +107,6 @@ export class CommentCardComponent implements OnInit {
       .editComment(this.comment, this.comment.id)
       .subscribe({
         next: () => {
-          console.log('COMENTARIO MODIFICADO');
           this.commentModified = true;
           this.commentState = false;
         },

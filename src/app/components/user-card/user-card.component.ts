@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user.interface';
@@ -9,19 +9,31 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterLink, CommonModule],
   templateUrl: './user-card.component.html',
-  styleUrl: './user-card.component.scss'
+  styleUrl: './user-card.component.scss',
 })
-export class UserCardComponent {
+export class UserCardComponent implements OnInit, OnDestroy {
+  //* VARIABLES:
 
-      //* VARIABLES:
-
-      @Input() public user!: User;
-
+  @Input() public user!: User;
 
 
+  //* CONSTRUCTOR:
 
-    //* CONSTRUCTOR:
+  constructor(private usersService: UserService) {}
 
-    constructor(private usersService: UserService) {}
+  //* LIFECYCLE HOOKS
+
+  ngOnDestroy(): void {}
+
+  ngOnInit(): void {
+
+  }
+  //* FUNCTIONS:
+
+
+
+
+
+
 
 }
