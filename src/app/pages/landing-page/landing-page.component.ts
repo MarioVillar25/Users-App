@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { debounceTime, Subscription } from 'rxjs';
+import { debounceTime, Subscription, filter } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
+import { User } from '../../interfaces/user.interface';
+import { Post } from '../../interfaces/post.interface';
+import { CommonModule } from '@angular/common';
+import { UserCardComponent } from '../../components/user-card/user-card.component';
+import { PostCardComponent } from '../../components/post-card/post-card.component';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, UserCardComponent, PostCardComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
@@ -14,6 +19,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //* VARIABLES:
 
   public suscriptions: Subscription[] = [];
+  public userWhoCommentedMost: User[] = [];
+  public usersWhoPostedMore: User[] = [];
+  public mostCommentedPost: Post[] = [];
 
   //* GETTERS:
 
@@ -38,6 +46,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.readAllUsers();
     this.readAllPosts();
     this.readAllComments();
+    setTimeout(() => {
+      this.GetUserWhoCommentedMost();
+      this.GetMostCommentedPost();
+      this.GetUsersWhoPostedMore();
+    }, 500);
   }
 
   public ngOnDestroy(): void {
@@ -46,6 +59,31 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   //* FUNCIONES:
 
+  public GetUserWhoCommentedMost(): void {
+    let data = this.usersService.users.reduce((max, elem) =>
+      elem.totalComments > max.totalComments ? elem : max
+    );
+
+    this.userWhoCommentedMost.push(data);
+  }
+
+  public GetMostCommentedPost(): void {
+    let data = this.usersService.posts.reduce((max, elem) =>
+      elem.totalComments > max.totalComments ? elem : max
+    );
+
+    this.mostCommentedPost.push(data);
+  }
+
+  public GetUsersWhoPostedMore(): void {
+    let dataSorted = this.usersService.users.sort(
+      (a, b) => b.totalPosts - a.totalPosts
+    );
+
+    let data = dataSorted.slice(0, 3);
+
+    this.usersWhoPostedMore = data;
+  }
 
   //Read all users
 
@@ -53,8 +91,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     let allUsersPetition = this.usersService.readAllUsers().subscribe({
       next: (res) => {
         this.usersService.users = res;
-        console.log("USERS",this.usersService.users);
-
+        console.log('USERS', this.usersService.users);
       },
       error: (err) => {
         alert('There was an error un readAllUsers');
@@ -70,8 +107,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     let allPostsPetition = this.usersService.readAllPosts().subscribe({
       next: (res) => {
         this.usersService.posts = res;
-        console.log("POSTS",this.usersService.posts);
-
+        console.log('POSTS', this.usersService.posts);
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
@@ -87,8 +123,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     let allCommentsPetition = this.usersService.readAllComments().subscribe({
       next: (res) => {
         this.usersService.comments = res;
-        console.log("COMENTARIOS",this.usersService.comments);
-
+        console.log('COMENTARIOS', this.usersService.comments);
       },
       error: (err) => {
         alert('There was an error un readAllComments');
@@ -97,10 +132,4 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
-
-
-
-
-
-
 }

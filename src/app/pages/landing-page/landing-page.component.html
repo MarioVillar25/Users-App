@@ -20,12 +20,27 @@
   <section class="cardsSection">
     <div>
       <h2>Know our Top 3 trending users!</h2>
+      <ng-container *ngFor="let user of usersWhoPostedMore ">
+        <div>
+          <app-user-card [user]="user"></app-user-card>
+        </div>
+      </ng-container>
     </div>
     <div>
       <h2>Most commented posts</h2>
+      <ng-container *ngFor="let post of mostCommentedPost ">
+        <div>
+          <app-post-card [post]="post"></app-post-card>
+        </div>
+      </ng-container>
     </div>
     <div>
       <h2>User who made most comments</h2>
+      <ng-container *ngFor="let user of userWhoCommentedMost ">
+        <div>
+          <app-user-card [user]="user"></app-user-card>
+        </div>
+      </ng-container>
     </div>
   </section>
 </div>
