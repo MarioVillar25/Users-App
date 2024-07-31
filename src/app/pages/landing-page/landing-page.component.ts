@@ -40,6 +40,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //* CONSTRUCTOR:
 
   constructor(private usersService: UserService) {}
+
   //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
@@ -60,19 +61,23 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //* FUNCIONES:
 
   public GetUserWhoCommentedMost(): void {
-    let data = this.usersService.users.reduce((max, elem) =>
-      elem.totalComments > max.totalComments ? elem : max
-    );
+    if (this.userWhoCommentedMost.length > 0) {
+      let data = this.usersService.users.reduce((max, elem) =>
+        elem.totalComments > max.totalComments ? elem : max
+      );
 
-    this.userWhoCommentedMost.push(data);
+      this.userWhoCommentedMost.push(data);
+    }
   }
 
   public GetMostCommentedPost(): void {
-    let data = this.usersService.posts.reduce((max, elem) =>
-      elem.totalComments > max.totalComments ? elem : max
-    );
+    if (this.mostCommentedPost.length > 0) {
+      let data = this.usersService.posts.reduce((max, elem) =>
+        elem.totalComments > max.totalComments ? elem : max
+      );
 
-    this.mostCommentedPost.push(data);
+      this.mostCommentedPost.push(data);
+    }
   }
 
   public GetUsersWhoPostedMore(): void {

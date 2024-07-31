@@ -60,11 +60,14 @@
             />
             <button type="button" (click)="addTag()">Add tag</button>
           </div>
-          <span *ngIf="tags.length === 5" class="error"
+          <span *ngIf="errorEmpty" class="error"
+          >You must write at least one tag to generate it</span
+        >
+          <span *ngIf="errorLength" class="error"
             >You cannot create more than 5 tags</span
           >
           <span *ngIf="error" class="error"
-          >This tag already exist</span
+          >The tag "{{repeatedTag}}" already exist</span
         >
         </div>
         <div class="formContainer_tagsContainer--tagsList">
