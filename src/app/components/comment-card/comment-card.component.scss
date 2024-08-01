@@ -1,5 +1,5 @@
 .cardContainer {
-  background-color: rgb(252, 252, 252);
+  background-color: rgb(247, 247, 247);
   padding: 2rem;
   display: flex;
   border-radius: 0.5rem;
@@ -41,7 +41,7 @@
       }
 
       button:hover{
-        background-color: red;
+        background-color: var(--dark-red);
         color: white;
       }
     }

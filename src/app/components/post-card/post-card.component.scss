@@ -1,22 +1,21 @@
 .postCard {
-  width: 100%;
-  padding: 1rem;
+  width: 30rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 0.8rem;
   cursor: pointer;
+  border: 2px solid transparent;
 
-  h2{
-
+  h2 {
     margin: 0;
   }
 
-  p{
+  p {
     margin: 0;
     color: rgba(108, 108, 108, 0.785);
-
   }
 
   .postCard__imgContainer {
@@ -31,7 +30,6 @@
   }
 
   .postCard__tagsContainer {
-
     margin: 10px 0px;
     display: flex;
     gap: 0.5rem;
@@ -47,7 +45,6 @@
   .postCard_userInfo {
     display: flex;
     margin-top: 1rem;
-
 
     img {
       object-fit: cover;
@@ -74,4 +71,8 @@
       }
     }
   }
+}
+
+.postCard:hover {
+  border: 2px solid var(--dark-blue);
 }

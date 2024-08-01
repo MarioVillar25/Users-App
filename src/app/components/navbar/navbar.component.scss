@@ -1,41 +1,73 @@
 nav {
-  >div{
-display: flex;
-align-items: center;
-gap: 1rem;
-height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+  .navContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+
+    .navContainer_title{
+      display: flex;
+      align-items: center;
+      i{
+        color: white;
+        font-size: 1.5rem;
+      }
+
+    }
+
+
+    .navContainer_inputContainer {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      padding: 0.5rem;
+      border-radius: 2rem;
+      width: 30%;
+
+
+      input {
+        background: none;
+        border: 1px solid transparent;
+        outline: none;
+        margin-left: 0.5rem;
+      }
+    }
   }
 
   gap: 1rem;
-  background-color: var(--dark);
+  background-color: var(--dark-blue);
   color: white;
-  padding: 1rem;
+  padding: 0.8rem;
 
   h3 {
     margin: 0;
   }
 
-  i{
+  i {
     cursor: pointer;
-    border-radius: 0.4rem;
-    padding: 0.2rem 0.5rem;
-  }
-
-  .activeIcon{
-    cursor: pointer;
-    border-radius: 0.4rem;
-    padding: 0.2rem 0.5rem;
-    background-color: white;
+    border-radius: 50%;
+    padding: 0.4rem;
     color: black;
   }
 
-  i:hover{
-    background-color: white;
-    color: black;
+  .activeIcon {
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.4rem;
+    background-color: var(--dark-blue);
+    color: white;
+  }
+
+  i:hover {
+    background-color: var(--dark-blue);
+    color: white;
   }
 }
 
-section{
+section {
+  background-color: var(--soft-blue);
+
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -45,15 +77,28 @@ section{
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   overflow-x: scroll;
 
+  .searcher_header {
+    h2{
+      font-weight: bold;
+      font-size: 2rem;
+      margin: 0;
+    }
 
-  >div{
+    p{
+      color: var(--dark-blue);
+
+    margin-bottom: 0;
+    }
+    padding: 1rem;
+
+  }
+
+  .searcher_body {
     display: flex;
-
   }
 
-  .usersContainer{
-    scale: 0.9;
-
+  .usersContainer {
+    padding: 1rem;
+    //scale: 0.9;
   }
-
 }

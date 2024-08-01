@@ -71,6 +71,20 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   //* FUNCTIONS:
 
+
+  public backToUserPage(): void {
+    let userIdParams = '';
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['userId'];
+    });
+
+    this.suscriptions.push(bringUserPetition);
+
+    this.router.navigate(['user-page', userIdParams]);
+  }
+
+
   //FUNCIONES PARA SUMAR EL TOTAL POST
 
   public getTotalComments(): void {

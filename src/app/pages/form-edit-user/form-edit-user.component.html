@@ -1,6 +1,5 @@
 <div class="formContainer">
   <h1>Edit User</h1>
-  <hr />
 
   <ng-container *ngIf="user">
     <div>
@@ -56,21 +55,29 @@
           >
         </div>
 
+        <!-- Images -->
 
-
-      <!-- Images -->
-
-      <div>
-        <label>Images</label>
-        <input
-        type="text"
-        formControlName="image"
-        placeholder="Introduce an image link"
-      />
-      </div>
+        <div>
+          <label>Images</label>
+          <input
+            type="text"
+            formControlName="image"
+            placeholder="Introduce an image link"
+          />
+        </div>
 
         <div class="formContainer__buttonContainer">
-          <button type="submit">Edit</button>
+          <button class="buttonSubmit" type="submit">
+            <i class="bx bxs-edit-alt"></i> Edit
+          </button>
+          <button
+            (click)="backToUserPage()"
+            routerLinkActive="router-link-active"
+            class="buttonCancel"
+            type="button"
+          >
+            <i class="bx bx-x"></i> Cancel
+          </button>
         </div>
       </form>
     </div>

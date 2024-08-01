@@ -7,7 +7,13 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, NavigationStart, Route, Router, RouterLink } from '@angular/router';
+import {
+  NavigationEnd,
+  NavigationStart,
+  Route,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { debounceTime, filter, Subject, Subscription } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
 import { UserService } from '../../services/user.service';
@@ -29,7 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public searchInputText = '';
   public suscriptions: Subscription[] = [];
   public showSearchArray: boolean = false;
-  public route:string = this.router.url
+  public route: string = this.router.url;
 
   //* GETTERS:
 
@@ -47,9 +53,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.resetSearchInputText();
     this.readAllUsers();
     this.toEmitDebounce();
-    this.route = this.router.url
-
-
+    this.route = this.router.url;
   }
 
   public ngOnDestroy(): void {
@@ -69,7 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe({
         next: () => {
-          this.route = this.router.url
+          this.route = this.router.url;
         },
         error: () => {
           alert('there was a problem at resetSearchInputText');
@@ -83,7 +87,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     //El Subject va a emitir el valor del input
 
     this.userService.changeInputValue(this.searchInputText);
-
   }
 
   public toEmitDebounce(): void {
@@ -116,7 +119,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     data = this.userService.users.filter(
       (elem) =>
         elem.name.toLowerCase().includes(query.toLowerCase()) ||
-        elem.username.toLowerCase().includes(query.toLowerCase())
+        elem.email.toLowerCase().includes(query.toLowerCase())
     );
 
     this.userService.users = data;

@@ -46,7 +46,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.readUserById();
     setTimeout(() => {
       this.getTotalPosts();
-    }, 1000);
+    }, 500);
   }
 
   public ngOnDestroy(): void {
@@ -136,7 +136,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.user = res;
-          this.readUserPosts();
+
+          setTimeout(() => {
+            this.readUserPosts();
+          }, 500);
+
           this.readCommentsByUserId();
         },
         error: (err) => {

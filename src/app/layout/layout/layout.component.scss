@@ -13,13 +13,22 @@
   margin-left: 12px;
 }
 
+.user-img:hover {
+
+  border: 4px solid white;
+  cursor: pointer;
+
+}
+
+
+
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 80px;
-  background-color: var(--dark);
+  background-color: var(--dark-blue);
   padding: 0.4rem, 0.8rem;
   transition: all 0.5s ease;
 }
@@ -156,6 +165,7 @@
 }
 
 .main-content {
+  background-color: var(--soft-blue);
   position: relative;
   min-height: 100vh;
   top: 0;
@@ -166,6 +176,6 @@
 
 /* Tag Styles */
 
-main{
+main {
   padding: 2rem;
 }

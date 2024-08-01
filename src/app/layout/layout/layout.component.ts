@@ -10,7 +10,6 @@ import {
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserService } from '../../services/user.service';
-import { User } from '../../interfaces/user.interface';
 import { Subscription } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
 
@@ -25,6 +24,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   //* VARIABLES:
 
   @ViewChild('btn') btn!: ElementRef;
+  @ViewChild('btn2') btn2!: ElementRef;
   @ViewChild('sidebar') sidebar!: ElementRef;
 
   public suscriptions: Subscription[] = [];
@@ -43,6 +43,10 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.btn.nativeElement.addEventListener('click', () => {
+      this.sidebar.nativeElement.classList.toggle('active');
+    });
+
+    this.btn2.nativeElement.addEventListener('click', () => {
       this.sidebar.nativeElement.classList.toggle('active');
     });
   }

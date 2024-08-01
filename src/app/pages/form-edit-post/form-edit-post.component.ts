@@ -26,7 +26,10 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
   public tags: string[] = [];
   public newTag: string = '';
+  public repeatedTag: string = '';
   public error: boolean = false;
+  public errorEmpty: boolean = false;
+  public errorLength: boolean = false;
   public post!: Post;
   public suscriptions: Subscription[] = [];
 
@@ -62,6 +65,26 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   }
 
   //* FUNCTIONS:
+
+  public backToUserPage(): void {
+    let userIdParams = '';
+    let postIdParams = '';
+
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['userId'];
+    });
+
+
+    let bringPostPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['postId'];
+    });
+
+    this.suscriptions.push(bringUserPetition, bringPostPetition);
+
+    this.router.navigate(['user-page', postIdParams, 'post-page', userIdParams]);
+  }
+
 
   //To recharge Inputs when component is created
 
@@ -121,19 +144,30 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   //To add a new tag
 
   public addTag(): void {
-    let datos = this.tags.filter((elem) => elem === this.newTag);
+    if (this.tags.length <= 5) {
+      this.errorLength = false;
+    }
 
-    if (datos.length === 1) {
-      this.error = true;
-
-      this.newTag = '';
+    if (this.newTag === '' && this.tags.length !== 5) {
+      this.errorEmpty = true;
     } else {
-      this.error = false;
+      this.errorEmpty = false;
 
-      if (this.tags.length < 5) {
-        this.tags.push(this.newTag);
+      let datos = this.tags.filter((elem) => elem === this.newTag);
 
+      if (datos.length === 1) {
+        this.error = true;
+        this.repeatedTag = this.newTag;
         this.newTag = '';
+      } else {
+        this.error = false;
+
+        if (this.tags.length < 5) {
+          this.tags.push(this.newTag);
+          this.newTag = '';
+        } else {
+          this.errorLength = true;
+        }
       }
     }
   }

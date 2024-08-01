@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ValidationsService } from '../../services/validations.service';
 import { HttpClient } from '@angular/common/http';
 import { getUniqueId, unsubscribePetition } from '../../utils/utils';
@@ -20,7 +20,7 @@ import { getUniqueId, unsubscribePetition } from '../../utils/utils';
 @Component({
   selector: 'app-form-page',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './form-page.component.html',
   styleUrl: './form-page.component.scss',
 })
