@@ -1,13 +1,12 @@
 <div class="formContainer">
   <h1>Create User</h1>
-  <hr />
 
   <div>
     <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <!-- Name -->
 
       <div>
-        <label>Name</label>
+        <label>Name:</label>
         <input
           type="text"
           formControlName="name"
@@ -22,7 +21,7 @@
       <!-- username -->
 
       <div>
-        <label>Username</label>
+        <label>Username:</label>
         <input
           type="text"
           formControlName="username"
@@ -41,7 +40,7 @@
       <!-- Description -->
 
       <div>
-        <label>Description</label>
+        <label>Description:</label>
         <textarea
           formControlName="description"
           placeholder="Introduce a description..."
@@ -56,7 +55,7 @@
       <!-- Email -->
 
       <div>
-        <label>Email</label>
+        <label>Email:</label>
         <input
           type="text"
           formControlName="email"
@@ -76,7 +75,7 @@
       <!-- Password -->
 
       <div>
-        <label>Password</label>
+        <label>Password:</label>
         <input
           type="password"
           autocomplete="on"
@@ -97,16 +96,26 @@
       <!-- Images -->
 
       <div>
-        <label>Images</label>
+        <label>Images:</label>
         <input
-        type="text"
-        formControlName="image"
-        placeholder="Introduce an image link"
-      />
+          type="text"
+          formControlName="image"
+          placeholder="Introduce an image link"
+        />
       </div>
 
       <div class="formContainer__buttonContainer">
-        <button type="submit">Submit</button>
+        <button class="buttonSubmit" type="submit">
+          <i class="bx bxs-edit-alt"></i> Create
+        </button>
+        <button
+          [routerLink]="['']"
+          routerLinkActive="router-link-active"
+          class="buttonCancel"
+          type="button"
+        >
+        <i class="bx bx-x"></i> Cancel
+        </button>
       </div>
     </form>
   </div>

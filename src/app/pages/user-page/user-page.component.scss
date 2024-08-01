@@ -2,6 +2,8 @@
   h1 {
     margin: 0;
     font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
   }
 
   hr {
@@ -17,43 +19,129 @@
     flex-direction: column;
     gap: 2rem;
 
-
-
     .userContainer__userCommentsBox {
       display: flex;
       justify-content: space-between;
-      height: 25rem;
+      height: 37rem;
 
       .userContainer_userInfo {
         display: flex;
-        justify-content: center;
-        width: 20%;
+        width: 30%;
 
         .userContainer_userInfo--card {
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          background-color: white;
           border-radius: 0.5rem;
-
+          width: 90%;
           padding: 2rem;
           display: flex;
           flex-direction: column;
+          gap: 0.5rem;
+
+          .userContainer_userInfo--card--img {
+            text-align: center;
+          }
+
+          .userContainer__buttonContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            i {
+              font-size: 1rem;
+            }
+
+            .buttonSubmit {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 0.5rem;
+              padding: 0.6rem;
+              width: 30%;
+              background-color: white;
+              border: 1px solid var(--dark-blue);
+              color: var(--dark-blue);
+              border-radius: 0.3rem;
+              transition: all 0.1s ease-in-out;
+              cursor: pointer;
+            }
+
+            .buttonSubmit:hover {
+              color: white;
+              background-color: var(--dark-blue);
+            }
+
+            .buttonCancel {
+              // margin-left: 0.5rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 0.5rem;
+              padding: 0.3rem;
+              width: 30%;
+              background-color: white;
+              border: 1px solid var(--dark-red);
+              color: var(--dark-red);
+              border-radius: 0.3rem;
+              transition: all 0.1s ease-in-out;
+              cursor: pointer;
+            }
+
+            .buttonCancel:hover {
+              color: white;
+              background-color: var(--dark-red);
+            }
+          }
+
+          h2 {
+            margin: 0;
+            font-weight: 600;
+            margin-top: 1rem;
+          }
+
+          span {
+            color: rgb(105, 105, 105);
+          }
+
+          p {
+            margin: 0;
+          }
+
+          .bold {
+            font-weight: 600;
+          }
+
           img {
             object-fit: cover;
             object-position: center;
-            width: 5rem;
-            height: 5rem;
+            width: 14rem;
+            height: 14rem;
             border-radius: 50%;
           }
         }
       }
       .userContainer__commentsContainer {
         width: 75%;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-        border-radius: 0.8rem;
-        padding: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        background-color: white;
+        border-radius: 0.5rem;
+        padding: 2rem;
         overflow-y: scroll;
 
+        h2{
+          font-weight: 600;
+          font-size: 2rem;
+          margin: 0;
+          margin-bottom: 0.5rem;
+        }
 
-        .userContainer__commentsContainer--commentsList{
+        hr{
+          margin-top: 0;
+          width: 45%;
+          opacity: 0.3;
+        }
+
+        .userContainer__commentsContainer--commentsList {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
@@ -70,4 +158,50 @@
       }
     }
   }
+
+  .userContainer__PostSection{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+
+    h2{
+      font-weight: 600;
+      font-size: 2rem;
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+
+
+    hr{
+      margin-top: 0;
+      width: 45%;
+      opacity: 0.3;
+    }
+
+    .buttonAddPost {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      width: 7rem;
+      background-color: white;
+      border: 1px solid var(--dark-red);
+      color: var(--dark-red);
+      border-radius: 0.3rem;
+      transition: all 0.1s ease-in-out;
+      cursor: pointer;
+    }
+
+    .buttonAddPost:hover {
+      color: white;
+      background-color: var(--dark-red);
+    }
+
+
+  }
+
+
+
 }

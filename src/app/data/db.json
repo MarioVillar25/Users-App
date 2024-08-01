@@ -1,5 +1,225 @@
 {
-  "posts": [],
-  "comments": [],
-  "users": []
+  "posts": [
+    {
+      "id": "be38-24bc-f79e",
+      "userId": "9ee8-7a41-e301",
+      "title": "Introduction to React",
+      "description": "React is a powerful library for building user interfaces. Learn the basics and get started with your first app.",
+      "tags": [
+        "React",
+        "framework",
+        "Frontend",
+        "development"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-31T13:26:07.616Z",
+      "image": "https://vabadus.es/images/articulos/63f5dad113ca7997803191.png",
+      "totalComments": 2
+    },
+    {
+      "id": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "title": "Understanding Node.js",
+      "description": "Node.js is a runtime environment for executing JavaScript outside the browser. Discover its capabilities and how to use it.",
+      "tags": [
+        "node",
+        "backend"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-31T13:28:25.221Z",
+      "image": "https://images.ctfassets.net/aq13lwl6616q/7cS8gBoWulxkWNWEm0FspJ/c7eb42dd82e27279307f8b9fc9b136fa/nodejs_cover_photo_smaller_size.png",
+      "totalComments": 5
+    },
+    {
+      "id": "a0a1-a51c-c244",
+      "userId": "886f-d83d-a083",
+      "title": "Summer Fashion Trends 2024",
+      "description": "Stay stylish this summer with the latest fashion trends. Here are my top picks for the season.",
+      "tags": [
+        "fashion",
+        "clothes"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-31T13:29:46.160Z",
+      "image": "https://media.vogue.co.uk/photos/654b9eef8005d04080cdeb03/master/w_1600%2Cc_limit/ss24_trends_.jpg",
+      "totalComments": 0
+    },
+    {
+      "id": "f0f2-44f4-d18d",
+      "userId": "c048-a178-9c50",
+      "title": "Harry Plotter: The Boy Who Miscast",
+      "description": "Once upon a time in the magical world of Hogwarts, there was a boy named Harry Plotter. Unlike the famous Harry Potter, Plotter had a knack for casting the wrong spells at the wrong times. One day, instead of 'Wingardium Leviosa,' he accidentally cast 'Wingardium Lasagna,' turning Professor Snape's potions class into an Italian feast. Join me on this hilarious journey as we explore the misadventures of Harry Plotter and his friends Ron Wheezy and Hermiony Danger.",
+      "tags": [
+        "harry",
+        "without",
+        "pottery"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-31T13:37:39.058Z",
+      "image": "https://static1.cbrimages.com/wordpress/wp-content/uploads/2022/08/Harry-Potter-Parodies-Additive-1.jpg",
+      "totalComments": 2
+    },
+    {
+      "id": "5ae9-e102-5958",
+      "userId": "886f-d83d-a083",
+      "title": "An Unforgettable Camping Adventure",
+      "description": "Last weekend, I went on a camping trip to the Blue Ridge Mountains with some friends. We set up our tents by a beautiful lake and spent the days hiking and exploring the stunning scenery. At night, we sat around the campfire, telling stories and roasting marshmallows. It was a perfect escape from the hustle and bustle of city life. I highly recommend this spot for anyone looking to reconnect with nature and enjoy some peace and tranquility.",
+      "tags": [
+        "camping",
+        "stars",
+        "trees",
+        "birds"
+      ],
+      "views": 0,
+      "dateCreation": "2024-07-31T13:42:33.969Z",
+      "image": "https://thehotelfactory.com/wp-content/uploads/2018/09/Camping-portada.jpeg",
+      "totalComments": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": "ebd9-cecc-5165",
+      "text": "This course is awesome!",
+      "postId": "be38-24bc-f79e",
+      "userId": "9ee8-7a41-e301",
+      "dateCreation": "2024-07-31T13:26:25.938Z"
+    },
+    {
+      "id": "beab-5715-067f",
+      "text": "I know it because it's mine!",
+      "postId": "be38-24bc-f79e",
+      "userId": "9ee8-7a41-e301",
+      "dateCreation": "2024-07-31T13:26:42.530Z"
+    },
+    {
+      "id": "c786-549a-8305",
+      "text": "wow!!!",
+      "postId": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-07-31T13:30:21.179Z"
+    },
+    {
+      "id": "2a5d-6115-cb2d",
+      "text": "comment this!",
+      "postId": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-07-31T13:30:27.014Z"
+    },
+    {
+      "id": "6b2b-2ce3-4c95",
+      "text": "node rules",
+      "postId": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-07-31T13:30:33.530Z"
+    },
+    {
+      "id": "ab64-ece4-881c",
+      "text": "yeah!",
+      "postId": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-07-31T13:30:38.113Z"
+    },
+    {
+      "id": "623f-3087-c97c",
+      "text": "Yeah, I hate that man",
+      "postId": "f0f2-44f4-d18d",
+      "userId": "c048-a178-9c50",
+      "dateCreation": "2024-07-31T13:38:40.351Z"
+    },
+    {
+      "id": "0956-69cb-827e",
+      "text": "I admit it!",
+      "postId": "f0f2-44f4-d18d",
+      "userId": "c048-a178-9c50",
+      "dateCreation": "2024-07-31T13:38:49.052Z"
+    },
+    {
+      "id": "86e2-1f3a-2822",
+      "text": "camping rules!",
+      "postId": "5ae9-e102-5958",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-07-31T13:43:02.174Z"
+    },
+    {
+      "id": "0555-ec6b-9c47",
+      "text": "hahah",
+      "postId": "a994-6959-fe28",
+      "userId": "886f-d83d-a083",
+      "dateCreation": "2024-08-01T12:49:31.661Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "9ee8-7a41-e301",
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "password": "12344",
+      "dateCreation": "2024-07-31T13:15:56.903Z",
+      "description": "Avid traveler and photographer. Love sharing my adventures.",
+      "image": "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-55958-614810.jpg&fm=jpg",
+      "totalPosts": 1,
+      "totalComments": 2
+    },
+    {
+      "id": "886f-d83d-a083",
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "email": "janesmith@gmail.com",
+      "password": "12344",
+      "dateCreation": "2024-07-31T13:16:42.628Z",
+      "description": "Food blogger and recipe developer. Passionate about healthy eating.",
+      "image": "https://media.hswstatic.com/eyJidWNrZXQiOiJjb250ZW50Lmhzd3N0YXRpYy5jb20iLCJrZXkiOiJnaWZcL3BsYXlcLzBiN2Y0ZTliLWY1OWMtNDAyNC05ZjA2LWIzZGMxMjg1MGFiNy0xOTIwLTEwODAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo4Mjh9fX0=",
+      "totalPosts": 3,
+      "totalComments": 5
+    },
+    {
+      "id": "45bd-2d84-b95a",
+      "name": "Michael Brown",
+      "username": "michaelbrown",
+      "email": "michaelbrown@gmail.com",
+      "password": "532545",
+      "dateCreation": "2024-07-31T13:18:34.737Z",
+      "description": "Tech enthusiast and software developer. Always exploring new technologies.",
+      "image": "https://www.pluggedin.com/wp-content/uploads/2023/03/a-good-person.jpg",
+      "totalPosts": 0,
+      "totalComments": 0
+    },
+    {
+      "id": "29d4-3490-8c7b",
+      "name": "Emily Davis",
+      "username": "emilydavis",
+      "email": "emilydavis@gmail.com",
+      "password": "32423525",
+      "dateCreation": "2024-07-31T13:19:17.165Z",
+      "description": "Fashion designer and stylist. Sharing my latest designs and tips.",
+      "image": "https://engineering.unl.edu/images/staff/Kayla-Person.jpg",
+      "totalPosts": 0,
+      "totalComments": 0
+    },
+    {
+      "id": "9e1d-8c98-0ead",
+      "name": "Chris Johnson",
+      "username": "chrisjohnson",
+      "email": "chrisjohnson@gmail.com",
+      "password": "324234",
+      "dateCreation": "2024-07-31T13:21:32.721Z",
+      "description": "Fitness trainer and wellness coach. Helping people stay fit and healthy",
+      "image": "https://media.proprofs.com/images/QM/user_images/2503852/-Type-Of-Person-.webp",
+      "totalPosts": 0,
+      "totalComments": 0
+    },
+    {
+      "id": "c048-a178-9c50",
+      "name": "Tom Felton",
+      "username": "tomfelton",
+      "email": "tomfelton@gmail.com",
+      "password": "12214213123",
+      "dateCreation": "2024-07-31T13:22:37.129Z",
+      "description": "This man used to be Draco Malfoy. Now everybody hate him. ",
+      "image": "https://images.ecestaticos.com/LpHmetNMJtVedoE3wkYfehiLcIM=/0x0:2272x2741/1200x1200/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2Fac4%2F6d8%2F3e9%2Fac46d83e922fee8a87e70d6af5378cfa.jpg",
+      "totalPosts": 1,
+      "totalComments": 2
+    }
+  ]
 }

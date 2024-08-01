@@ -1,57 +1,112 @@
 <div class="postContainer">
   <h1>Post Info</h1>
-  <hr />
   <ng-container *ngIf="post">
-    <div class="postContainer__buttonsContainer">
-      <button
-        [routerLink]="['edit-post']"
-        class="postContainer__buttonsContainer--editButton"
-      >
-        Edit Post
-      </button>
-      <button
-        (click)="deletePostById()"
-        class="postContainer__buttonsContainer--deleteButton"
-      >
-        Delete Post
-      </button>
-    </div>
+
     <section>
       <div class="postContainer__card">
-        <app-post-card [post]="post"></app-post-card>
+
+
+        <div class="postContainer__buttonsContainer">
+          <button (click)="backToUserPage()" class="buttonBack">
+           <i class='bx bx-arrow-back' ></i> Back
+          </button>
+          <button
+            [routerLink]="['edit-post']"
+            class="buttonEdit"
+          >
+          <i class="bx bxs-edit-alt"></i> Edit Post
+          </button>
+          <button
+            (click)="deletePostById()"
+            class="buttonDelete"
+          >
+          <i class='bx bx-x'></i>Delete Post
+          </button>
+        </div>
+        <div class="postContainer__buttonsContainer--postCard">
+          <div class="postCard" >
+            <div class="postCard__imgContainer">
+              <img
+                  [src]="
+                    post.image
+                      ? post.image
+                      : 'https://wallpapercave.com/wp/wp4344773.jpg'
+                  "
+                  alt="img"
+                />
+            </div>
+            <div class="postCard__tagsContainer">
+              <ng-container *ngFor="let tag of post.tags">
+                <span>{{tag}}</span>
+
+              </ng-container>
+            </div>
+            <h2>{{post.title}}</h2>
+            <p>
+              {{post.description}}
+            </p>
+            <div class="postCard_userInfo">
+              <img
+              [src]="
+                user.image
+                  ? user.image
+                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
+              "
+              alt="img"
+            />
+                <div>
+                  <h4>{{user.name}}</h4>
+                  <p>{{post.dateCreation | date}}</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+
+
       </div>
+
+
 
       <div class="postContainer__commentsContainer">
         <div class="postContainer__commentsContainer--commentsList">
           <h2>Comments</h2>
-          <hr>
+          <hr />
+
 
           <div class="postContainer__commentsContainer--commentsList--input">
-            <form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
-              <h3>Create a new comment</h3>
+            <form
+              [formGroup]="myForm"
+              (ngSubmit)="onSubmit()"
+              autocomplete="off"
+            >
               <textarea
-              formControlName="comment"
-              placeholder="Write about something!"
+                formControlName="comment"
+                placeholder="Write about something..."
               >
               </textarea>
               <span *ngIf="isValidField('comment', 'required')" class="error"
-              >You must write something to post a comment</span
-            >
+                >You must write something to post a comment</span
+              >
 
               <div>
-                <button>Add Comment</button>
-
-                <button (click)="deleteCommentsByPostId()">test</button>
-
+                <button type="submit"><i class='bx bx-plus' ></i> Add Comment</button>
               </div>
             </form>
           </div>
           <ng-container *ngFor="let comment of commentsByPost">
             <div>
-              <app-comment-card [comment]="comment" [comments]="commentsByPost" (emisionComments)="getCommentsArray($event)"></app-comment-card>
+              <app-comment-card
+                [comment]="comment"
+                [comments]="commentsByPost"
+                (emisionComments)="getCommentsArray($event)"
+              ></app-comment-card>
             </div>
           </ng-container>
-
         </div>
       </div>
     </section>

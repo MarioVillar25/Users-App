@@ -1,19 +1,24 @@
 <nav>
-  <div>
-    <h3>Logo</h3>
+  <div class="navContainer">
+    <div class="navContainer_title">
+      <h3>SocialPeople </h3> <i class='bx bx-meh-blank'></i>
+    </div>
 
-    <input
-      placeholder="Search for users..."
-      [(ngModel)]="searchInputText"
-      type="text"
-      (keyup)="onKeyPress()"
-    />
-    <i
+    <div class="navContainer_inputContainer">
+      <i
       [ngClass]="(this.route !== '/users-list' && this.searchInputText.length > 0) ||
       (this.route !== '/users-list' && showSearchArray) ? 'activeIcon' : ''"
       (click)="setSearch()"
       class="bx bx-search"
     ></i>
+      <input
+        placeholder="Search for users..."
+        [(ngModel)]="searchInputText"
+        type="text"
+        (keyup)="onKeyPress()"
+      />
+
+    </div>
   </div>
 </nav>
 
@@ -24,11 +29,13 @@
   "
 >
   <section>
-    <h3>looking for someone?</h3>
-    <hr>
-     <p>There are {{users.length}} results with the search: '{{searchInputText}}'</p>
+    <div class="searcher_header">
+      <h2>Looking for someone?</h2>
+      <p *ngIf="searchInputText.length > 0">There are {{users.length}} results with the search: "{{searchInputText}}"...</p>
+    </div>
 
-    <div>
+
+    <div class="searcher_body">
       <div class="usersContainer" *ngFor="let user of users">
         <app-user-card [user]="user"></app-user-card>
       </div>

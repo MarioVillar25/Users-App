@@ -51,7 +51,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.GetUserWhoCommentedMost();
       this.GetMostCommentedPost();
       this.GetUsersWhoPostedMore();
-    }, 500);
+    }, 100);
   }
 
   public ngOnDestroy(): void {
@@ -61,23 +61,26 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   //* FUNCIONES:
 
   public GetUserWhoCommentedMost(): void {
-    if (this.userWhoCommentedMost.length > 0) {
-      let data = this.usersService.users.reduce((max, elem) =>
-        elem.totalComments > max.totalComments ? elem : max
-      );
+    let dataSorted = this.usersService.users.sort(
+      (a, b) => b.totalComments - a.totalComments
+    );
 
-      this.userWhoCommentedMost.push(data);
-    }
+    let data = dataSorted.slice(0, 1);
+
+
+    this.userWhoCommentedMost = data;
   }
 
   public GetMostCommentedPost(): void {
-    if (this.mostCommentedPost.length > 0) {
-      let data = this.usersService.posts.reduce((max, elem) =>
-        elem.totalComments > max.totalComments ? elem : max
-      );
+    let dataSorted = this.usersService.posts.sort(
+      (a, b) => b.totalComments - a.totalComments
+    );
 
-      this.mostCommentedPost.push(data);
-    }
+    let data = dataSorted.slice(0, 2);
+
+    console.log(data);
+
+    this.mostCommentedPost = data;
   }
 
   public GetUsersWhoPostedMore(): void {

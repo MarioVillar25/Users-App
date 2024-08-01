@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '../../interfaces/user.interface';
 import { Subscription, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ import { unsubscribePetition } from '../../utils/utils';
 @Component({
   selector: 'app-form-edit-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './form-edit-user.component.html',
   styleUrl: './form-edit-user.component.scss',
 })
@@ -33,9 +33,8 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     name: ['', [Validators.required]],
     description: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(4)]],
-    image: ['']
+    image: [''],
   });
-
 
   //* CONSTRUCTOR:
 
@@ -62,6 +61,18 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
 
   //* FUNCTIONS:
 
+  public backToUserPage(): void {
+    let userIdParams = '';
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['id'];
+    });
+
+    this.suscriptions.push(bringUserPetition);
+
+    this.router.navigate(['user-page', userIdParams]);
+  }
+
   public editUser() {
     let editPetition = this.usersService
       .editUser(this.user, this.user.id)
@@ -86,7 +97,6 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
       this.user.password = this.editForm.controls['password'].value;
       this.user.image = this.editForm.controls['image'].value;
 
-
       this.editUser();
     }
   }
@@ -102,7 +112,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
             name: this.user.name,
             description: this.user.description,
             password: this.user.password,
-            image: this.user.image
+            image: this.user.image,
           });
         },
         error: (err) => {
@@ -119,16 +129,13 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     return this.validationsService.isValidField(this.editForm, field, error);
   }
 
-
-
   //Read all users
 
   public readAllUsers() {
     let allUsersPetition = this.usersService.readAllUsers().subscribe({
       next: (res) => {
         this.usersService.users = res;
-        console.log("USERS",this.usersService.users);
-
+        console.log('USERS', this.usersService.users);
       },
       error: (err) => {
         alert('There was an error un readAllUsers');
@@ -144,8 +151,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     let allPostsPetition = this.usersService.readAllPosts().subscribe({
       next: (res) => {
         this.usersService.posts = res;
-        console.log("POSTS",this.usersService.posts);
-
+        console.log('POSTS', this.usersService.posts);
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
@@ -161,8 +167,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     let allCommentsPetition = this.usersService.readAllComments().subscribe({
       next: (res) => {
         this.usersService.comments = res;
-        console.log("COMENTARIOS",this.usersService.comments);
-
+        console.log('COMENTARIOS', this.usersService.comments);
       },
       error: (err) => {
         alert('There was an error un readAllComments');
@@ -171,5 +176,4 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
-
 }

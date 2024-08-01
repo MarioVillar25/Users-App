@@ -1,6 +1,5 @@
 <div class="formContainer">
   <h1>Create Post</h1>
-  <hr />
 
 
   <div>
@@ -8,7 +7,7 @@
       <!-- title -->
 
       <div>
-        <label>title</label>
+        <label>Title:</label>
         <input
           type="text"
           formControlName="title"
@@ -23,7 +22,7 @@
       <!-- Description -->
 
       <div>
-        <label>Description</label>
+        <label>Description:</label>
         <textarea
           formControlName="description"
           placeholder="Introduce a description..."
@@ -38,7 +37,7 @@
          <!-- Images -->
 
          <div>
-          <label>Images</label>
+          <label>Images:</label>
           <input
           type="text"
           formControlName="image"
@@ -50,37 +49,53 @@
 
       <div class="formContainer_tagsContainer">
         <div class="formContainer_tagsContainer--form">
-          <label>tags</label>
-          <div>
+          <label>Tags:</label>
+          <div class="formContainer_tagsContainer--form--container">
             <input
               type="text"
               [(ngModel)]="newTag"
               [ngModelOptions]="{ standalone: true }"
               placeholder="Introduce a tag"
             />
-            <button type="button" (click)="addTag()">Add tag</button>
+            <button type="button" (click)="addTag()">
+              <i class="bx bx-add-to-queue"></i>Add tag
+            </button>
           </div>
+
           <span *ngIf="errorEmpty" class="error"
-          >You must write at least one tag to generate it</span
-        >
+            >You must write at least one tag to generate it</span
+          >
           <span *ngIf="errorLength" class="error"
             >You cannot create more than 5 tags</span
           >
           <span *ngIf="error" class="error"
-          >The tag "{{repeatedTag}}" already exist</span
-        >
-        </div>
-        <div class="formContainer_tagsContainer--tagsList">
-          <ul>
-            <li *ngFor="let tag of tags">
+            >The tag "{{ repeatedTag }}" already exist</span
+          >
+
+          <div class="formContainer_tagsContainer--tagsList">
+            <span *ngFor="let tag of tags">
               {{ tag }} <i (click)="deleteTag(tag)" class="bx bx-x"></i>
-            </li>
-          </ul>
+            </span>
+          </div>
         </div>
       </div>
 
+                  <!-- Buttons -->
+
+
       <div class="formContainer__buttonContainer">
-        <button type="submit">Submit</button>
+
+
+
+        <button class="buttonSubmit" type="submit">
+          <i class="bx bxs-edit-alt"></i>Create
+        </button>
+        <button class="buttonCancel" (click)="backToUserPage()" type="button">
+          <i class="bx bx-x"></i>Cancel
+        </button>
+
+
+
       </div>
     </form>
 

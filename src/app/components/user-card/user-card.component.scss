@@ -8,6 +8,8 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
   border: 2px solid transparent;
+  height: 16rem;
+  width: 30rem;
 
   .bold {
     font-weight: 600;
@@ -58,7 +60,8 @@
 }
 
 .card:hover {
-  border: 2px solid #8e989e60;
+
+  border: 2px solid var(--dark-blue);
   transform: scale(1.03);
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
 }

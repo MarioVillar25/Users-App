@@ -67,6 +67,18 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
 
   //* FUNCTIONS:
 
+  public backToUserPage(): void {
+    let userIdParams = '';
+
+    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
+      userIdParams = params['id'];
+    });
+
+    this.suscriptions.push(bringUserPetition);
+
+    this.router.navigate(['user-page', userIdParams]);
+  }
+
   //FUNCIONES PARA CREAR EL POST
 
   public onSubmit() {
