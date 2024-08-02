@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { debounceTime, Subscription, filter } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
 import { User } from '../../interfaces/user.interface';
 import { Post } from '../../interfaces/post.interface';

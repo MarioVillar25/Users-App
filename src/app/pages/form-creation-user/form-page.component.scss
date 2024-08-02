@@ -56,12 +56,11 @@ form {
     }
   }
 
-
   .formContainer__buttonContainer {
     display: flex;
     flex-direction: row;
 
-    i{
+    i {
       font-size: 1rem;
     }
     .buttonSubmit {
@@ -71,7 +70,7 @@ form {
       gap: 0.5rem;
       padding: 0.6rem;
       margin-top: 1rem;
-      width: 12%;
+      width: 5rem;
       background-color: white;
       border: 1px solid var(--dark-blue);
       color: var(--dark-blue);
@@ -92,7 +91,7 @@ form {
       gap: 0.5rem;
       padding: 0.6rem;
       margin-top: 1rem;
-      width: 12%;
+      width: 5rem;
       background-color: white;
       border: 1px solid var(--dark-red);
       color: var(--dark-red);
@@ -104,6 +103,24 @@ form {
     .buttonCancel:hover {
       color: white;
       background-color: var(--dark-red);
+    }
+  }
+}
+
+/* Media Queries */
+
+@media (width <= 988px) {
+  form {
+    > div {
+      width: 100%;
+    }
+  }
+}
+
+@media (width <= 720px) {
+  .formContainer {
+    .formContainer__buttonContainer {
+      justify-content: space-between;
     }
   }
 }

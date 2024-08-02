@@ -55,17 +55,19 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
 
   //* LIFECYCLE HOOKS
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.readAllComments();
     this.readAllPosts();
     this.readAllUsers();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions);
   }
 
   //* FUNCTIONS:
+
+  //To go back to the previous page
 
   public backToUserPage(): void {
     let userIdParams = '';
@@ -79,7 +81,7 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
     this.router.navigate(['user-page', userIdParams]);
   }
 
-  //FUNCIONES PARA CREAR EL POST
+  //To submit form
 
   public onSubmit() {
     if (this.myForm.invalid) {
@@ -114,6 +116,8 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
     }
   }
 
+  //To create post
+
   public createPost(post: Post) {
     let createPetition = this.usersService.createPost(post).subscribe({
       next: () => {
@@ -126,6 +130,8 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(createPetition);
   }
+
+  //To add a new tag
 
   public addTag(): void {
     if (this.tags.length <= 5) {
@@ -155,6 +161,8 @@ export class FormCreationPostComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  //To delete tag
 
   public deleteTag(tag: string): void {
     let datos = this.tags.filter((elem) => elem !== tag);

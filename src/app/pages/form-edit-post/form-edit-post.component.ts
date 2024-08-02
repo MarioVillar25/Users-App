@@ -38,7 +38,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   public myForm: FormGroup = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    image: ['']
+    image: [''],
   });
 
   //* CONSTRUCTOR:
@@ -53,28 +53,28 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
   //* LIFE CYCLEHOOKS
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.readAllUsers();
     this.readAllPosts();
     this.readAllComments();
     this.rechargeInputs();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions);
   }
 
   //* FUNCTIONS:
 
+  //To back to the previous page
+
   public backToUserPage(): void {
     let userIdParams = '';
     let postIdParams = '';
 
-
     let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
       userIdParams = params['userId'];
     });
-
 
     let bringPostPetition = this.activatedRoute.params.subscribe((params) => {
       userIdParams = params['postId'];
@@ -82,9 +82,13 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(bringUserPetition, bringPostPetition);
 
-    this.router.navigate(['user-page', postIdParams, 'post-page', userIdParams]);
+    this.router.navigate([
+      'user-page',
+      postIdParams,
+      'post-page',
+      userIdParams,
+    ]);
   }
-
 
   //To recharge Inputs when component is created
 
@@ -98,7 +102,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
           this.myForm.patchValue({
             title: this.post.title,
             description: this.post.description,
-            image: this.post.image
+            image: this.post.image,
           });
         },
         error: (err) => {
@@ -111,7 +115,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
   //To Submit button from Form
 
-  onEdit() {
+  public onEdit() {
     if (this.myForm.invalid) {
       this.myForm.markAllAsTouched();
     } else {
@@ -185,16 +189,13 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     return this.validationsService.isValidField(this.myForm, field, error);
   }
 
-
-
   //Read all users
 
   public readAllUsers() {
     let allUsersPetition = this.usersService.readAllUsers().subscribe({
       next: (res) => {
         this.usersService.users = res;
-        console.log("USERS",this.usersService.users);
-
+        console.log('USERS', this.usersService.users);
       },
       error: (err) => {
         alert('There was an error un readAllUsers');
@@ -210,8 +211,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     let allPostsPetition = this.usersService.readAllPosts().subscribe({
       next: (res) => {
         this.usersService.posts = res;
-        console.log("POSTS",this.usersService.posts);
-
+        console.log('POSTS', this.usersService.posts);
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
@@ -227,8 +227,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     let allCommentsPetition = this.usersService.readAllComments().subscribe({
       next: (res) => {
         this.usersService.comments = res;
-        console.log("COMENTARIOS",this.usersService.comments);
-
+        console.log('COMENTARIOS', this.usersService.comments);
       },
       error: (err) => {
         alert('There was an error un readAllComments');
@@ -237,5 +236,4 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
-
 }

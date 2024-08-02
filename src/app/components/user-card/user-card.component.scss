@@ -1,3 +1,5 @@
+/* Classes Styles */
+
 .card {
   background-color: rgb(252, 252, 252);
   padding: 2rem;
@@ -64,4 +66,15 @@
   border: 2px solid var(--dark-blue);
   transform: scale(1.03);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+}
+
+
+/* Media Queries */
+
+@media (width <= 556px) {
+
+  .card{
+    height: 16rem;
+   width: 20rem;
+  }
 }

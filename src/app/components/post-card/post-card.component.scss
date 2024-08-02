@@ -76,3 +76,11 @@
 .postCard:hover {
   border: 2px solid var(--dark-blue);
 }
+
+/* Media Queries */
+
+@media (width <= 572px) {
+  .postCard {
+    width: 22rem;
+  }
+}

@@ -12,9 +12,8 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ValidationsService } from '../../services/validations.service';
-import { HttpClient } from '@angular/common/http';
 import { getUniqueId, unsubscribePetition } from '../../utils/utils';
 
 @Component({
@@ -58,17 +57,19 @@ export class FormPageComponent implements OnInit, OnDestroy {
   ) {}
   //* LIFECYCLE HOOKS
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.readAllUsers();
     this.readAllPosts();
     this.readAllComments();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions)
   }
 
   //* FUNCTIONS:
+
+  //To create user
 
   public createUser(user: User) {
     this.usersService.createUser(user).subscribe({
@@ -78,6 +79,8 @@ export class FormPageComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  //To submit form
 
   public onSubmit() {
     if (this.myForm.invalid) {
