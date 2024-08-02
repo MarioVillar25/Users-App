@@ -54,16 +54,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.suscriptions.push(allUsersPetition);
   }
 
-
-
   //Read all posts
 
   public readAllPosts() {
     let allPostsPetition = this.userService.readAllPosts().subscribe({
       next: (res) => {
         this.userService.posts = res;
-        console.log("POSTS",this.userService.posts);
-
+        console.log('POSTS', this.userService.posts);
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
@@ -79,8 +76,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     let allCommentsPetition = this.userService.readAllComments().subscribe({
       next: (res) => {
         this.userService.comments = res;
-        console.log("COMENTARIOS",this.userService.comments);
-
+        console.log('COMENTARIOS', this.userService.comments);
       },
       error: (err) => {
         alert('There was an error un readAllComments');
@@ -89,5 +85,4 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(allCommentsPetition);
   }
-
 }

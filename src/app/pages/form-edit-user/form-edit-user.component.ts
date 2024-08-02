@@ -48,18 +48,20 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
 
   //* LIFECYCLE HOOKS
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.readAllUsers();
     this.readAllPosts();
     this.readAllComments();
     this.rechargeInputs();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     unsubscribePetition(this.suscriptions);
   }
 
   //* FUNCTIONS:
+
+  //To back to the previous page
 
   public backToUserPage(): void {
     let userIdParams = '';
@@ -72,6 +74,8 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
 
     this.router.navigate(['user-page', userIdParams]);
   }
+
+  //To edit User
 
   public editUser() {
     let editPetition = this.usersService
@@ -88,6 +92,8 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     this.suscriptions.push(editPetition);
   }
 
+  //To Submit button from Form
+
   public onEdit() {
     if (this.editForm.invalid) {
       this.editForm.markAllAsTouched();
@@ -100,6 +106,8 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
       this.editUser();
     }
   }
+
+  //To recharge Inputs when component is created
 
   public rechargeInputs() {
     let readByIdPetition = this.activatedRoute.params

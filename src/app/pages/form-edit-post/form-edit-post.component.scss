@@ -22,7 +22,6 @@ form {
   display: flex;
   flex-direction: column;
 
-
   h1 {
     margin: 0;
     font-weight: 600;
@@ -100,10 +99,6 @@ form {
       color: white;
       background-color: var(--dark-red);
     }
-
-
-
-
   }
 
   .formContainer_tagsContainer {
@@ -132,7 +127,7 @@ form {
           cursor: pointer;
         }
 
-        button:hover{
+        button:hover {
           color: white;
           background-color: var(--dark-blue);
         }
@@ -161,7 +156,31 @@ form {
       }
     }
   }
+}
 
+/* Media Queries */
 
+@media (width <= 988px) {
+  form {
+    > div {
+      width: 100%;
+    }
+  }
+}
 
+@media (width <= 500px) {
+  .formContainer {
+    .formContainer_tagsContainer {
+      .formContainer_tagsContainer--form {
+        .formContainer_tagsContainer--form--container {
+          display: flex;
+          gap: 1rem;
+          button {
+            margin-left: 0rem;
+            height: 50%;
+          }
+        }
+      }
+    }
+  }
 }

@@ -57,7 +57,7 @@
               align-items: center;
               gap: 0.5rem;
               padding: 0.6rem;
-              width: 30%;
+              width: 7rem;
               background-color: white;
               border: 1px solid var(--dark-blue);
               color: var(--dark-blue);
@@ -78,7 +78,7 @@
               align-items: center;
               gap: 0.5rem;
               padding: 0.3rem;
-              width: 30%;
+              width: 7rem;
               background-color: white;
               border: 1px solid var(--dark-red);
               color: var(--dark-red);
@@ -128,14 +128,14 @@
         padding: 2rem;
         overflow-y: scroll;
 
-        h2{
+        h2 {
           font-weight: 600;
           font-size: 2rem;
           margin: 0;
           margin-bottom: 0.5rem;
         }
 
-        hr{
+        hr {
           margin-top: 0;
           width: 45%;
           opacity: 0.3;
@@ -153,27 +153,23 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      > div {
-        width: 32%;
-      }
     }
   }
 
-  .userContainer__PostSection{
+  .userContainer__PostSection {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: white;
     border-radius: 0.5rem;
     padding: 2rem;
 
-    h2{
+    h2 {
       font-weight: 600;
       font-size: 2rem;
       margin: 0;
       margin-bottom: 0.5rem;
     }
 
-
-    hr{
+    hr {
       margin-top: 0;
       width: 45%;
       opacity: 0.3;
@@ -185,7 +181,7 @@
       align-items: center;
       gap: 0.5rem;
       padding: 0.5rem;
-      width: 7rem;
+      width: rem;
       background-color: white;
       border: 1px solid var(--dark-red);
       color: var(--dark-red);
@@ -198,10 +194,59 @@
       color: white;
       background-color: var(--dark-red);
     }
+  }
+}
 
+/* Media Queries */
+
+@media (width <= 1332px) {
+  .userContainer {
+    section {
+      .userContainer__userCommentsBox {
+        .userContainer_userInfo {
+          display: flex;
+          width: 60%;
+
+          .userContainer_userInfo--card {
+            width: 90%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (width <= 1048px) {
+  .userContainer {
+    section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+
+      .userContainer__userCommentsBox {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        gap: 2rem;
+        height: 100%;
+
+        .userContainer_userInfo {
+          display: flex;
+          justify-content: center;
+
+          width: 100%;
+
+          .userContainer_userInfo--card {
+            width: 100%;
+          }
+        }
+        .userContainer__commentsContainer {
+          width: 100%;
+        }
+      }
+    }
 
   }
-
-
-
 }

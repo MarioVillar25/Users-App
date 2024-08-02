@@ -13,17 +13,27 @@ import { UserService } from '../../services/user.service';
   styleUrl: './post-card.component.scss',
 })
 export class PostCardComponent implements OnInit {
+  //* VARIABLES:
+
   @Input() public post!: Post;
 
   public user?: User;
 
+  //* CONSTRUCTOR:
+
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {
+  //* LIFECYCLE HOOKS
+
+  public ngOnInit(): void {
     this.bringUser();
   }
 
-  bringUser(): void {
+  //* FUNCTIONS:
+
+  //To bring user info
+
+  public bringUser(): void {
     let datos = this.userService.users.filter(
       (elem) => elem.id === this.post.userId
     );

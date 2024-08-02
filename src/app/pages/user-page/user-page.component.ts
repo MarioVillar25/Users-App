@@ -1,6 +1,4 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
   Component,
   OnDestroy,
   OnInit,
@@ -55,7 +53,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   //* FUNCTIONS:
 
-  //FUNCIONES PARA SUMAR EL TOTAL POST
+
+  //To save totalPosts number
 
   public getTotalPosts(): void {
     //First: Read User By Id
@@ -99,8 +98,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(editPetition);
   }
-
-  //-----------------
 
   public readCommentsByUserId() {
     let userIdParams = '';
@@ -203,6 +200,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     this.suscriptions.push(deletePetition);
   }
+
+  //To update local comments array
 
   public getCommentsArray(comments: Comment[]) {
     return (this.userComments = comments);

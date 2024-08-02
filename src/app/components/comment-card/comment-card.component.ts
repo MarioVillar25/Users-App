@@ -3,8 +3,8 @@ import { Comment } from '../../interfaces/comment.interface';
 import { CommonModule } from '@angular/common';
 import { User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
-import { Subscription, switchMap } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { unsubscribePetition } from '../../utils/utils';
 import {
   FormBuilder,
@@ -32,7 +32,7 @@ export class CommentCardComponent implements OnInit {
   public user!: User;
   public commentState: boolean = false;
   public commentModified: boolean = false;
-  public route = this.router.url
+  public route = this.router.url;
 
   //* FORM:
 
@@ -62,6 +62,8 @@ export class CommentCardComponent implements OnInit {
 
   //* FUNCTIONS:
 
+  //To bring user info
+
   public bringUser(): void {
     let datos = this.userService.users.filter(
       (elem) => elem.id === this.comment.userId
@@ -70,12 +72,13 @@ export class CommentCardComponent implements OnInit {
     this.user = datos[0];
   }
 
+  //To delete comment by ID
+
   public deleteCommentById() {
     let deletePetition = this.userService
       .deleteComment(this.comment.id)
       .subscribe({
         next: (res) => {
-
           let datos = this.comments.filter((elem) => elem.id !== res.id);
           this.comments = datos;
           this.emisionComments.emit(this.comments);
@@ -88,9 +91,13 @@ export class CommentCardComponent implements OnInit {
     this.suscriptions.push(deletePetition);
   }
 
+  //To edit comment by ID
+
   public editCommentById(): void {
     this.commentState = !this.commentState;
   }
+
+  //To submit button form
 
   public onEdit(): void {
     if (this.editForm.invalid) {
@@ -101,6 +108,8 @@ export class CommentCardComponent implements OnInit {
       this.editComment();
     }
   }
+
+  //To edit comment action
 
   public editComment() {
     let editPetition = this.userService
@@ -118,11 +127,15 @@ export class CommentCardComponent implements OnInit {
     this.suscriptions.push(editPetition);
   }
 
+  //To recharge form inputs
+
   public rechargeInputs() {
     this.editForm.patchValue({
       comment: this.comment.text,
     });
   }
+
+  //To validate form field
 
   public isValidField(field: string, error: string) {
     return this.validationService.isValidField(this.editForm, field, error);

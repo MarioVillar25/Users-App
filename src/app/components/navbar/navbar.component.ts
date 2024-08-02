@@ -7,13 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  NavigationEnd,
-  NavigationStart,
-  Route,
-  Router,
-  RouterLink,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { debounceTime, filter, Subject, Subscription } from 'rxjs';
 import { unsubscribePetition } from '../../utils/utils';
 import { UserService } from '../../services/user.service';
@@ -50,7 +44,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
-    this.resetSearchInputText();
+    this.controlQuickSearchWindow();
     this.readAllUsers();
     this.toEmitDebounce();
     this.route = this.router.url;
@@ -60,15 +54,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     unsubscribePetition(this.suscriptions);
   }
 
-  //* FUNCIONES:
+  //* FUNCTIONS:
 
-  setSearch() {
+  //To show quick search window
+
+  public setSearch() {
     return (this.showSearchArray = !this.showSearchArray);
   }
 
-  //Función para que cada vez que cambia la ruta se resetea el valor del input
+  //To control quick search window depending on the route
 
-  public resetSearchInputText(): void {
+  public controlQuickSearchWindow(): void {
     let suscripcionURL = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe({
@@ -76,18 +72,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.route = this.router.url;
         },
         error: () => {
-          alert('there was a problem at resetSearchInputText');
+          alert('there was a problem at controlQuickSearchWindow');
         },
       });
 
     this.suscriptions.push(suscripcionURL);
   }
 
-  onKeyPress(): void {
-    //El Subject va a emitir el valor del input
+  //To send Input Value on key press
 
+  public onKeyPress(): void {
     this.userService.changeInputValue(this.searchInputText);
   }
+
+  //To emit debounce function on searchBox
 
   public toEmitDebounce(): void {
     let debouncePetition = this.userService.searchProtected
@@ -109,6 +107,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.suscriptions.push(debouncePetition);
   }
 
+  //To read users by query
+
   public readUsersByQuery(query: string) {
     if (query === '') {
       this.readAllUsers();
@@ -124,6 +124,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.userService.users = data;
   }
+
+  //To read all users
 
   public readAllUsers() {
     let allUsersPetition = this.userService.readAllUsers().subscribe({

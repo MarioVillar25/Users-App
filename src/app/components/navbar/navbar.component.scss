@@ -6,16 +6,14 @@ nav {
     gap: 1rem;
     height: 100%;
 
-    .navContainer_title{
+    .navContainer_title {
       display: flex;
       align-items: center;
-      i{
+      i {
         color: white;
         font-size: 1.5rem;
       }
-
     }
-
 
     .navContainer_inputContainer {
       display: flex;
@@ -24,7 +22,6 @@ nav {
       padding: 0.5rem;
       border-radius: 2rem;
       width: 30%;
-
 
       input {
         background: none;
@@ -78,19 +75,18 @@ section {
   overflow-x: scroll;
 
   .searcher_header {
-    h2{
+    h2 {
       font-weight: bold;
       font-size: 2rem;
       margin: 0;
     }
 
-    p{
+    p {
       color: var(--dark-blue);
 
-    margin-bottom: 0;
+      margin-bottom: 0;
     }
     padding: 1rem;
-
   }
 
   .searcher_body {
@@ -100,5 +96,19 @@ section {
   .usersContainer {
     padding: 1rem;
     //scale: 0.9;
+  }
+}
+
+/* Media Queries */
+
+@media (width <= 668px) {
+  nav {
+    .navContainer {
+
+
+      .navContainer_inputContainer {
+        width: 60%;
+      }
+    }
   }
 }

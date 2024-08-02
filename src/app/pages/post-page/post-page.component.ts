@@ -84,9 +84,6 @@ export class PostPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['user-page', userIdParams]);
   }
 
-
-  //FUNCIONES PARA SUMAR EL TOTAL POST
-
   public getTotalComments(): void {
     this.user.totalComments = this.commentsByPost.length;
     this.post.totalComments = this.commentsByPost.length;
@@ -266,6 +263,8 @@ export class PostPageComponent implements OnInit, OnDestroy {
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.myForm, field, error);
   }
+
+  //To update local comments array from this component
 
   public getCommentsArray(comments: Comment[]): void {
     this.commentsByPost = comments;

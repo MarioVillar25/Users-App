@@ -82,11 +82,13 @@
       .cardsSection_topUsers--list {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
       }
     }
 
     .cardsSection_postUserContainer {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
 
       .cardsSection_mostCommentedPost {
@@ -96,6 +98,7 @@
         border-radius: 1rem;
         display: flex;
         flex-direction: column;
+        gap: 2rem;
         width: 60%;
 
         h2 {
@@ -107,6 +110,7 @@
         > div {
           display: flex;
           justify-content: space-between;
+          flex-wrap: wrap;
         }
       }
 
@@ -124,6 +128,119 @@
           font-weight: bold;
           margin-top: 0;
           margin-bottom: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+/* Media Queries */
+
+@media (width <= 1506px) {
+  .landingContainer {
+    .cardsSection {
+      .cardsSection_postUserContainer {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+
+        .cardsSection_mostCommentedPost {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 2rem;
+
+          width: 100%;
+        }
+
+        .cardsSection_mostActiveUser {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media (width <= 1118px) {
+  .landingContainer {
+
+    .countersSection {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      > div {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        padding: 2rem;
+        border-radius: 1rem;
+        .countersSection_header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          i {
+            font-size: 1.5rem;
+          }
+        }
+
+        .countersSection_body {
+          display: flex;
+          align-items: center;
+
+          p {
+            margin: 0;
+            margin-left: 0.5rem;
+          }
+        }
+
+        h2 {
+          font-weight: bold;
+          margin: 0;
+        }
+        span {
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+
+        p {
+          color: var(--soft-gray);
+        }
+      }
+    }
+
+    .cardsSection {
+      .cardsSection_topUsers {
+        .cardsSection_topUsers--list {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+      }
+
+      .cardsSection_postUserContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .cardsSection_mostCommentedPost {
+          width: 100%;
+
+          > div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+          }
+        }
+
+        .cardsSection_mostActiveUser {
+          width: 100%;
         }
       }
     }
