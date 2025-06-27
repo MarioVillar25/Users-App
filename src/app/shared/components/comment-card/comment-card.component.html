@@ -1,4 +1,4 @@
-<ng-container *ngIf="comment && user">
+@if (comment && user) {
   <div class="cardContainer">
     <div class="cardContainer__card--header">
       <div>
@@ -8,55 +8,52 @@
             ? user.image
             : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
         "
-        alt="img"
-      />        <h1>{{ user.name }}</h1>
+          alt="img"
+          />        <h1>{{ user.name }}</h1>
+        </div>
+        <p>{{ comment.dateCreation | date }}</p>
       </div>
-      <p>{{ comment.dateCreation | date }}</p>
-    </div>
-    <div class="cardContainer__card--comment">
-      <ng-container *ngIf="!commentState">
-        <p>
-          {{ comment.text }}
-        </p>
-
-        <span
-          *ngIf="commentModified"
-          class="cardContainer__card--comment--modified"
-        >
-          Comment modified by {{ user.name }}
-        </span>
-      </ng-container>
-
-      <ng-container *ngIf="commentState">
-        <form [formGroup]="editForm" (ngSubmit)="onEdit()" autocomplete="off">
-          <textarea placeholder="edit Comment" formControlName="comment">
-          </textarea>
-
-          <span *ngIf="isValidField('comment', 'required')"
-            >You must write something to edit a comment</span
-          >
-
-          <div><button type="submit"><i class='bx bx-edit-alt' ></i> Edit Comment</button></div>
-        </form>
-      </ng-container>
-    </div>
-    <div class="cardContainer__card--options">
+      <div class="cardContainer__card--comment">
+        @if (!commentState) {
+          <p>
+            {{ comment.text }}
+          </p>
+          @if (commentModified) {
+            <span
+              class="cardContainer__card--comment--modified"
+              >
+              Comment modified by {{ user.name }}
+            </span>
+          }
+        }
+        @if (commentState) {
+          <form [formGroup]="editForm" (ngSubmit)="onEdit()" autocomplete="off">
+            <textarea placeholder="edit Comment" formControlName="comment">
+            </textarea>
+            @if (isValidField('comment', 'required')) {
+              <span
+                >You must write something to edit a comment</span
+                >
+            }
+            <div><button type="submit"><i class='bx bx-edit-alt' ></i> Edit Comment</button></div>
+          </form>
+        }
+      </div>
+      <div class="cardContainer__card--options">
         <div class="cardContainer__card--options--spans">
           <span
             class="cardContainer__card--options--spans--button"
             (click)="editCommentById()"
             >Edit</span
-          >
-          <span>•</span>
-          <span
-            class="cardContainer__card--options--spans--button"
-            (click)="deleteCommentById()"
-            >Remove</span
-          >
+            >
+            <span>•</span>
+            <span
+              class="cardContainer__card--options--spans--button"
+              (click)="deleteCommentById()"
+              >Remove</span
+              >
+            </div>
+            <i class="bx bx-check-circle"></i>
+          </div>
         </div>
-
-
-      <i class="bx bx-check-circle"></i>
-    </div>
-  </div>
-</ng-container>
+      }

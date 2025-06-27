@@ -5,14 +5,6 @@ import { FormGroup } from '@angular/forms';
   providedIn: 'root',
 })
 export class ValidationsService {
-  //* VARIABLES:
-
-  //* CONSTRUCTOR:
-
-  constructor() {}
-
-  //* FUNCIONES:
-
 
   public isValidField(form: FormGroup, field: string, error: string) {
     return (

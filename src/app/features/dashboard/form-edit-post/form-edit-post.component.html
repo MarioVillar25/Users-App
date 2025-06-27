@@ -11,98 +11,110 @@
           type="text"
           formControlName="title"
           placeholder="Introduce a title"
-        />
-      </div>
+          />
+        </div>
 
-      <span *ngIf="isValidField('title', 'required')" class="error"
-        >This entry must be filled</span
-      >
+        @if (isValidField('title', 'required')) {
+          <span class="error"
+            >This entry must be filled</span
+            >
+        }
 
-      <!-- Description -->
+        <!-- Description -->
 
-      <div>
-        <label>Description:</label>
-        <textarea
-          formControlName="description"
-          placeholder="Introduce a description..."
-        >
-        </textarea>
-      </div>
+        <div>
+          <label>Description:</label>
+          <textarea
+            formControlName="description"
+            placeholder="Introduce a description..."
+            >
+          </textarea>
+        </div>
 
-      <span *ngIf="isValidField('description', 'required')" class="error"
-        >This entry must be filled</span
-      >
+        @if (isValidField('description', 'required')) {
+          <span class="error"
+            >This entry must be filled</span
+            >
+          }
 
-      <!-- Images -->
+          <!-- Images -->
 
-      <div>
-        <label>Images:</label>
-        <input
-          type="text"
-          formControlName="image"
-          placeholder="Introduce an image link"
-        />
-      </div>
-
-      <!-- tags -->
-
-      <div class="formContainer_tagsContainer">
-        <div class="formContainer_tagsContainer--form">
-          <label>Tags:</label>
-          <div class="formContainer_tagsContainer--form--container">
+          <div>
+            <label>Images:</label>
             <input
               type="text"
-              [(ngModel)]="newTag"
-              [ngModelOptions]="{ standalone: true }"
-              placeholder="Introduce a tag"
-            />
-            <button type="button" (click)="addTag()">
-              <i class="bx bx-add-to-queue"></i>Add tag
-            </button>
-          </div>
+              formControlName="image"
+              placeholder="Introduce an image link"
+              />
+            </div>
 
-          <span *ngIf="errorEmpty" class="error"
-            >You must write at least one tag to generate it</span
-          >
-          <span *ngIf="errorLength" class="error"
-            >You cannot create more than 5 tags</span
-          >
-          <span *ngIf="error" class="error"
-            >The tag "{{ repeatedTag }}" already exist</span
-          >
+            <!-- tags -->
 
-          <div class="formContainer_tagsContainer--tagsList">
-            <span *ngFor="let tag of tags">
-              {{ tag }} <i (click)="deleteTag(tag)" class="bx bx-x"></i>
-            </span>
-          </div>
-        </div>
-      </div>
+            <div class="formContainer_tagsContainer">
+              <div class="formContainer_tagsContainer--form">
+                <label>Tags:</label>
+                <div class="formContainer_tagsContainer--form--container">
+                  <input
+                    type="text"
+                    [(ngModel)]="newTag"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Introduce a tag"
+                    />
+                    <button type="button" (click)="addTag()">
+                      <i class="bx bx-add-to-queue"></i>Add tag
+                    </button>
+                  </div>
 
+                  @if (errorEmpty) {
+                    <span class="error"
+                      >You must write at least one tag to generate it</span
+                      >
+                  }
+                  @if (errorLength) {
+                    <span class="error"
+                      >You cannot create more than 5 tags</span
+                      >
+                    }
+                    @if (error) {
+                      <span class="error"
+                        >The tag "{{ repeatedTag }}" already exist</span
+                        >
+                      }
 
-            <!-- Buttons -->
-
-
-
-
-      <div class="formContainer__buttonContainer">
-
-
-
-        <button class="buttonSubmit" type="submit">
-          <i class="bx bxs-edit-alt"></i>Edit
-        </button>
-        <button class="buttonCancel" (click)="backToUserPage()" type="button">
-          <i class="bx bx-x"></i>Cancel
-        </button>
-
-
-
-      </div>
-
-
+                      <div class="formContainer_tagsContainer--tagsList">
+                        @for (tag of tags; track tag) {
+                          <span>
+                            {{ tag }} <i (click)="deleteTag(tag)" class="bx bx-x"></i>
+                          </span>
+                        }
+                      </div>
+                    </div>
+                  </div>
 
 
-    </form>
-  </div>
-</div>
+                  <!-- Buttons -->
+
+
+
+
+                  <div class="formContainer__buttonContainer">
+
+
+
+                    <button class="buttonSubmit" type="submit">
+                      <i class="bx bxs-edit-alt"></i>Edit
+                    </button>
+                    <button class="buttonCancel" (click)="backToUserPage()" type="button">
+                      <i class="bx bx-x"></i>Cancel
+                    </button>
+
+
+
+                  </div>
+
+
+
+
+                </form>
+              </div>
+            </div>

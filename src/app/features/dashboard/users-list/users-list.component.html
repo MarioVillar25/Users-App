@@ -2,8 +2,10 @@
   <h1>Users List</h1>
 
   <section>
-    <div *ngFor="let user of users">
-      <app-user-card [user]="user"></app-user-card>
-    </div>
+    @for (user of users; track user) {
+      <div>
+        <app-user-card [user]="user"></app-user-card>
+      </div>
+    }
   </section>
 </div>

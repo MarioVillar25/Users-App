@@ -37,29 +37,28 @@
     <div class="cardsSection_topUsers">
       <h2>Top Trending Users</h2>
       <div class="cardsSection_topUsers--list">
-        <ng-container *ngFor="let user of usersWhoPostedMore">
+        @for (user of usersWhoPostedMore; track user) {
           <app-user-card [user]="user"></app-user-card>
-        </ng-container>
+        }
       </div>
     </div>
     <div class="cardsSection_postUserContainer">
       <div class="cardsSection_mostCommentedPost">
         <h2>Most Commented Posts</h2>
-          <div>
-            <ng-container *ngFor="let post of mostCommentedPost">
-
+        <div>
+          @for (post of mostCommentedPost; track post) {
             <app-post-card [post]="post"></app-post-card>
-          </ng-container>
+          }
 
-          </div>
+        </div>
       </div>
       <div class="cardsSection_mostActiveUser">
         <h2>Most Active User</h2>
-        <ng-container *ngFor="let user of userWhoCommentedMost">
+        @for (user of userWhoCommentedMost; track user) {
           <div>
             <app-user-card [user]="user"></app-user-card>
           </div>
-        </ng-container>
+        }
       </div>
     </div>
   </section>

@@ -1,29 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
-import { unsubscribePetition } from '../../../core/utils/utils';
+import { Component, inject, OnInit } from '@angular/core';
 import { User } from '../../../core/interfaces/user.interface';
 import { Post } from '../../../core/interfaces/post.interface';
-import { CommonModule } from '@angular/common';
-import { UserCardComponent } from '../../../components/user-card/user-card.component';
-import { PostCardComponent } from '../../../components/post-card/post-card.component';
+import { UserService } from '../../../core/services/user.service';
+import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
+import { UserCardComponent } from '../../../shared/components/user-card/user-card.component';
+import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [CommonModule, UserCardComponent, PostCardComponent],
+  imports: [UserCardComponent, PostCardComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
 })
-export class LandingPageComponent implements OnInit, OnDestroy {
-  //* VARIABLES:
+export class LandingPageComponent
+  extends UnsubscribeDirective
+  implements OnInit
+{
+  protected readonly usersService = inject(UserService);
 
-  public suscriptions: Subscription[] = [];
-  public userWhoCommentedMost: User[] = [];
-  public usersWhoPostedMore: User[] = [];
-  public mostCommentedPost: Post[] = [];
-
-  //* GETTERS:
+  userWhoCommentedMost: User[] = [];
+  usersWhoPostedMore: User[] = [];
+  mostCommentedPost: Post[] = [];
 
   public get comments() {
     return this.usersService.comments;
@@ -37,12 +35,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     return this.usersService.users;
   }
 
-  //* CONSTRUCTOR:
-
-  constructor(private usersService: UserService) {}
-
-  //* LIFECYCLE HOOKS
-
   public ngOnInit(): void {
     this.readAllUsers();
     this.readAllPosts();
@@ -54,19 +46,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  public ngOnDestroy(): void {
-    unsubscribePetition(this.suscriptions);
-  }
-
-  //* FUNCIONES:
-
   public GetUserWhoCommentedMost(): void {
     let dataSorted = this.usersService.users.sort(
       (a, b) => b.totalComments - a.totalComments
     );
 
     let data = dataSorted.slice(0, 1);
-
 
     this.userWhoCommentedMost = data;
   }
@@ -77,8 +62,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     );
 
     let data = dataSorted.slice(0, 2);
-
-    console.log(data);
 
     this.mostCommentedPost = data;
   }
@@ -93,10 +76,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.usersWhoPostedMore = data;
   }
 
-  //Read all users
-
   public readAllUsers() {
-    let allUsersPetition = this.usersService.readAllUsers().subscribe({
+    this.usersService.readAllUsers().subscribe({
       next: (res) => {
         this.usersService.users = res;
         console.log('USERS', this.usersService.users);
@@ -105,39 +86,27 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         alert('There was an error un readAllUsers');
       },
     });
-
-    this.suscriptions.push(allUsersPetition);
   }
 
-  //Read all posts
-
   public readAllPosts() {
-    let allPostsPetition = this.usersService.readAllPosts().subscribe({
+    this.usersService.readAllPosts().subscribe({
       next: (res) => {
         this.usersService.posts = res;
-        console.log('POSTS', this.usersService.posts);
       },
       error: (err) => {
         alert('There was an error un readAllPosts');
       },
     });
-
-    this.suscriptions.push(allPostsPetition);
   }
 
-  //Read all comments
-
   public readAllComments() {
-    let allCommentsPetition = this.usersService.readAllComments().subscribe({
+    this.usersService.readAllComments().subscribe({
       next: (res) => {
         this.usersService.comments = res;
-        console.log('COMENTARIOS', this.usersService.comments);
       },
       error: (err) => {
         alert('There was an error un readAllComments');
       },
     });
-
-    this.suscriptions.push(allCommentsPetition);
   }
 }

@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Comment } from '../../core/interfaces/comment.interface';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from '../../core/interfaces/user.interface';
-import { UserService } from '../../services/user.service';
-import { Subscription } from 'rxjs';
+
+import { Subscription, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
-import { unsubscribePetition } from '../../core/utils/utils';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ValidationsService } from '../../services/validations.service';
+import { UnsubscribeDirective } from '../../directives/unsubscribe.directive';
+import { User } from '../../../core/interfaces/user.interface';
+import { UserService } from '../../../core/services/user.service';
+import { ValidationsService } from '../../../core/services/validations.service';
+import { Comment } from '../../../core/interfaces/comment.interface';
 
 @Component({
   selector: 'app-comment-card',
@@ -21,48 +22,29 @@ import { ValidationsService } from '../../services/validations.service';
   templateUrl: './comment-card.component.html',
   styleUrl: './comment-card.component.scss',
 })
-export class CommentCardComponent implements OnInit {
-  //* VARIABLES:
+export class CommentCardComponent extends UnsubscribeDirective implements OnInit {
+  private readonly userService = inject(UserService);
+  private readonly fb = inject(FormBuilder);
+  private readonly validationService = inject(ValidationsService);
+  private readonly router = inject(Router);
 
   @Input() comment!: Comment;
   @Input() comments!: Comment[];
   @Output() emisionComments = new EventEmitter<Comment[]>();
 
-  public suscriptions: Subscription[] = [];
-  public user!: User;
-  public commentState: boolean = false;
-  public commentModified: boolean = false;
-  public route = this.router.url;
+   user!: User;
+   commentState: boolean = false;
+   commentModified: boolean = false;
+   route = this.router.url;
 
-  //* FORM:
-
-  public editForm: FormGroup = this.fb.group({
+   editForm: FormGroup = this.fb.group({
     comment: ['', [Validators.required]],
   });
-
-  //*CONSTRUCTOR
-
-  constructor(
-    private userService: UserService,
-    private fb: FormBuilder,
-    private validationService: ValidationsService,
-    private router: Router
-  ) {}
-
-  //* LIFECYCLE HOOKS
 
   public ngOnInit(): void {
     this.bringUser();
     this.rechargeInputs();
   }
-
-  public ngOnDestroy(): void {
-    unsubscribePetition(this.suscriptions);
-  }
-
-  //* FUNCTIONS:
-
-  //To bring user info
 
   public bringUser(): void {
     let datos = this.userService.users.filter(
@@ -72,11 +54,11 @@ export class CommentCardComponent implements OnInit {
     this.user = datos[0];
   }
 
-  //To delete comment by ID
 
   public deleteCommentById() {
-    let deletePetition = this.userService
+     this.userService
       .deleteComment(this.comment.id)
+      .pipe(takeUntil(this._destroy$))
       .subscribe({
         next: (res) => {
           let datos = this.comments.filter((elem) => elem.id !== res.id);
@@ -88,16 +70,11 @@ export class CommentCardComponent implements OnInit {
         },
       });
 
-    this.suscriptions.push(deletePetition);
   }
-
-  //To edit comment by ID
 
   public editCommentById(): void {
     this.commentState = !this.commentState;
   }
-
-  //To submit button form
 
   public onEdit(): void {
     if (this.editForm.invalid) {
@@ -109,11 +86,10 @@ export class CommentCardComponent implements OnInit {
     }
   }
 
-  //To edit comment action
-
   public editComment() {
-    let editPetition = this.userService
+     this.userService
       .editComment(this.comment, this.comment.id)
+      .pipe(takeUntil(this._destroy$))
       .subscribe({
         next: () => {
           this.commentModified = true;
@@ -124,18 +100,13 @@ export class CommentCardComponent implements OnInit {
         },
       });
 
-    this.suscriptions.push(editPetition);
   }
-
-  //To recharge form inputs
 
   public rechargeInputs() {
     this.editForm.patchValue({
       comment: this.comment.text,
     });
   }
-
-  //To validate form field
 
   public isValidField(field: string, error: string) {
     return this.validationService.isValidField(this.editForm, field, error);

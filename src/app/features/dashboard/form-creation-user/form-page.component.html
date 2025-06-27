@@ -11,112 +11,130 @@
           type="text"
           formControlName="name"
           placeholder="Introduce a name"
-        />
-      </div>
+          />
+        </div>
 
-      <span *ngIf="isValidField('name', 'required')" class="error"
-        >This entry must be filled</span
-      >
+        @if (isValidField('name', 'required')) {
+          <span class="error"
+            >This entry must be filled</span
+            >
+        }
 
-      <!-- username -->
+        <!-- username -->
 
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          formControlName="username"
-          placeholder="Introduce an username"
-        />
-      </div>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            formControlName="username"
+            placeholder="Introduce an username"
+            />
+          </div>
 
-      <span *ngIf="isValidField('username', 'required')" class="error"
-        >This entry must be filled</span
-      >
+          @if (isValidField('username', 'required')) {
+            <span class="error"
+              >This entry must be filled</span
+              >
+          }
 
-      <span *ngIf="isValidField('username', 'usernameTaken')" class="error"
-        >This username already exist</span
-      >
+          @if (isValidField('username', 'usernameTaken')) {
+            <span class="error"
+              >This username already exist</span
+              >
+            }
 
-      <!-- Description -->
+            <!-- Description -->
 
-      <div>
-        <label>Description:</label>
-        <textarea
-          formControlName="description"
-          placeholder="Introduce a description..."
-        >
-        </textarea>
-      </div>
+            <div>
+              <label>Description:</label>
+              <textarea
+                formControlName="description"
+                placeholder="Introduce a description..."
+                >
+              </textarea>
+            </div>
 
-      <span *ngIf="isValidField('description', 'required')" class="error"
-        >This entry must be filled</span
-      >
+            @if (isValidField('description', 'required')) {
+              <span class="error"
+                >This entry must be filled</span
+                >
+              }
 
-      <!-- Email -->
+              <!-- Email -->
 
-      <div>
-        <label>Email:</label>
-        <input
-          type="text"
-          formControlName="email"
-          placeholder="Introduce an email"
-        />
-        <span *ngIf="isValidField('email', 'pattern')" class="error"
-          >You must enter an Email</span
-        >
-        <span *ngIf="isValidField('email', 'required')" class="error"
-          >This entry must be filled</span
-        >
-        <span *ngIf="isValidField('email', 'emailTaken')" class="error"
-          >This email already exist</span
-        >
-      </div>
+              <div>
+                <label>Email:</label>
+                <input
+                  type="text"
+                  formControlName="email"
+                  placeholder="Introduce an email"
+                  />
+                  @if (isValidField('email', 'pattern')) {
+                    <span class="error"
+                      >You must enter an Email</span
+                      >
+                  }
+                  @if (isValidField('email', 'required')) {
+                    <span class="error"
+                      >This entry must be filled</span
+                      >
+                    }
+                    @if (isValidField('email', 'emailTaken')) {
+                      <span class="error"
+                        >This email already exist</span
+                        >
+                      }
+                    </div>
 
-      <!-- Password -->
+                    <!-- Password -->
 
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          autocomplete="on"
-          name="password"
-          formControlName="password"
-          placeholder="Introduce a password"
-        />
+                    <div>
+                      <label>Password:</label>
+                      <input
+                        type="password"
+                        autocomplete="on"
+                        name="password"
+                        formControlName="password"
+                        placeholder="Introduce a password"
+                        />
 
-        <span *ngIf="isValidField('password', 'required')" class="error"
-          >This entry must be filled</span
-        >
+                        @if (isValidField('password', 'required')) {
+                          <span class="error"
+                            >This entry must be filled</span
+                            >
+                        }
 
-        <span *ngIf="isValidField('password', 'minlength')" class="error"
-          >Password must contain at least 6 characters</span
-        >
-      </div>
+                        @if (isValidField('password', 'minlength')) {
+                          <span class="error"
+                            >Password must contain at least 6 characters</span
+                            >
+                          }
+                        </div>
 
-      <!-- Images -->
+                        <!-- Images -->
 
-      <div>
-        <label>Images:</label>
-        <input
-          type="text"
-          formControlName="image"
-          placeholder="Introduce an image link"
-        />
-      </div>
+                        <div>
+                          <label>Images:</label>
+                          <input
+                            type="text"
+                            formControlName="image"
+                            placeholder="Introduce an image link"
+                            />
+                          </div>
 
-      <div class="formContainer__buttonContainer">
-        <button class="buttonSubmit" type="submit">
-          <i class="bx bxs-edit-alt"></i> Create
-        </button>
-        <button
-          [routerLink]="['']"
-          routerLinkActive="router-link-active"
-          class="buttonCancel"
-          type="button"
-        >
-        <i class="bx bx-x"></i> Cancel
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+                          <div class="formContainer__buttonContainer">
+                            <button class="buttonSubmit" type="submit">
+                              <i class="bx bxs-edit-alt"></i> Create
+                            </button>
+                            <button
+                              [routerLink]="['']"
+                              routerLinkActive="router-link-active"
+                              class="buttonCancel"
+                              type="button"
+                              >
+                              <i class="bx bx-x"></i> Cancel
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>

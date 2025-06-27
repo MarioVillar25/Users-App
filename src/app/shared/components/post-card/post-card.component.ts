@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Post } from '../../core/interfaces/post.interface';
 import { CommonModule } from '@angular/common';
-import { User } from '../../core/interfaces/user.interface';
-import { UserService } from '../../services/user.service';
+import { Post } from '../../../core/interfaces/post.interface';
+import { User } from '../../../core/interfaces/user.interface';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-post-card',
@@ -13,27 +13,17 @@ import { UserService } from '../../services/user.service';
   styleUrl: './post-card.component.scss',
 })
 export class PostCardComponent implements OnInit {
-  //* VARIABLES:
+  private readonly userService = inject(UserService)
 
   @Input() public post!: Post;
 
   public user?: User;
 
-  //* CONSTRUCTOR:
-
-  constructor(private userService: UserService) {}
-
-  //* LIFECYCLE HOOKS
-
   public ngOnInit(): void {
-    this.bringUser();
+    this.getUser();
   }
 
-  //* FUNCTIONS:
-
-  //To bring user info
-
-  public bringUser(): void {
+  public getUser(): void {
     let datos = this.userService.users.filter(
       (elem) => elem.id === this.post.userId
     );

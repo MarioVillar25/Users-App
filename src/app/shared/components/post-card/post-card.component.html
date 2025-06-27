@@ -6,31 +6,30 @@
             ? post.image
             : 'https://wallpapercave.com/wp/wp4344773.jpg'
         "
-        alt="img"
+      alt="img"
       />
-  </div>
-  <div class="postCard__tagsContainer">
-    <ng-container *ngFor="let tag of post.tags">
-      <span>{{tag}}</span>
-
-    </ng-container>
-  </div>
-  <h2>{{post.title}}</h2>
-  <p>
-    {{post.description}}
-  </p>
-  <div class="postCard_userInfo">
-    <img
+    </div>
+    <div class="postCard__tagsContainer">
+      @for (tag of post.tags; track tag) {
+        <span>{{tag}}</span>
+      }
+    </div>
+    <h2>{{post.title}}</h2>
+    <p>
+      {{post.description}}
+    </p>
+    <div class="postCard_userInfo">
+      <img
     [src]="
       user?.image
         ? user?.image
         : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
     "
-    alt="img"
-  />
-      <div>
-        <h4>{{user?.name}}</h4>
-        <p>{{post.dateCreation | date}}</p>
+        alt="img"
+        />
+        <div>
+          <h4>{{user?.name}}</h4>
+          <p>{{post.dateCreation | date}}</p>
+        </div>
+      </div>
     </div>
-  </div>
-</div>

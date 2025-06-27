@@ -1,6 +1,6 @@
 <div class="userContainer">
   <h1>User Info</h1>
-  <ng-container *ngIf="user">
+  @if (user) {
     <section>
       <div class="userContainer__userCommentsBox">
         <div class="userContainer_userInfo">
@@ -13,71 +13,66 @@
                     : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpd4mJRIUwqgE8D_Z2znANEbtiz4GhI4M8NQ&s'
                 "
                 alt="img"
-              />
-            </div>
-            <h2>{{ user.name }}</h2>
-            <span>&commat;{{ user.username }}</span>
-            <p>Contact me: {{ user.email }}</p>
-            <p>{{ user.description }}</p>
-            <span>
-              <span class="bold">{{ user.totalPosts }}</span> posts •
-              <span class="bold">{{ user.totalComments }}</span> comments •
-              Since {{ user.dateCreation | date }}
-            </span>
-            <br />
-
-            <div class="userContainer__buttonContainer">
-              <button
-              class="buttonSubmit"
-              [routerLink]="['/edit-user', user.id]"
-            >
-              <i class="bx bxs-edit-alt"></i>
-              Edit User
-            </button>
-              <button class="buttonCancel" (click)="deleteUserById()">
-                <i class="bx bx-x"></i>
-                Delete User
-              </button>
-
-            </div>
-          </div>
-        </div>
-        <div class="userContainer__commentsContainer">
-          <h2>Comments</h2>
-          <hr>
-          <div class="userContainer__commentsContainer--commentsList">
-            <ng-container *ngFor="let comment of userComments">
-              <div>
-                <app-comment-card
-                  [comment]="comment"
-                  [comments]="userComments"
-                  (emisionComments)="getCommentsArray($event)"
-                ></app-comment-card>
+                />
               </div>
-            </ng-container>
+              <h2>{{ user.name }}</h2>
+              <span>&commat;{{ user.username }}</span>
+              <p>Contact me: {{ user.email }}</p>
+              <p>{{ user.description }}</p>
+              <span>
+                <span class="bold">{{ user.totalPosts }}</span> posts •
+                <span class="bold">{{ user.totalComments }}</span> comments •
+                Since {{ user.dateCreation | date }}
+              </span>
+              <br />
+              <div class="userContainer__buttonContainer">
+                <button
+                  class="buttonSubmit"
+                  [routerLink]="['/edit-user', user.id]"
+                  >
+                  <i class="bx bxs-edit-alt"></i>
+                  Edit User
+                </button>
+                <button class="buttonCancel" (click)="deleteUserById()">
+                  <i class="bx bx-x"></i>
+                  Delete User
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-<br>
-    <section>
-
-
-      <div class="userContainer__PostSection">
-        <h2>Posts</h2>
-<hr>
-        <div><button class="buttonAddPost" [routerLink]="['create-post']"><i class='bx bx-book-add'></i>Add Post</button></div>
-        <br>
-        <br>
-        <div class="userContainer_postsInfo">
-
-          <div *ngFor="let post of userPosts">
-            <app-post-card [post]="post"></app-post-card>
+          <div class="userContainer__commentsContainer">
+            <h2>Comments</h2>
+            <hr>
+              <div class="userContainer__commentsContainer--commentsList">
+                @for (comment of userComments; track comment) {
+                  <div>
+                    <app-comment-card
+                      [comment]="comment"
+                      [comments]="userComments"
+                      (emisionComments)="getCommentsArray($event)"
+                    ></app-comment-card>
+                  </div>
+                }
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-
-    </section>
-  </ng-container>
-</div>
+        </section>
+        <br>
+          <section>
+            <div class="userContainer__PostSection">
+              <h2>Posts</h2>
+              <hr>
+                <div><button class="buttonAddPost" [routerLink]="['create-post']"><i class='bx bx-book-add'></i>Add Post</button></div>
+                <br>
+                  <br>
+                    <div class="userContainer_postsInfo">
+                      @for (post of userPosts; track post) {
+                        <div>
+                          <app-post-card [post]="post"></app-post-card>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </section>
+              }
+            </div>

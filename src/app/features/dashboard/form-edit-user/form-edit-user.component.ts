@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,26 +7,30 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '../../../core/interfaces/user.interface';
-import { Subscription, switchMap } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { ValidationsService } from '../../services/validations.service';
-import { unsubscribePetition } from '../../../core/utils/utils';
+import { switchMap, takeUntil } from 'rxjs';
+import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
+import { UserService } from '../../../core/services/user.service';
+import { ValidationsService } from '../../../core/services/validations.service';
 
 @Component({
   selector: 'app-form-edit-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './form-edit-user.component.html',
   styleUrl: './form-edit-user.component.scss',
 })
-export class FormEditUserComponent implements OnInit, OnDestroy {
-  //* VARIABLES:
+export class FormEditUserComponent
+  extends UnsubscribeDirective
+  implements OnInit
+{
+  protected readonly usersService = inject(UserService);
+  protected readonly validationsService = inject(ValidationsService);
+  protected readonly fb = inject(FormBuilder);
+  protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly router = inject(Router);
 
   public newId: number = Date.now();
-  public suscriptions: Subscription[] = [];
   public user!: User;
-
-  //* FORM:
 
   public editForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -36,50 +39,27 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     image: [''],
   });
 
-  //* CONSTRUCTOR:
-
-  constructor(
-    private usersService: UserService,
-    private validationsService: ValidationsService,
-    private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  //* LIFECYCLE HOOKS
-
   public ngOnInit(): void {
     this.readAllUsers();
-    this.readAllPosts();
-    this.readAllComments();
     this.rechargeInputs();
   }
-
-  public ngOnDestroy(): void {
-    unsubscribePetition(this.suscriptions);
-  }
-
-  //* FUNCTIONS:
-
-  //To back to the previous page
 
   public backToUserPage(): void {
     let userIdParams = '';
 
-    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
-      userIdParams = params['id'];
-    });
-
-    this.suscriptions.push(bringUserPetition);
+    this.activatedRoute.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => {
+        userIdParams = params['id'];
+      });
 
     this.router.navigate(['user-page', userIdParams]);
   }
 
-  //To edit User
-
   public editUser() {
-    let editPetition = this.usersService
+    this.usersService
       .editUser(this.user, this.user.id)
+      .pipe(takeUntil(this._destroy$))
       .subscribe({
         next: () => {
           this.router.navigate(['users-list']);
@@ -88,11 +68,7 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
           alert('there was an error at editUser');
         },
       });
-
-    this.suscriptions.push(editPetition);
   }
-
-  //To Submit button from Form
 
   public onEdit() {
     if (this.editForm.invalid) {
@@ -107,11 +83,12 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  //To recharge Inputs when component is created
-
   public rechargeInputs() {
-    let readByIdPetition = this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.usersService.readUserById(id)))
+    this.activatedRoute.params
+      .pipe(
+        switchMap(({ id }) => this.usersService.readUserById(id)),
+        takeUntil(this._destroy$)
+      )
       .subscribe({
         next: (res) => {
           this.user = res;
@@ -127,61 +104,24 @@ export class FormEditUserComponent implements OnInit, OnDestroy {
           alert('There was a problem at rechargeInputs');
         },
       });
-
-    this.suscriptions.push(readByIdPetition);
   }
-
-  //Check errors in field
 
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.editForm, field, error);
   }
 
-  //Read all users
-
   public readAllUsers() {
-    let allUsersPetition = this.usersService.readAllUsers().subscribe({
-      next: (res) => {
-        this.usersService.users = res;
-        console.log('USERS', this.usersService.users);
-      },
-      error: (err) => {
-        alert('There was an error un readAllUsers');
-      },
-    });
-
-    this.suscriptions.push(allUsersPetition);
-  }
-
-  //Read all posts
-
-  public readAllPosts() {
-    let allPostsPetition = this.usersService.readAllPosts().subscribe({
-      next: (res) => {
-        this.usersService.posts = res;
-        console.log('POSTS', this.usersService.posts);
-      },
-      error: (err) => {
-        alert('There was an error un readAllPosts');
-      },
-    });
-
-    this.suscriptions.push(allPostsPetition);
-  }
-
-  //Read all comments
-
-  public readAllComments() {
-    let allCommentsPetition = this.usersService.readAllComments().subscribe({
-      next: (res) => {
-        this.usersService.comments = res;
-        console.log('COMENTARIOS', this.usersService.comments);
-      },
-      error: (err) => {
-        alert('There was an error un readAllComments');
-      },
-    });
-
-    this.suscriptions.push(allCommentsPetition);
+    this.usersService
+      .readAllUsers()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.usersService.users = res;
+          console.log('USERS', this.usersService.users);
+        },
+        error: (err) => {
+          alert('There was an error un readAllUsers');
+        },
+      });
   }
 }

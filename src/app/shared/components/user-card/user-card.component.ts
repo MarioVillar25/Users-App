@@ -11,7 +11,5 @@ import { User } from '../../../core/interfaces/user.interface';
   styleUrl: './user-card.component.scss',
 })
 export class UserCardComponent {
-  //* VARIABLES:
-
   @Input() public user!: User;
 }

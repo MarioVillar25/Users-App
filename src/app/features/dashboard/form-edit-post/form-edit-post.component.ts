@@ -1,6 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
-import { ValidationsService } from '../../services/validations.service';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,19 +8,27 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../core/interfaces/post.interface';
-import { CommonModule } from '@angular/common';
-import { Subscription, switchMap } from 'rxjs';
-import { unsubscribePetition } from '../../../core/utils/utils';
+import { Subscription, switchMap, takeUntil } from 'rxjs';
+import { ValidationsService } from '../../../core/services/validations.service';
+import { UserService } from '../../../core/services/user.service';
+import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
 
 @Component({
   selector: 'app-form-edit-post',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './form-edit-post.component.html',
   styleUrl: './form-edit-post.component.scss',
 })
-export class FormEditPostComponent implements OnInit, OnDestroy {
-  //* VARIABLES:
+export class FormEditPostComponent
+  extends UnsubscribeDirective
+  implements OnInit
+{
+  protected readonly usersService = inject(UserService);
+  protected readonly validationsService = inject(ValidationsService);
+  protected readonly fb = inject(FormBuilder);
+  protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly router = inject(Router);
 
   public tags: string[] = [];
   public newTag: string = '';
@@ -33,25 +39,11 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
   public post!: Post;
   public suscriptions: Subscription[] = [];
 
-  //* FORM:
-
   public myForm: FormGroup = this.fb.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
     image: [''],
   });
-
-  //* CONSTRUCTOR:
-
-  constructor(
-    private usersService: UserService,
-    private validationsService: ValidationsService,
-    private fb: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  //* LIFE CYCLEHOOKS
 
   public ngOnInit(): void {
     this.readAllUsers();
@@ -60,27 +52,21 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     this.rechargeInputs();
   }
 
-  public ngOnDestroy(): void {
-    unsubscribePetition(this.suscriptions);
-  }
-
-  //* FUNCTIONS:
-
-  //To back to the previous page
-
   public backToUserPage(): void {
     let userIdParams = '';
     let postIdParams = '';
 
-    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
-      userIdParams = params['userId'];
-    });
+    this.activatedRoute.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => {
+        userIdParams = params['userId'];
+      });
 
-    let bringPostPetition = this.activatedRoute.params.subscribe((params) => {
-      userIdParams = params['postId'];
-    });
-
-    this.suscriptions.push(bringUserPetition, bringPostPetition);
+    this.activatedRoute.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => {
+        userIdParams = params['postId'];
+      });
 
     this.router.navigate([
       'user-page',
@@ -90,11 +76,12 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     ]);
   }
 
-  //To recharge Inputs when component is created
-
   public rechargeInputs() {
-    let readByIdPetition = this.activatedRoute.params
-      .pipe(switchMap(({ postId }) => this.usersService.readPostById(postId)))
+    this.activatedRoute.params
+      .pipe(
+        switchMap(({ postId }) => this.usersService.readPostById(postId)),
+        takeUntil(this._destroy$)
+      )
       .subscribe({
         next: (res) => {
           this.post = res;
@@ -109,11 +96,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
           alert('There was a problem at rechargeInputs');
         },
       });
-
-    this.suscriptions.push(readByIdPetition);
   }
-
-  //To Submit button from Form
 
   public onEdit() {
     if (this.myForm.invalid) {
@@ -128,11 +111,10 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     }
   }
 
-  //To edit Post
-
   public editPost() {
-    let editPetition = this.usersService
+    this.usersService
       .editPost(this.post, this.post.id)
+      .pipe(takeUntil(this._destroy$))
       .subscribe({
         next: () => {
           this.router.navigate(['posts-list']);
@@ -141,11 +123,7 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
           alert('there was an error at editPost');
         },
       });
-
-    this.suscriptions.push(editPetition);
   }
-
-  //To add a new tag
 
   public addTag(): void {
     if (this.tags.length <= 5) {
@@ -176,64 +154,54 @@ export class FormEditPostComponent implements OnInit, OnDestroy {
     }
   }
 
-  //To delete a tag
-
   public deleteTag(tag: string): void {
     let datos = this.tags.filter((elem) => elem !== tag);
     this.tags = datos;
   }
 
-  //To check if a field is valid
-
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.myForm, field, error);
   }
 
-  //Read all users
-
   public readAllUsers() {
-    let allUsersPetition = this.usersService.readAllUsers().subscribe({
-      next: (res) => {
-        this.usersService.users = res;
-        console.log('USERS', this.usersService.users);
-      },
-      error: (err) => {
-        alert('There was an error un readAllUsers');
-      },
-    });
-
-    this.suscriptions.push(allUsersPetition);
+    this.usersService
+      .readAllUsers()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.usersService.users = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllUsers');
+        },
+      });
   }
-
-  //Read all posts
 
   public readAllPosts() {
-    let allPostsPetition = this.usersService.readAllPosts().subscribe({
-      next: (res) => {
-        this.usersService.posts = res;
-        console.log('POSTS', this.usersService.posts);
-      },
-      error: (err) => {
-        alert('There was an error un readAllPosts');
-      },
-    });
-
-    this.suscriptions.push(allPostsPetition);
+    this.usersService
+      .readAllPosts()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.usersService.posts = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllPosts');
+        },
+      });
   }
 
-  //Read all comments
-
   public readAllComments() {
-    let allCommentsPetition = this.usersService.readAllComments().subscribe({
-      next: (res) => {
-        this.usersService.comments = res;
-        console.log('COMENTARIOS', this.usersService.comments);
-      },
-      error: (err) => {
-        alert('There was an error un readAllComments');
-      },
-    });
-
-    this.suscriptions.push(allCommentsPetition);
+    this.usersService
+      .readAllComments()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.usersService.comments = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllComments');
+        },
+      });
   }
 }

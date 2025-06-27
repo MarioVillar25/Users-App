@@ -38,9 +38,11 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   public getTotalPosts(): void {
     let userIdParams = '';
 
-    let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
-      userIdParams = params['id'];
-    });
+    this.activatedRoute.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => {
+        userIdParams = params['id'];
+      });
 
     let dataUser = this.userService.users.filter(
       (elem) => elem.id === userIdParams
@@ -58,8 +60,9 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   }
 
   public editUser(): void {
-    let editPetition = this.userService
+    this.userService
       .editUser(this.user, this.user.id)
+      .pipe(takeUntil(this._destroy$))
       .subscribe({
         next: () => {},
         error: () => {
@@ -71,19 +74,24 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   public readCommentsByUserId() {
     let userIdParams = '';
 
-    let paramsUserPetition = this.activatedRoute.params.subscribe((params) => {
-      userIdParams = params['id'];
-    });
+    this.activatedRoute.params
+      .pipe(takeUntil(this._destroy$))
+      .subscribe((params) => {
+        userIdParams = params['id'];
+      });
 
-    let readPetition = this.userService.readAllComments().subscribe({
-      next: (res) => {
-        let data = res.filter((elem) => elem.userId === userIdParams);
-        this.userComments = data;
-      },
-      error: (err) => {
-        alert('There was a problem at readCommentsByUserId');
-      },
-    });
+    this.userService
+      .readAllComments()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          let data = res.filter((elem) => elem.userId === userIdParams);
+          this.userComments = data;
+        },
+        error: (err) => {
+          alert('There was a problem at readCommentsByUserId');
+        },
+      });
   }
 
   public readUserPosts(): void {
@@ -95,8 +103,11 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   }
 
   public readUserById() {
-    let readByIdPetition = this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.userService.readUserById(id)))
+    this.activatedRoute.params
+      .pipe(
+        switchMap(({ id }) => this.userService.readUserById(id)),
+        takeUntil(this._destroy$)
+      )
       .subscribe({
         next: (res) => {
           this.user = res;
@@ -116,12 +127,15 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   public deletePostsByUserId(): Post[] {
     let data = this.userService.posts.filter((elem) => {
       if (elem.userId === this.user.id) {
-        let deletePetition = this.userService.deletePost(elem.id).subscribe({
-          next: (res) => {},
-          error: () => {
-            alert('There was an error at deleteCommentById');
-          },
-        });
+        this.userService
+          .deletePost(elem.id)
+          .pipe(takeUntil(this._destroy$))
+          .subscribe({
+            next: (res) => {},
+            error: () => {
+              alert('There was an error at deleteCommentById');
+            },
+          });
       }
     });
 
@@ -147,8 +161,11 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   }
 
   public deleteUserById() {
-    let deletePetition = this.activatedRoute.params
-      .pipe(switchMap(({ id }) => this.userService.deleteUser(id)))
+    this.activatedRoute.params
+      .pipe(
+        switchMap(({ id }) => this.userService.deleteUser(id)),
+        takeUntil(this._destroy$)
+      )
       .subscribe({
         next: (res) => {
           this.deleteCommentsByUserId();
@@ -168,42 +185,48 @@ export class UserPageComponent extends UnsubscribeDirective implements OnInit {
   }
 
   public readAllUsers() {
-    let allUsersPetition = this.userService.readAllUsers().subscribe({
-      next: (res) => {
-        this.userService.users = res;
-        console.log('USERS', this.userService.users);
-      },
-      error: (err) => {
-        alert('There was an error un readAllUsers');
-      },
-    });
+    this.userService
+      .readAllUsers()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.userService.users = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllUsers');
+        },
+      });
   }
 
   //Read all posts
 
   public readAllPosts() {
-    let allPostsPetition = this.userService.readAllPosts().subscribe({
-      next: (res) => {
-        this.userService.posts = res;
-        console.log('POSTS', this.userService.posts);
-      },
-      error: (err) => {
-        alert('There was an error un readAllPosts');
-      },
-    });
+    this.userService
+      .readAllPosts()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.userService.posts = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllPosts');
+        },
+      });
   }
 
   //Read all comments
 
   public readAllComments() {
-    let allCommentsPetition = this.userService.readAllComments().subscribe({
-      next: (res) => {
-        this.userService.comments = res;
-        console.log('COMENTARIOS', this.userService.comments);
-      },
-      error: (err) => {
-        alert('There was an error un readAllComments');
-      },
-    });
+    this.userService
+      .readAllComments()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe({
+        next: (res) => {
+          this.userService.comments = res;
+        },
+        error: (err) => {
+          alert('There was an error un readAllComments');
+        },
+      });
   }
 }

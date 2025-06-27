@@ -2,9 +2,11 @@
   <h1>Posts List</h1>
 
   <section>
-    <div *ngFor="let post of posts">
-      <app-post-card [post]="post"></app-post-card>
-    </div>
+    @for (post of posts; track post) {
+      <div>
+        <app-post-card [post]="post"></app-post-card>
+      </div>
+    }
   </section>
 
 
