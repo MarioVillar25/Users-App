@@ -31,8 +31,7 @@ export class NavbarComponent extends UnsubscribeDirective implements OnInit {
 
   public ngOnInit(): void {
     this.controlQuickSearchWindow();
-    this.readAllUsers();
-    this.toEmitDebounce();
+   // this.toEmitDebounce();
     this.route = this._router.url;
   }
 
@@ -107,4 +106,6 @@ export class NavbarComponent extends UnsubscribeDirective implements OnInit {
         },
       });
   }
+
+  
 }

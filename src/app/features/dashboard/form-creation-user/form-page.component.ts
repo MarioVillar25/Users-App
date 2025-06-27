@@ -24,7 +24,7 @@ import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.dir
   templateUrl: './form-page.component.html',
   styleUrl: './form-page.component.scss',
 })
-export class FormPageComponent extends UnsubscribeDirective implements OnInit {
+export class FormPageComponent extends UnsubscribeDirective {
   protected readonly usersService = inject(UserService);
   protected readonly validationsService = inject(ValidationsService);
   protected readonly fb = inject(FormBuilder);
@@ -45,12 +45,6 @@ export class FormPageComponent extends UnsubscribeDirective implements OnInit {
     password: ['', [Validators.required, Validators.minLength(4)]],
     image: [''],
   });
-
-  public ngOnInit(): void {
-    this.readAllUsers();
-    this.readAllPosts();
-    this.readAllComments();
-  }
 
   public createUser(user: User) {
     this.usersService.createUser(user).subscribe({
@@ -130,49 +124,5 @@ export class FormPageComponent extends UnsubscribeDirective implements OnInit {
 
       return of(state ? { usernameTaken: true } : null);
     };
-  }
-
-  public readAllUsers() {
-    this.usersService
-      .readAllUsers()
-      .pipe(takeUntil(this._destroy$))
-      .subscribe({
-        next: (res) => {
-          this.usersService.users = res;
-        },
-        error: (err) => {
-          alert('There was an error un readAllUsers');
-        },
-      });
-  }
-
-  public readAllPosts() {
-    this.usersService
-      .readAllPosts()
-      .pipe(takeUntil(this._destroy$))
-
-      .subscribe({
-        next: (res) => {
-          this.usersService.posts = res;
-        },
-        error: (err) => {
-          alert('There was an error un readAllPosts');
-        },
-      });
-  }
-
-  public readAllComments() {
-    this.usersService
-      .readAllComments()
-      .pipe(takeUntil(this._destroy$))
-
-      .subscribe({
-        next: (res) => {
-          this.usersService.comments = res;
-        },
-        error: (err) => {
-          alert('There was an error un readAllComments');
-        },
-      });
   }
 }

@@ -1,33 +1,56 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../../../core/components/navbar/navbar.component';
-
+import { SidebarComponent } from '../../../core/components/sidebar/sidebar.component';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, RouterLink],
+  imports: [RouterOutlet, NavbarComponent, SidebarComponent, RouterLink],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent implements AfterViewInit {
+export class LayoutComponent implements OnInit {
+  protected readonly usersService = inject(UserService);
 
-  @ViewChild('btn') btn!: ElementRef;
-  @ViewChild('btn2') btn2!: ElementRef;
-  @ViewChild('sidebar') sidebar!: ElementRef;
+  ngOnInit(): void {
+    this.readAllUsers();
+    this.readAllPosts();
+    this.readAllComments();
+  }
 
-  ngAfterViewInit(): void {
-    this.btn.nativeElement.addEventListener('click', () => {
-      this.sidebar.nativeElement.classList.toggle('active');
+  public readAllUsers() {
+    this.usersService.readAllUsers().subscribe({
+      next: (res) => {
+        this.usersService.updateUsersSubject(res);
+        this.usersService.users = res;
+      },
+      error: (err) => {
+        console.error(err);
+      },
     });
+  }
 
-    this.btn2.nativeElement.addEventListener('click', () => {
-      this.sidebar.nativeElement.classList.toggle('active');
+  public readAllPosts() {
+    this.usersService.readAllPosts().subscribe({
+      next: (res) => {
+        this.usersService.posts = res;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+
+  public readAllComments() {
+    this.usersService.readAllComments().subscribe({
+      next: (res) => {
+        this.usersService.comments = res;
+      },
+      error: (err) => {
+        console.error(err);
+      },
     });
   }
 }

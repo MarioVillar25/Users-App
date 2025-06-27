@@ -3,6 +3,7 @@ import { takeUntil } from 'rxjs';
 import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
 import { UserService } from '../../../core/services/user.service';
 import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
+import { Post } from '../../../core/interfaces/post.interface';
 
 @Component({
   selector: 'app-posts-page',
@@ -11,28 +12,8 @@ import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.dir
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss',
 })
-export class PostsPageComponent extends UnsubscribeDirective implements OnInit {
-  protected readonly userService = inject(UserService);
+export class PostsPageComponent extends UnsubscribeDirective {
+  private readonly userService = inject(UserService);
 
-  public get posts() {
-    return this.userService.posts;
-  }
-
-  public ngOnInit(): void {
-    this.readAllPosts();
-  }
-
-  public readAllPosts() {
-    this.userService
-      .readAllPosts()
-      .pipe(takeUntil(this._destroy$))
-      .subscribe({
-        next: (res) => {
-          this.userService.posts = res;
-        },
-        error: (err) => {
-          alert('There was an error un readAllPosts');
-        },
-      });
-  }
+  posts: Post[] = this.userService.posts
 }

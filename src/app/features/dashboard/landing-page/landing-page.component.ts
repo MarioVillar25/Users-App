@@ -5,6 +5,7 @@ import { UserService } from '../../../core/services/user.service';
 import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
 import { UserCardComponent } from '../../../shared/components/user-card/user-card.component';
 import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
+import { Comment } from '../../../core/interfaces/comment.interface';
 
 @Component({
   selector: 'app-landing-page',
@@ -23,22 +24,11 @@ export class LandingPageComponent
   usersWhoPostedMore: User[] = [];
   mostCommentedPost: Post[] = [];
 
-  public get comments() {
-    return this.usersService.comments;
-  }
-
-  public get posts() {
-    return this.usersService.posts;
-  }
-
-  public get users() {
-    return this.usersService.users;
-  }
+  users: User[] = this.usersService.users;
+  comments: Comment[] = this.usersService.comments;
+  posts: Post[] = this.usersService.posts;
 
   public ngOnInit(): void {
-    this.readAllUsers();
-    this.readAllPosts();
-    this.readAllComments();
     setTimeout(() => {
       this.GetUserWhoCommentedMost();
       this.GetMostCommentedPost();
@@ -74,39 +64,5 @@ export class LandingPageComponent
     let data = dataSorted.slice(0, 3);
 
     this.usersWhoPostedMore = data;
-  }
-
-  public readAllUsers() {
-    this.usersService.readAllUsers().subscribe({
-      next: (res) => {
-        this.usersService.users = res;
-        console.log('USERS', this.usersService.users);
-      },
-      error: (err) => {
-        alert('There was an error un readAllUsers');
-      },
-    });
-  }
-
-  public readAllPosts() {
-    this.usersService.readAllPosts().subscribe({
-      next: (res) => {
-        this.usersService.posts = res;
-      },
-      error: (err) => {
-        alert('There was an error un readAllPosts');
-      },
-    });
-  }
-
-  public readAllComments() {
-    this.usersService.readAllComments().subscribe({
-      next: (res) => {
-        this.usersService.comments = res;
-      },
-      error: (err) => {
-        alert('There was an error un readAllComments');
-      },
-    });
   }
 }

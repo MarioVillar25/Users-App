@@ -18,15 +18,29 @@ export class UserService {
   public posts: Post[] = [];
   public comments: Comment[] = [];
 
-  public searchInputValue: BehaviorSubject<string> =
-    new BehaviorSubject<string>('');
+  private usersSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+  public users$ = this.usersSubject.asObservable();
+
+  private postsSubject: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
+  public posts$ = this.postsSubject.asObservable();
+
+  private commentsSubject: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
+  public comments$ = this.commentsSubject.asObservable();
+
+  private searchInputValue: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchProtected = this.searchInputValue.asObservable();
+
+  //-----OBSERVABLES-----
 
   public changeInputValue(value: string) {
     this.searchInputValue.next(value);
   }
 
-  //-----READ-----
+  public updateUsersSubject(users: User[]){
+    this.usersSubject.next(users);
+  }
+
+  //-----GET-----
 
   public readAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.usersURL);

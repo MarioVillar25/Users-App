@@ -22,10 +22,7 @@ import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.dir
   templateUrl: './form-creation-post.component.html',
   styleUrl: './form-creation-post.component.scss',
 })
-export class FormCreationPostComponent
-  extends UnsubscribeDirective
-  implements OnInit
-{
+export class FormCreationPostComponent extends UnsubscribeDirective {
   protected readonly usersService = inject(UserService);
   protected readonly validationsService = inject(ValidationsService);
   protected readonly fb = inject(FormBuilder);
@@ -39,7 +36,6 @@ export class FormCreationPostComponent
   errorEmpty: boolean = false;
   errorLength: boolean = false;
   post?: Post;
-  suscriptions: Subscription[] = [];
   user!: User;
 
   myForm: FormGroup = this.fb.group({
@@ -47,12 +43,6 @@ export class FormCreationPostComponent
     description: ['', [Validators.required]],
     image: [''],
   });
-
-  public ngOnInit(): void {
-    this.readAllComments();
-    this.readAllPosts();
-    this.readAllUsers();
-  }
 
   public backToUserPage(): void {
     let userIdParams = '';
@@ -66,19 +56,17 @@ export class FormCreationPostComponent
     this.router.navigate(['user-page', userIdParams]);
   }
 
-
   public onSubmit() {
     if (this.myForm.invalid) {
       this.myForm.markAllAsTouched();
     } else {
       let userIdParams = '';
 
-       this.activatedRoute.params
+      this.activatedRoute.params
         .pipe(takeUntil(this._destroy$))
         .subscribe((params) => {
           userIdParams = params['id'];
         });
-
 
       this.post = {
         id: getUniqueId(3),
@@ -106,15 +94,12 @@ export class FormCreationPostComponent
       .createPost(post)
       .pipe(takeUntil(this._destroy$))
       .subscribe({
-        next: () => {
-          console.log('POST CREADO');
-        },
+        next: () => {},
         error: () => {
-          alert('There was a problem at createPost');
+          console.error('There was a problem at createPost');
         },
       });
   }
-
 
   public addTag(): void {
     if (this.tags.length <= 5) {
@@ -145,7 +130,6 @@ export class FormCreationPostComponent
     }
   }
 
-
   public deleteTag(tag: string): void {
     let datos = this.tags.filter((elem) => elem !== tag);
 
@@ -154,54 +138,5 @@ export class FormCreationPostComponent
 
   public isValidField(field: string, error: string) {
     return this.validationsService.isValidField(this.myForm, field, error);
-  }
-
-
-  public readAllUsers() {
-    this.usersService
-      .readAllUsers()
-      .pipe(takeUntil(this._destroy$))
-
-      .subscribe({
-        next: (res) => {
-          this.usersService.users = res;
-          console.log('USERS', this.usersService.users);
-        },
-        error: (err) => {
-          alert('There was an error un readAllUsers');
-        },
-      });
-  }
-
-  public readAllPosts() {
-    this.usersService
-      .readAllPosts()
-      .pipe(takeUntil(this._destroy$))
-
-      .subscribe({
-        next: (res) => {
-          this.usersService.posts = res;
-          console.log('POSTS', this.usersService.posts);
-        },
-        error: (err) => {
-          alert('There was an error un readAllPosts');
-        },
-      });
-  }
-
-  public readAllComments() {
-    this.usersService
-      .readAllComments()
-      .pipe(takeUntil(this._destroy$))
-
-      .subscribe({
-        next: (res) => {
-          this.usersService.comments = res;
-          console.log('COMENTARIOS', this.usersService.comments);
-        },
-        error: (err) => {
-          alert('There was an error un readAllComments');
-        },
-      });
   }
 }

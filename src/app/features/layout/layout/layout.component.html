@@ -1,48 +1,5 @@
-<div class="sidebar" #sidebar>
-  <div class="top">
-    <div class="logo"></div>
-    <i class="bx bx-menu" id="btn" #btn></i>
-  </div>
-  <div class="user">
-    <img class="user-img"  id="btn2" #btn2 src="https://github.com/MarioVillar25.png" alt="" />
-    <div>
-      <p class="bold">Mario Villar</p>
-      <p>Admin</p>
-    </div>
-  </div>
-  <ul>
-    <li>
-      <a [routerLink]="['']">
-        <i class="bx bxs-dashboard"></i>
-        <span class="nav-item">dashboard</span>
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['create-user']">
-        <i class='bx bx-edit'></i>
-        <span class="nav-item">creation</span>
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['users-list']">
-        <i class="bx bx-user"></i>
-        <span class="nav-item">Users</span>
-      </a>
-    </li>
-    <li>
-      <a [routerLink]="['posts-list']">
-        <i class="bx bx-comment-dots"></i>
-        <span class="nav-item">Posts</span>
-      </a>
-    </li>
-    <li>
-      <a>
-        <i class="bx bx-log-out-circle"></i>
-        <span class="nav-item">LogOut</span>
-      </a>
-    </li>
-  </ul>
-</div>
+<app-sidebar></app-sidebar>
+
 <div class="main-content">
   <div class="container">
     <header>

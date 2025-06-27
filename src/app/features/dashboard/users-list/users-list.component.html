@@ -1,6 +1,7 @@
 <div class="usersContainer">
   <h1>Users List</h1>
 
+  @if(users){
   <section>
     @for (user of users; track user) {
       <div>
@@ -8,4 +9,8 @@
       </div>
     }
   </section>
+  } @else {
+    <h1>loading</h1>
+  }
+
 </div>
