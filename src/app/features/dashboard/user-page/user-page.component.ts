@@ -1,18 +1,14 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { PostCardComponent } from '../../../components/post-card/post-card.component';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { unsubscribePetition } from '../../../core/utils/utils';
-import { Subscription, switchMap } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs';
 import { User } from '../../../core/interfaces/user.interface';
-import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Post } from '../../../core/interfaces/post.interface';
 import { Comment } from '../../../core/interfaces/comment.interface';
-import { CommentCardComponent } from '../../../components/comment-card/comment-card.component';
+import { PostCardComponent } from '../../../shared/components/post-card/post-card.component';
+import { CommentCardComponent } from '../../../shared/components/comment-card/comment-card.component';
+import { UserService } from '../../../core/services/user.service';
+import { UnsubscribeDirective } from '../../../shared/directives/unsubscribe.directive';
 
 @Component({
   selector: 'app-user-page',
@@ -21,22 +17,14 @@ import { CommentCardComponent } from '../../../components/comment-card/comment-c
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.scss',
 })
-export class UserPageComponent implements OnInit, OnDestroy {
-  //* VARIABLES:
-  public suscriptions: Subscription[] = [];
+export class UserPageComponent extends UnsubscribeDirective implements OnInit {
+  protected readonly userService = inject(UserService);
+  protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly router = inject(Router);
   public user!: User;
   public userPosts: Post[] = [];
   public userComments: Comment[] = [];
 
-  //* CONSTRUCTOR:
-
-  constructor(
-    private userService: UserService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  //* LIFECYCLE HOOKS
   public ngOnInit(): void {
     this.readAllUsers();
     this.readAllPosts();
@@ -47,24 +35,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  public ngOnDestroy(): void {
-    unsubscribePetition(this.suscriptions);
-  }
-
-  //* FUNCTIONS:
-
-
-  //To save totalPosts number
-
   public getTotalPosts(): void {
-    //First: Read User By Id
     let userIdParams = '';
 
     let bringUserPetition = this.activatedRoute.params.subscribe((params) => {
       userIdParams = params['id'];
     });
-
-    this.suscriptions.push(bringUserPetition);
 
     let dataUser = this.userService.users.filter(
       (elem) => elem.id === userIdParams
@@ -72,17 +48,12 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
     this.user = dataUser[0];
 
-    //Second: Bring all posts from that User ID
-
     let dataPosts = this.userService.posts.filter(
       (elem) => elem.userId === userIdParams
     );
 
-    //Third: Asign value to totalPost
-
     this.user.totalPosts = dataPosts.length;
 
-    //Last: PUT
     this.editUser();
   }
 
@@ -95,8 +66,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
           alert('there was an error at editUser');
         },
       });
-
-    this.suscriptions.push(editPetition);
   }
 
   public readCommentsByUserId() {
@@ -115,8 +84,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         alert('There was a problem at readCommentsByUserId');
       },
     });
-
-    this.suscriptions.push(paramsUserPetition, readPetition);
   }
 
   public readUserPosts(): void {
@@ -144,8 +111,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
           alert('There was a problem at readUserById');
         },
       });
-
-    this.suscriptions.push(readByIdPetition);
   }
 
   public deletePostsByUserId(): Post[] {
@@ -157,8 +122,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
             alert('There was an error at deleteCommentById');
           },
         });
-
-        this.suscriptions.push(deletePetition);
       }
     });
 
@@ -168,14 +131,15 @@ export class UserPageComponent implements OnInit, OnDestroy {
   public deleteCommentsByUserId(): Comment[] {
     let data = this.userService.comments.filter((elem) => {
       if (elem.userId === this.user.id) {
-        let deletePetition = this.userService.deleteComment(elem.id).subscribe({
-          next: (res) => {},
-          error: () => {
-            alert('There was an error at deleteCommentById');
-          },
-        });
-
-        this.suscriptions.push(deletePetition);
+        this.userService
+          .deleteComment(elem.id)
+          .pipe(takeUntil(this._destroy$))
+          .subscribe({
+            next: (res) => {},
+            error: () => {
+              alert('There was an error at deleteCommentById');
+            },
+          });
       }
     });
 
@@ -197,17 +161,11 @@ export class UserPageComponent implements OnInit, OnDestroy {
           alert('There was an error at deleteUserById');
         },
       });
-
-    this.suscriptions.push(deletePetition);
   }
-
-  //To update local comments array
 
   public getCommentsArray(comments: Comment[]) {
     return (this.userComments = comments);
   }
-
-  //Read all users
 
   public readAllUsers() {
     let allUsersPetition = this.userService.readAllUsers().subscribe({
@@ -219,8 +177,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         alert('There was an error un readAllUsers');
       },
     });
-
-    this.suscriptions.push(allUsersPetition);
   }
 
   //Read all posts
@@ -235,8 +191,6 @@ export class UserPageComponent implements OnInit, OnDestroy {
         alert('There was an error un readAllPosts');
       },
     });
-
-    this.suscriptions.push(allPostsPetition);
   }
 
   //Read all comments
@@ -251,7 +205,5 @@ export class UserPageComponent implements OnInit, OnDestroy {
         alert('There was an error un readAllComments');
       },
     });
-
-    this.suscriptions.push(allCommentsPetition);
   }
 }

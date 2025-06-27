@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { User } from '../../core/interfaces/user.interface';
 import { CommonModule } from '@angular/common';
+import { User } from '../../../core/interfaces/user.interface';
 
 @Component({
   selector: 'app-user-card',

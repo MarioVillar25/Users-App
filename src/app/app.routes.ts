@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './features/layout/layout/layout.component';
-import { PostPageComponent } from './features/dashboard/post-page/post-page.component';
-import { FormEditPostComponent } from './features/dashboard/form-edit-post/form-edit-post.component';
 
 export const routes: Routes = [
   {

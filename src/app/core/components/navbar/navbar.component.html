@@ -23,6 +23,7 @@
 </nav>
 
 <ng-container
+@if
   *ngIf="
     (this.route !== '/users-list' && this.searchInputText.length > 0) ||
     (this.route !== '/users-list' && showSearchArray)
